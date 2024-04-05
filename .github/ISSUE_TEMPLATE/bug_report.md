@@ -7,22 +7,23 @@ assignees: ''
 
 ---
 
-**Descripción**
-Descripción clara y concisa del bug
+# Comportamiento esperado
+Descripción clara y concisa de lo que se espera que suceda
 
-**Pasos para la reproducción**
+# Comportamiento actual
+Descripción clara y concisa del problema que se desea reportar
+
+# Pasos para la reproducción
 Steps to reproduce the behavior:
 1. Ir a '...'
 2. Dar click en '....'
 3. Desplazarse a la sección '....'
 4. Ver el error
 
-**Comportamiento esperado**
-Descripción clara y concisa de lo que se espera que suceda
-
-**Evidencia**
+# Evidencia
 Si aplica, agregar capturas o videos para ayudar a explicar el problema
 
+# Contexto (Ambiente de ejecución)
 **Escritorio (completar la siguiente información):**
  - Sistema operativo: [e.g. Windows 11, macOS Sonoma 14.4]
  - Navegador [e.g. chrome, safari, firefox]
@@ -34,5 +35,5 @@ Si aplica, agregar capturas o videos para ayudar a explicar el problema
  - Navegador [e.g. stock browser, safari, chrome]
  - Versión [e.g. 22]
 
-**Contexto Adicional**
-Agregar cualquer otro contexto acerca del problema aquí
+# Información Adicional
+Agregar cualquier otro contexto acerca del problema aquí
