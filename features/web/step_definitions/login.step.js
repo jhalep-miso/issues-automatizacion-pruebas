@@ -1,16 +1,13 @@
 const { Given } = require("@cucumber/cucumber");
+const LoginPage = require("../page-objects/login-page");
 
 Given(
-  "I Login to {kraken-string} with {kraken-string} and {kraken-string}",
-  async function (loginUrl, email, password) {
-    const result = await this.driver.url(loginUrl);
-    const emailElement = await this.driver.$("#identification");
-    await emailElement.setValue(email);
-    const passwordElement = await this.driver.$("#password");
-    await passwordElement.setValue(password);
-    const loginButton = await this.driver.$("#ember5");
-    await loginButton.click();
-
-    return result;
+  "I Login with {kraken-string} and {kraken-string}",
+  async function (email, password) {
+    const loginPage = new LoginPage(this.driver);
+    await loginPage.navigateToLogin();
+    await loginPage.enterEmail(email);
+    await loginPage.enterPassword(password);
+    await loginPage.clickSignInButton();
   }
 );

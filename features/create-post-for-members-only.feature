@@ -2,7 +2,7 @@ Feature: My feature
 
   @user1 @web
   Scenario: Login in the application
-    Given I Login to "<LOGIN_URL>" with "<EMAIL>" and "<PASSWORD>"
+    Given I Login with "<EMAIL>" and "<PASSWORD>"
     And I wait for 2 seconds
     And I create a new post with title "$name_1" and content "$name_2"
     And I wait for 2 seconds
