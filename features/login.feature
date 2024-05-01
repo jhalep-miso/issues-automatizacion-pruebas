@@ -1,4 +1,4 @@
-Feature: My feature
+Feature: Login feature
 
   @user1 @web
   Scenario: Login in the application
