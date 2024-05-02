@@ -1,11 +1,11 @@
-const { Given, When, Then } = require("@cucumber/cucumber");
-const assert = require("assert");
-const PostPage = require("../page-objects/post-page");
+import { KrakenWorld } from "web/support/support";
+
+import { Given, When, Then } from "@cucumber/cucumber";
+import assert from "assert";
 
 Given(
   "I create a new post with title {kraken-string} and content {kraken-string}",
-  async function (title, content) {
-    this.postPage = new PostPage(this.driver);
+  async function (this: KrakenWorld, title: string, content: string) {
     await this.postPage.navigateToCreatePost();
     await this.postPage.setPostTitle(title);
     await this.postPage.setPostContent(content);
@@ -15,13 +15,13 @@ Given(
   }
 );
 
-Given("I navigate to the created post", async function () {
+Given("I navigate to the created post", async function (this: KrakenWorld) {
   await this.postPage.navigateToPublishedPost();
 });
 
 When(
   "I update the created post access to {string}",
-  async function (accessType) {
+  async function (this: KrakenWorld, accessType: string) {
     await this.postPage.navigateToEditPost();
     await this.postPage.clickSettingsButton();
     await this.postPage.selectPostVisibility(accessType);
@@ -31,7 +31,7 @@ When(
 
 Then(
   "I should see the post title {kraken-string} and a banner with text {string}",
-  async function (title, text) {
+  async function (this: KrakenWorld, title: string, text: string) {
     const titleText = await this.postPage.getPostTitle();
     assert.strictEqual(titleText, title);
 

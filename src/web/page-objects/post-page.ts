@@ -1,16 +1,22 @@
 const BASE_URL = "https://ghost-ebcl.onrender.com";
+import type { Browser } from "webdriverio";
 
-class PostPage {
-  #accessTypeMap = new Map([
+export class PostPage {
+  driver: Browser<"async">;
+  editPostUrl: string;
+  createPostUrl: string;
+  private accessTypeMap = new Map([
     ["Public", "public"],
     ["Members Only", "members"],
     ["Paid-Members only", "paid"],
     ["Specific tier(s)", "tiers"],
   ]);
+  publishedPostUrl: string;
 
-  constructor(driver) {
+  constructor(driver: Browser<"async">) {
     this.driver = driver;
     this.editPostUrl = "";
+    this.publishedPostUrl = "";
     this.createPostUrl = BASE_URL + "/ghost/#/editor/post";
   }
 
@@ -28,13 +34,13 @@ class PostPage {
     await this.pause(2000);
   }
 
-  async setPostTitle(title) {
+  async setPostTitle(title: string) {
     const titleElement = await this.driver.$(".gh-editor-title");
     await titleElement.waitForDisplayed({ timeout: 5000 });
     await titleElement.setValue(title);
   }
 
-  async setPostContent(content) {
+  async setPostContent(content: string) {
     const contentElement = await this.driver.$(".kg-prose");
     await contentElement.waitForDisplayed({ timeout: 5000 });
     await contentElement.setValue(content);
@@ -82,14 +88,14 @@ class PostPage {
     await this.pause();
   }
 
-  async selectPostVisibility(accessType) {
+  async selectPostVisibility(accessType: string) {
     const postVisibilitySelect = await this.driver.$(
       "[data-test-select='post-visibility']"
     );
     await postVisibilitySelect.waitForDisplayed({ timeout: 5000 });
     await postVisibilitySelect.selectByAttribute(
       "value",
-      this.#accessTypeMap.get(accessType)
+      this.accessTypeMap.get(accessType)
     );
     await this.pause();
   }
@@ -113,5 +119,3 @@ class PostPage {
     return bannerTitle.getText();
   }
 }
-
-module.exports = PostPage;
