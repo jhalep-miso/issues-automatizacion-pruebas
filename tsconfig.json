@@ -4,9 +4,9 @@
     "target": "es2018",
     "lib": ["dom", "es2018"],
     "module": "commonjs",
-    "baseUrl": ".",
-    "rootDir": "./",
-    "outDir": "../features",
+    "baseUrl": "src",
+    "rootDir": "./src",
+    "outDir": "features",
     "allowJs": true,
     "sourceMap": true,
     "esModuleInterop": true,
@@ -17,5 +17,5 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
   },
-  "include": ["web"]
+  "include": ["src/web"]
 }
