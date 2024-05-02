@@ -1,7 +1,10 @@
 const BASE_URL = "https://ghost-ebcl.onrender.com";
+import type { Browser } from "webdriverio";
 
-class LoginPage {
-  constructor(driver) {
+export class LoginPage {
+  driver: Browser<"async">;
+  url: string;
+  constructor(driver: Browser<"async">) {
     this.driver = driver;
     this.url = BASE_URL + "/ghost/#/signin";
   }
@@ -15,13 +18,13 @@ class LoginPage {
     await this.pause();
   }
 
-  async enterEmail(email) {
+  async enterEmail(email: string) {
     const emailInput = await this.driver.$("#identification");
     await emailInput.waitForDisplayed({ timeout: 5000 });
     await emailInput.setValue(email);
   }
 
-  async enterPassword(password) {
+  async enterPassword(password: string) {
     const passwordInput = await this.driver.$("#password");
     await passwordInput.waitForDisplayed({ timeout: 5000 });
     await passwordInput.setValue(password);
@@ -34,5 +37,3 @@ class LoginPage {
     await this.pause();
   }
 }
-
-module.exports = LoginPage;
