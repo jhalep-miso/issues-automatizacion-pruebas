@@ -1,4 +1,4 @@
-const { BASE_URL } = require("../../../properties.json");
+const BASE_URL = "https://ghost-ebcl.onrender.com";
 
 class PostPage {
   #accessTypeMap = new Map([
