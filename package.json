@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "kraken-build": "npx tsc --build ./src/tsconfig.json",
-    "test": "kraken-node run"
+    "kraken-build": "npx tsc --build ./src/tsconfig.kraken.json",
+    "test": "npm run kraken-build && kraken-node run"
   },
   "keywords": [],
   "author": "",
