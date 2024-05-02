@@ -1,7 +1,5 @@
 {
   "EMAIL": "ja.penat1@uniandes.edu.co",
   "PASSWORD": "MyGh0stPass!",
-  "BASE_URL": "http://localhost:2369",
-  "CREATE_POST_URL": "http://localhost:2369/ghost/#/editor/post"
+  "BASE_URL": "http://localhost:2369"
 }
-
