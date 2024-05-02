@@ -1,4 +1,4 @@
-Feature: My feature
+Feature: Create a post and update the access to Members Only
 
   @user1 @web
   Scenario: Login in the application
