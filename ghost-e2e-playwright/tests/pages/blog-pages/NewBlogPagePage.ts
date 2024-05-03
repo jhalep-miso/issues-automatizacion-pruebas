@@ -15,5 +15,8 @@ export class NewBlogPagePage {
     await this.page.getByRole("button", { name: "Continue, final review →" }).click()
 
     await this.page.getByRole("button", { name: "Publish page, right now" }).click()
+
+    // Wait for final page that shows that the blog page was published successfully to avoid issues with navigation
+    await this.page.waitForSelector("img")
   }
 }

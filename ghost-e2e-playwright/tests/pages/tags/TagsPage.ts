@@ -9,7 +9,7 @@ export class TagsPage {
   constructor(private readonly page: Page) { }
 
   getTagByName(name: string) {
-    return this.page.getByText(name)
+    return this.page.getByRole("heading", { name })
   }
 
   async newTag(): Promise<NewTagPage> {
@@ -20,6 +20,8 @@ export class TagsPage {
 
   async go(): Promise<TagsPage> {
     await this.page.goto(`${Config.baseUri}/${TagsPage.path}`)
+    // Wait for any title to load from the list of tags
+    await this.page.waitForSelector("h3")
 
     return this
   }

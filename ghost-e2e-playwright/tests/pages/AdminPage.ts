@@ -3,6 +3,7 @@ import { TagsPage } from "./tags/TagsPage"
 import { PostPage } from "./posts/PostsPage"
 import { BlogPagesPage } from "./blog-pages/BlogPagesPage"
 import { MembersPage } from "./members/MembersPage"
+import { SettingsPage } from "./settings/SettingsPage"
 
 export class AdminPage {
 

@@ -20,6 +20,8 @@ export class MembersPage {
 
   async go(): Promise<MembersPage> {
     await this.page.goto(`${Config.baseUri}/${MembersPage.path}`)
+    // Wait for any title to load from the list of members
+    await this.page.waitForSelector("h3")
 
     return this
   }

@@ -9,17 +9,19 @@ export class PostPage {
   constructor(private readonly page: Page) { }
 
   getPostByTitle(title: string) {
-    return this.page.getByText(title)
+    return this.page.getByRole("heading", { name: title })
   }
 
   async newPost(): Promise<NewPostPage> {
-    await this.page.getByRole("link", { name: "New post", exact: true }).click()
+    await this.page.getByTitle("New post").click()
 
     return new NewPostPage(this.page)
   }
 
   async go(): Promise<PostPage> {
     await this.page.goto(`${Config.baseUri}/${PostPage.path}`)
+    // Wait for any title to load from the list of posts
+    await this.page.waitForSelector("h3")
 
     return this
   }

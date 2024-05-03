@@ -21,5 +21,7 @@ export class NewMemberPage {
     await noteInput.fill(member.note)
 
     await this.page.getByRole("button", { name: "Save" }).click()
+
+    await this.page.getByRole("heading", { name: "Signup info" }).isVisible()
   }
 }

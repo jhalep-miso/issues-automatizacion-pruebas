@@ -9,7 +9,7 @@ export class BlogPagesPage {
   constructor(private readonly page: Page) { }
 
   getBlogPageByTitle(title: string) {
-    return this.page.getByText(title)
+    return this.page.getByRole("heading", { name: title })
   }
 
   async newPage(): Promise<NewBlogPagePage> {
@@ -20,6 +20,8 @@ export class BlogPagesPage {
 
   async go(): Promise<BlogPagesPage> {
     await this.page.goto(`${Config.baseUri}/${BlogPagesPage.path}`)
+    // Wait for any title to load from the list of blog pages
+    await this.page.waitForSelector("h3")
 
     return this
   }

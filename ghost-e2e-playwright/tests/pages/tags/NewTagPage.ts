@@ -13,5 +13,8 @@ export class NewTagPage {
     await this.page.locator("#tag-description").fill(tag.description)
 
     await this.page.getByRole("button", { name: "Save" }).click()
+
+    // Wait for the delete button to appear after creating the tag to avoid issues with navigation
+    await this.page.getByRole("button", { name: "Delete" }).isEnabled()
   }
 }
