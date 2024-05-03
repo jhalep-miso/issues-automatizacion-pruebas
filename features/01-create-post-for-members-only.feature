@@ -8,7 +8,7 @@ Feature: Create a post and update the access to Members Only
     And I wait for 2 seconds
     And I navigate to the created post
     When I wait for 2 seconds
-    And I update the created post access to "Members Only"
+    And I update the created post access to "Members only"
     And I navigate to the created post
     And I wait for 2 seconds
     Then I should see the post title "$$name_1" and a banner with text "This post is for subscribers only"

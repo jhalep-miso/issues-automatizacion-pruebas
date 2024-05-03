@@ -7,8 +7,8 @@ export class PostPage {
   createPostUrl: string;
   private accessTypeMap = new Map([
     ["Public", "public"],
-    ["Members Only", "members"],
-    ["Paid-Members only", "paid"],
+    ["Members only", "members"],
+    ["Paid-members only", "paid"],
     ["Specific tier(s)", "tiers"],
   ]);
   publishedPostUrl: string;
@@ -93,10 +93,9 @@ export class PostPage {
       "[data-test-select='post-visibility']"
     );
     await postVisibilitySelect.waitForDisplayed({ timeout: 5000 });
-    await postVisibilitySelect.selectByAttribute(
-      "value",
-      this.accessTypeMap.get(accessType)
-    );
+    const accessTypeValue = this.accessTypeMap.get(accessType);
+    if (!accessTypeValue) throw new Error("Invalid access type");
+    await postVisibilitySelect.selectByAttribute("value", accessTypeValue);
     await this.pause();
   }
 
