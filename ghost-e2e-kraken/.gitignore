@@ -1,0 +1,5 @@
+node_modules/
+reports/
+.kraken/
+features/web
+features/tsconfig.*
