@@ -1,22 +1,24 @@
-const BASE_URL = "https://ghost-ebcl.onrender.com";
+import { BASE_URL } from "./constants";
 import type { Browser } from "webdriverio";
 
 export class PostPage {
   driver: Browser<"async">;
   editPostUrl: string;
   createPostUrl: string;
+  oldPostUrl: string;
+  publishedPostUrl: string;
   private accessTypeMap = new Map([
     ["Public", "public"],
     ["Members only", "members"],
     ["Paid-members only", "paid"],
     ["Specific tier(s)", "tiers"],
   ]);
-  publishedPostUrl: string;
 
   constructor(driver: Browser<"async">) {
     this.driver = driver;
     this.editPostUrl = "";
     this.publishedPostUrl = "";
+    this.oldPostUrl = "";
     this.createPostUrl = BASE_URL + "/ghost/#/editor/post";
   }
 
@@ -81,6 +83,11 @@ export class PostPage {
     await this.pause();
   }
 
+  async navigateToOldPostUrl() {
+    await this.driver.url(this.oldPostUrl);
+    await this.pause();
+  }
+
   async clickSettingsButton() {
     const settingsButton = await this.driver.$(".settings-menu-toggle");
     await settingsButton.waitForDisplayed({ timeout: 5000 });
@@ -99,6 +106,24 @@ export class PostPage {
     await this.pause();
   }
 
+  async updatePostUrlSlug(newUrlText: string) {
+    const urlElement = await this.driver.$(".post-setting-slug");
+    await urlElement.waitForDisplayed({ timeout: 5000 });
+    await urlElement.setValue(newUrlText);
+    await this.pause();
+  }
+
+  async setNewPostUrl() {
+    await this.clickSettingsButton();
+    await this.clickSettingsButton();
+    const urlPreviewUrlElement = await this.driver.$(".ghost-url-preview");
+    await urlPreviewUrlElement.waitForDisplayed({ timeout: 5000 });
+    const urlPreviewUrl: string = await urlPreviewUrlElement.getText();
+    const newPostPath = urlPreviewUrl.split("/")[1];
+    this.oldPostUrl = this.publishedPostUrl;
+    this.publishedPostUrl = `${BASE_URL}/${newPostPath}`;
+  }
+
   async clickPublishSaveButton() {
     const saveButton = await this.driver.$("[data-test-button='publish-save']");
     await saveButton.waitForDisplayed({ timeout: 5000 });
@@ -112,9 +137,27 @@ export class PostPage {
     return titleElement.getText();
   }
 
+  async getPostContent() {
+    const contentElement = await this.driver.$("section.gh-content > p");
+    await contentElement.waitForDisplayed({ timeout: 5000 });
+    return contentElement.getText();
+  }
+
   async getSubscriptionBannerText() {
     const bannerTitle = await this.driver.$("h2");
     await bannerTitle.waitForDisplayed({ timeout: 5000 });
     return bannerTitle.getText();
+  }
+
+  async getErrorText(): Promise<string> {
+    const errorText = await this.driver.$(".error-description");
+    await errorText.waitForDisplayed({ timeout: 5000 });
+    return errorText.getText();
+  }
+
+  async getErrorCode(): Promise<number> {
+    const errorText = await this.driver.$(".error-code");
+    await errorText.waitForDisplayed({ timeout: 5000 });
+    return errorText.getText().then((text: string) => parseInt(text, 10));
   }
 }

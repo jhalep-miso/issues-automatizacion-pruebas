@@ -1,4 +1,4 @@
-const BASE_URL = "https://ghost-ebcl.onrender.com";
+import { BASE_URL } from "./constants";
 import type { Browser } from "webdriverio";
 
 export class LoginPage {
