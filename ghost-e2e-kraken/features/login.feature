@@ -1,6 +1,6 @@
-Feature: My feature
+Feature: Login feature
 
   @user1 @web
   Scenario: Login in the application
-    Given I Login to "<LOGIN_URL>" with "<EMAIL>" and "<PASSWORD>"
+    Given I Login with "<EMAIL>" and "<PASSWORD>"
     When I wait

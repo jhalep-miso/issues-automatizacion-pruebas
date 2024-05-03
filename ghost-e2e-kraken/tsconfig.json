@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "Node",
+    "target": "es2018",
+    "lib": ["dom", "es2018"],
+    "module": "commonjs",
+    "baseUrl": "src",
+    "rootDir": "./src",
+    "outDir": "features",
+    "allowJs": true,
+    "sourceMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+  },
+  "include": ["src/web"]
+}
