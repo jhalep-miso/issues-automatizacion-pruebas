@@ -95,6 +95,34 @@ export class PostPage {
     await this.pause();
   }
 
+  // some changes to the settings are triggered by moving away from the modified element
+  async saveSettingsChange() {
+    await this.clickSettingsButton();
+    await this.clickSettingsButton();
+  }
+
+  async clickCodeInjectionButton() {
+    const codeInjectionButton = await this.driver.$(
+      "[data-test-button='codeinjection']"
+    );
+    await codeInjectionButton.waitForDisplayed({ timeout: 5000 });
+    await codeInjectionButton.click();
+    await this.pause();
+  }
+
+  async addCodeInjectionElement(elementType: string, text: string, id: string) {
+    const codeInjectionElement = await this.driver.$(
+      "div.CodeMirror-code > div:nth-child(1) > pre"
+    );
+    await codeInjectionElement.waitForDisplayed({ timeout: 5000 });
+    await codeInjectionElement.click();
+    await this.driver.keys(
+      `<${elementType} id="${id}">${text}</${elementType}>`
+    );
+    await this.saveSettingsChange();
+    await this.pause();
+  }
+
   async selectPostVisibility(accessType: string) {
     const postVisibilitySelect = await this.driver.$(
       "[data-test-select='post-visibility']"
@@ -114,8 +142,6 @@ export class PostPage {
   }
 
   async setNewPostUrl() {
-    await this.clickSettingsButton();
-    await this.clickSettingsButton();
     const urlPreviewUrlElement = await this.driver.$(".ghost-url-preview");
     await urlPreviewUrlElement.waitForDisplayed({ timeout: 5000 });
     const urlPreviewUrl: string = await urlPreviewUrlElement.getText();
@@ -132,7 +158,7 @@ export class PostPage {
   }
 
   async getPostTitle() {
-    const titleElement = await this.driver.$("h1");
+    const titleElement = await this.driver.$("h1.gh-article-title");
     await titleElement.waitForDisplayed({ timeout: 5000 });
     return titleElement.getText();
   }
@@ -141,6 +167,16 @@ export class PostPage {
     const contentElement = await this.driver.$("section.gh-content > p");
     await contentElement.waitForDisplayed({ timeout: 5000 });
     return contentElement.getText();
+  }
+
+  async getElement(elementType: string, id: string) {
+    try {
+      const element = await this.driver.$(`${elementType}#${id}`);
+      await element.waitForDisplayed({ timeout: 5000 });
+      return element;
+    } catch (error) {
+      return null;
+    }
   }
 
   async getSubscriptionBannerText() {
