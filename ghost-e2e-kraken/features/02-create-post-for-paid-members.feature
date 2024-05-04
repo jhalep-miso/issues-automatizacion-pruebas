@@ -1,7 +1,7 @@
-Feature: Create a post and update the access to Paid-members Only
+Feature: Create and update Posts
 
   @user1 @web
-  Scenario: Login in the application
+  Scenario: Create a post and update the access to Paid-members Only and verify the banner message
     Given I Login with "<EMAIL>" and "<PASSWORD>"
     And I wait for 2 seconds
     And I create a new post with title "$name_1" and content "$name_2"

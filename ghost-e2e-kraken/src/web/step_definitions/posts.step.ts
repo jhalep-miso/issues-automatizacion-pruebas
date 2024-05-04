@@ -35,7 +35,23 @@ When(
     await this.postPage.navigateToEditPost();
     await this.postPage.clickSettingsButton();
     await this.postPage.updatePostUrlSlug(newUrlText);
+    await this.postPage.saveSettingsChange();
     await this.postPage.setNewPostUrl();
+  }
+);
+
+When(
+  "I update the created post code injection with a {string} element with id {kraken-string} and text {kraken-string}",
+  async function (
+    this: KrakenWorld,
+    elementType: string,
+    text: string,
+    id: string
+  ) {
+    await this.postPage.navigateToEditPost();
+    await this.postPage.clickSettingsButton();
+    await this.postPage.clickCodeInjectionButton();
+    await this.postPage.addCodeInjectionElement(elementType, text, id);
   }
 );
 
@@ -77,5 +93,21 @@ Then(
 
     const statusCode = await this.postPage.getErrorCode();
     assert.strictEqual(statusCode, errorCode);
+  }
+);
+
+Then(
+  "I should see the post with a {string} element with id {kraken-string} and text {kraken-string}",
+  async function (
+    this: KrakenWorld,
+    elementType: string,
+    text: string,
+    id: string
+  ) {
+    const element = await this.postPage.getElement(elementType, id);
+    assert.notEqual(element, null);
+
+    const elementText = await element.getText();
+    assert.strictEqual(elementText, text);
   }
 );
