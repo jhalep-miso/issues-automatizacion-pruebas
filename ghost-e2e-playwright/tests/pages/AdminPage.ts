@@ -4,6 +4,7 @@ import { PostPage } from "./posts/PostsPage"
 import { BlogPagesPage } from "./blog-pages/BlogPagesPage"
 import { MembersPage } from "./members/MembersPage"
 import { Config } from "../Config"
+import { SettingsPage } from "./settings/SettingsPage"
 
 export class AdminPage {
 
@@ -34,10 +35,16 @@ export class AdminPage {
     await this.page.goto(`${Config.baseUri}/${MembersPage.path}`)
     await this.page.getByRole("heading", { name: "Get started with memberships" }).waitFor({
       state: "visible",
-      timeout: 50000
+      timeout: 5000
     })
 
     return new MembersPage(this.page)
+  }
+
+  async settings(): Promise<SettingsPage> {
+    await this.page.goto(`${Config.baseUri}/${SettingsPage.path}`)
+
+    return new SettingsPage(this.page)
   }
 
   async go(): Promise<AdminPage> {

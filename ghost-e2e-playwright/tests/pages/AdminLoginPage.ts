@@ -23,7 +23,7 @@ export class AdminLoginPage {
 
     await this.page.getByRole("heading", { name: "Dashboard", exact: true }).waitFor({
       state: "visible",
-      timeout: 50000
+      timeout: 5000
     })
 
     return new AdminPage(this.page)
