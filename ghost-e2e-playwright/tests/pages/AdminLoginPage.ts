@@ -21,7 +21,10 @@ export class AdminLoginPage {
 
     await this.page.getByRole("button", { name: "Sign in" }).click()
 
-    await this.page.getByRole("heading", { name: "Dashboard" }).isVisible()
+    await this.page.getByRole("heading", { name: "Dashboard", exact: true }).waitFor({
+      state: "visible",
+      timeout: 50000
+    })
 
     return new AdminPage(this.page)
   }

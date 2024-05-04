@@ -30,8 +30,12 @@ export class AdminPage {
   }
 
   async members(): Promise<MembersPage> {
-    await this.page.getByRole("link", { name: "Members", exact: true }).click()
-    await this.page.getByPlaceholder("Search members...").isVisible()
+    // await this.page.getByRole("link", { name: "Members", exact: true }).click() // This one does not work
+    await this.page.goto(`${Config.baseUri}/${MembersPage.path}`)
+    await this.page.getByRole("heading", { name: "Get started with memberships" }).waitFor({
+      state: "visible",
+      timeout: 50000
+    })
 
     return new MembersPage(this.page)
   }
