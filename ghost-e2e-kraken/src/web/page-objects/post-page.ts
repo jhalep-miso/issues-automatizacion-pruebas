@@ -95,6 +95,24 @@ export class PostPage {
     await this.pause();
   }
 
+  async clickUnpublishButton() {
+    const unpublishButton = await this.driver.$(
+      ".gh-unpublish-trigger[data-test-button='update-flow']"
+    );
+    await unpublishButton.waitForDisplayed({ timeout: 5000 });
+    await unpublishButton.click();
+    await this.pause();
+  }
+
+  async clickUnpublishAndRevertToDraft() {
+    const revertToDraftButton = await this.driver.$(
+      "[data-test-button='revert-to-draft']"
+    );
+    await revertToDraftButton.waitForDisplayed({ timeout: 5000 });
+    await revertToDraftButton.click();
+    await this.pause();
+  }
+
   // some changes to the settings are triggered by moving away from the modified element
   async saveSettingsChange() {
     await this.clickSettingsButton();

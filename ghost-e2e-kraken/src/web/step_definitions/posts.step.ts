@@ -55,6 +55,12 @@ When(
   }
 );
 
+When("I unpublish the created post", async function (this: KrakenWorld) {
+  await this.postPage.navigateToEditPost();
+  await this.postPage.clickUnpublishButton();
+  await this.postPage.clickUnpublishAndRevertToDraft();
+});
+
 Then(
   "I should see the post title {kraken-string} and content {kraken-string}",
   async function (this: KrakenWorld, title: string, content: string) {
