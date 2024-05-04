@@ -21,6 +21,8 @@ export class AdminLoginPage {
 
     await this.page.getByRole("button", { name: "Sign in" }).click()
 
+    await this.page.getByRole("heading", { name: "Dashboard" }).isVisible()
+
     return new AdminPage(this.page)
   }
 }

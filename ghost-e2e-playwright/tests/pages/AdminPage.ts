@@ -3,9 +3,11 @@ import { TagsPage } from "./tags/TagsPage"
 import { PostPage } from "./posts/PostsPage"
 import { BlogPagesPage } from "./blog-pages/BlogPagesPage"
 import { MembersPage } from "./members/MembersPage"
-import { SettingsPage } from "./settings/SettingsPage"
+import { Config } from "../Config"
 
 export class AdminPage {
+
+  private static readonly path = "ghost"
 
   constructor(private readonly page: Page) { }
 
@@ -29,7 +31,14 @@ export class AdminPage {
 
   async members(): Promise<MembersPage> {
     await this.page.getByRole("link", { name: "Members", exact: true }).click()
+    await this.page.getByPlaceholder("Search members...").isVisible()
 
     return new MembersPage(this.page)
+  }
+
+  async go(): Promise<AdminPage> {
+    await this.page.goto(`${Config.baseUri}/${AdminPage.path}`)
+
+    return this
   }
 }

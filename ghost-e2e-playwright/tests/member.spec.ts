@@ -13,6 +13,11 @@ test.afterEach(async ({ page }) => {
 
   await settingsPage.go()
   await settingsPage.deleteAllContent()
+
+  const adminPage = new AdminPage(page)
+  await adminPage.go()
+  const membersPage = await adminPage.members()
+  await membersPage.deleteAllMembers()
 })
 
 test("Create a member", async ({ page }) => {
