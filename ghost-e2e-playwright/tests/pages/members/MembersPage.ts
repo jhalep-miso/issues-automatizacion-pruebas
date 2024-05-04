@@ -5,7 +5,7 @@ import { EditMemberPage } from "./EditMemberPage"
 
 export class MembersPage {
 
-  private static readonly path = "ghost/#/members"
+  static readonly path = "ghost/#/members"
 
   constructor(private readonly page: Page) { }
 

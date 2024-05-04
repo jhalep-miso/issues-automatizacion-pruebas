@@ -22,6 +22,9 @@ export class NewMemberPage {
 
     await this.page.getByRole("button", { name: "Save" }).click()
 
-    await this.page.getByRole("heading", { name: "Signup info" }).isVisible()
+    await this.page.getByText("Created — ").waitFor({
+      state: "visible",
+      timeout: 50000
+    })
   }
 }
