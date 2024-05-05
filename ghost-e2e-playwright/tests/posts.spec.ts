@@ -13,7 +13,8 @@ test.beforeEach(async ({ page }) => {
 test("Create a post and update the access to Members Only and verify the banner message", async ({ page }) => {
   const post = {
     title: faker.word.words(5),
-    content: faker.word.words(50)
+    content: faker.word.words(50),
+    tags: []
   }
 
   // Given:
@@ -44,7 +45,8 @@ test("Create a post and update the access to Members Only and verify the banner 
 test("Create a post and update the access to Paid-members Only and verify the banner message", async ({ page }) => {
   const post = {
     title: faker.word.words(5),
-    content: faker.word.words(50)
+    content: faker.word.words(50),
+    tags: []
   }
 
   // Given:
@@ -75,7 +77,8 @@ test("Create a post and update the access to Paid-members Only and verify the ba
 test("Create a post and change the url to then verify it is being changed and the old url is no longer valid", async ({ page }) => {
   const post = {
     title: faker.word.words(5),
-    content: faker.word.words(50)
+    content: faker.word.words(50),
+    tags: []
   }
 
   // Given:
@@ -113,7 +116,8 @@ test("Create a post and change the url to then verify it is being changed and th
 test("Create a post and update it with code injection and verify the changes", async ({ page }) => {
   const post = {
     title: faker.word.words(5),
-    content: faker.word.words(50)
+    content: faker.word.words(50),
+    tags: []
   }
   const injection = {
     id: faker.string.alpha(4),
@@ -149,7 +153,8 @@ test("Create a post and update it with code injection and verify the changes", a
 test("Create a post and unpublish it should not allow to see it", async ({ page }) => {
   const post = {
     title: faker.word.words(5),
-    content: faker.word.words(50)
+    content: faker.word.words(50),
+    tags: []
   }
 
   // Given:
@@ -182,7 +187,8 @@ test("Create a post and unpublish it should not allow to see it", async ({ page 
 test("Create a post and delete it should not allow to see it", async ({ page }) => {
   const post = {
     title: faker.word.words(5),
-    content: faker.word.words(50)
+    content: faker.word.words(50),
+    tags: []
   }
 
   // Given:

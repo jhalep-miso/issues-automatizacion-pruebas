@@ -13,6 +13,6 @@ export class ImpersonatePage {
 
     await frame.locator("input#input-name").fill(name)
 
-    await frame.getByRole("button", { name: "Save" }).click()
+    await frame.getByRole("button", { name: "Save", exact: true }).click()
   }
 }
