@@ -1,6 +1,13 @@
 import {BASE_URL} from "./constants";
 import type {Browser} from "webdriverio";
 
+export type PostsListFilters = {
+  type?: "draft" | "published" | "sent" | "scheduled" | "featured";
+  visibility?: "public" | "members" | "[paid,tiers]";
+  author?: string;
+  tag?: string;
+};
+
 export class PostPage {
     driver: Browser<"async">;
     editPostUrl: string;
@@ -38,7 +45,14 @@ export class PostPage {
         await this.pause(2000);
     }
 
-    async setPostTitle(title: string) {
+    async navigateToPostsList(filter?: PostsListFilters) {
+    const query = new URLSearchParams(filter).toString();
+    const url = query
+      ? `${BASE_URL}/ghost/#/posts?${query}`
+      : `${BASE_URL}/ghost/#/posts`;
+    await this.driver.url(url);
+    await this.pause();
+  }async setPostTitle(title: string) {
         const titleElement = await this.driver.$(".gh-editor-title");
         await titleElement.waitForDisplayed({timeout: 5000});
         await titleElement.setValue(title);
@@ -105,6 +119,24 @@ export class PostPage {
         await unpublishButton.click();
         await this.pause();
     }
+
+  async clickDeletePost() {
+    const deletePostButton = await this.driver.$(
+      ".settings-menu-delete-button > button"
+    );
+    await deletePostButton.waitForDisplayed({ timeout: 5000 });
+    await deletePostButton.click();
+    await this.pause();
+  }
+
+  async clickDeletePostConfirm() {
+    const confirmButton = await this.driver.$(
+      "div.modal-footer >button.gh-btn-red"
+    );
+    await confirmButton.waitForDisplayed({ timeout: 5000 });
+    await confirmButton.click();
+    await this.pause();
+  }
 
     async clickUnpublishAndRevertToDraft() {
         const revertToDraftButton = await this.driver.$(
@@ -183,7 +215,11 @@ export class PostPage {
         return titleElement.getText();
     }
 
-    async getPostContent() {
+    async getPostTitles() {
+    const titleElements = await this.driver.$$("div.posts-list.gh-list > div > li > a > h3");
+    await titleElements[0].waitForDisplayed({ timeout: 5000 });
+    return Promise.all(titleElements.map((element) => element.getText()));
+  }async getPostContent() {
         const contentElement = await this.driver.$("section.gh-content > p");
         await contentElement.waitForDisplayed({timeout: 5000});
         return contentElement.getText();

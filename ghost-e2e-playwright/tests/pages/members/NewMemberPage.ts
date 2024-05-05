@@ -20,7 +20,7 @@ export class NewMemberPage {
     await noteInput.click() // This is just so that the "Labels" search bar dissapears
     await noteInput.fill(member.note)
 
-    await this.page.getByRole("button", { name: "Save" }).click()
+    await this.page.getByRole("button", { name: "Save", exact: true }).click()
 
     await this.page.getByText("Created — ").waitFor({
       state: "visible",

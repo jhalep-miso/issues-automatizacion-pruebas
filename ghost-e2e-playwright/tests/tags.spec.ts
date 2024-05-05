@@ -21,5 +21,5 @@ test("Create a tag", async ({ page }) => {
   await newTagPage.create(tag)
   await tagsPage.go()
 
-  expect(tagsPage.getTagByName(tag.name)).toHaveText(tag.name)
+  await expect(tagsPage.getTagByName(tag.name)).toHaveText(tag.name)
 })
