@@ -11,7 +11,10 @@ test.beforeEach(async ({ page }) => {
 })
 
 test("Create 4 posts with the same tag and validate that the same 4 posts are listed when filtering by tag", async ({ page }) => {
-  const tagName = faker.word.words(1)
+  const tagName = faker.string.alphanumeric({
+    length: 10,
+    casing: "lower"
+  })
   const randomPost = () => ({
     title: faker.word.words(5),
     content: faker.word.words(50),
@@ -23,7 +26,7 @@ test("Create 4 posts with the same tag and validate that the same 4 posts are li
 
   const adminPage = new AdminPage(page)
   const postsPage = await adminPage.posts()
-  
+
   // And I create four new posts with title "$name_1", content "$name_2" and tag "$name_3"
   for (const post of posts) {
     const newPostPage = await postsPage.newPost()
@@ -48,7 +51,10 @@ test("Create 4 posts with the same tag and validate that the same 4 posts are li
 
 test("Create a tag, and then associate 4 posts with the same tag. Validate that the same 4 posts are listed when filtering by tag", async ({ page }) => {
   const tag = {
-    name: faker.word.words(1),
+    name: faker.string.alphanumeric({
+      length: 10,
+      casing: "lower"
+    }),
     slug: faker.word.words(1),
     description: faker.word.words(50)
   }
@@ -92,13 +98,19 @@ test("Create a tag, and then associate 4 posts with the same tag. Validate that 
 })
 
 test("If we replace the tag of an exisiting post by another one, the change should be reflected when listing the posts", async ({ page }) => {
-  const oldTagName = faker.word.words(1)
+  const oldTagName = faker.string.alphanumeric({
+    length: 10,
+    casing: "lower"
+  })
   const post = {
     title: faker.word.words(5),
     content: faker.word.words(50),
     tags: [oldTagName]
   }
-  const newTagName = faker.word.words(1)
+  const newTagName = faker.string.alphanumeric({
+    length: 10,
+    casing: "lower"
+  })
 
   // Given:
 
@@ -137,7 +149,10 @@ test("If we replace the tag of an exisiting post by another one, the change shou
 })
 
 test("If we create a post with a tag, and then delete said tag from the list of tags, we should see that the post information got updated, showing that it has no tags", async ({ page }) => {
-  const tagName = faker.word.words(1)
+  const tagName = faker.string.alphanumeric({
+    length: 10,
+    casing: "lower"
+  })
   const post = {
     title: faker.word.words(5),
     content: faker.word.words(50),
@@ -178,13 +193,19 @@ test("If we create a post with a tag, and then delete said tag from the list of 
 })
 
 test("If we create a post with a tag, and then edit the name said tag from the list of tags, we should see that the post information got updated, showing that the new tag name on its tag list", async ({ page }) => {
-  const oldTagName = faker.word.words(1)
+  const oldTagName = faker.string.alphanumeric({
+    length: 10,
+    casing: "lower"
+  })
   const post = {
     title: faker.word.words(5),
     content: faker.word.words(50),
     tags: [oldTagName]
   }
-  const newTagName = faker.word.words(1)
+  const newTagName = faker.string.alphanumeric({
+    length: 10,
+    casing: "lower"
+  })
 
   // Given:
 

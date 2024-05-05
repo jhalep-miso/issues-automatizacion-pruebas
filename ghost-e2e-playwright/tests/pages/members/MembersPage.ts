@@ -37,8 +37,11 @@ export class MembersPage {
 
   async go(): Promise<MembersPage> {
     await this.page.goto(`${Config.baseUri}/${MembersPage.path}`)
-    // Wait for any title to load from the list of members
-    await this.page.waitForSelector("h3")
+    // Wait for the list of members to load
+    await this.page.locator(".members-list-container-stretch").waitFor({
+      state: "visible",
+      timeout: 5000
+    })
 
     return this
   }
