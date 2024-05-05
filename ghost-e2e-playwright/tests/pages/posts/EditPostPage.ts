@@ -29,6 +29,9 @@ export class EditPostPage {
 
     // Just to unfocus the Post URL field
     await this.page.getByText("Post settings").click()
+
+    // Unfortunately I don't know how else to know from the UI when the url was changed
+    await this.page.waitForTimeout(2000)
   }
 
   async changePostAccess(access: PostAccess): Promise<void> {
@@ -56,6 +59,20 @@ export class EditPostPage {
     await this.settings()
 
     // Unfortunately I don't know how else to know from the UI when the injection is saved
+    await this.page.waitForTimeout(2000)
+  }
+
+  async unpublish(): Promise<void> {
+    await this.page.getByRole("button", { name: "Unpublish" }).click()
+
+    await this.page.getByRole("button", { name: "Unpublish and revert to private draft" }).click()
+
+    await this.page.getByRole("button", { name: "Preview" }).waitFor({
+      state: "visible",
+      timeout: 5000
+    })
+
+    // Unfortunately I don't know how else to know from the UI when the post is unpublished
     await this.page.waitForTimeout(2000)
   }
 
