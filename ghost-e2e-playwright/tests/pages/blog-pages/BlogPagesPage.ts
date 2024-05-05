@@ -1,6 +1,7 @@
 import { type Page } from "@playwright/test"
 import { Config } from "../../Config"
 import { NewBlogPagePage } from "./NewBlogPagePage"
+import { EditBlogPagePage } from "./EditBlogPagePage"
 
 export class BlogPagesPage {
 
@@ -16,6 +17,12 @@ export class BlogPagesPage {
     await this.page.getByRole("link", { name: "New page", exact: true }).click()
 
     return new NewBlogPagePage(this.page)
+  }
+
+  async editPage(title: string): Promise<EditBlogPagePage> {
+    await this.getBlogPageByTitle(title).click()
+
+    return new EditBlogPagePage(this.page)
   }
 
   async go(): Promise<BlogPagesPage> {

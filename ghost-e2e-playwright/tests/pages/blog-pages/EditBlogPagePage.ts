@@ -1,7 +1,7 @@
 import { type Page } from "@playwright/test"
 import { AccessType } from "../../domain/AccessType"
 
-export class EditPostPage {
+export class EditBlogPagePage {
 
   constructor(private readonly page: Page) { }
 
@@ -28,20 +28,20 @@ export class EditPostPage {
     await this.page.locator("input#url").fill(slug)
 
     // Just to unfocus the Post URL field
-    await this.page.getByText("Post settings").click()
+    await this.page.getByText("Page settings").click()
 
     // Unfortunately I don't know how else to know from the UI when the url was changed
     await this.page.waitForTimeout(2000)
   }
 
-  async changePostAccess(access: AccessType): Promise<void> {
+  async changePageAccess(access: AccessType): Promise<void> {
     await this.settings()
 
     await this.page.locator("[data-test-select='post-visibility']").selectOption(access)
 
     await this.page.getByRole("button", { name: "Update" }).click()
 
-    await this.page.getByRole("link", { name: "View Post", exact: true }).waitFor({
+    await this.page.getByRole("link", { name: "View Page", exact: true }).waitFor({
       state: "visible",
       timeout: 5000
     })
@@ -76,36 +76,6 @@ export class EditPostPage {
     await this.page.waitForTimeout(2000)
   }
 
-  async getTags(): Promise<string[]> {
-    await this.settings()
-
-    const inputLocator = this.page.locator("div#tag-input")
-
-    await inputLocator.waitFor({ state: "visible", timeout: 5000 })
-
-    const tagLocators = await inputLocator.locator("li.tag-token").all()
-
-    return Promise.all(tagLocators.map(locator => locator.innerText()))
-  }
-
-  async replaceTags(newTags: string[]): Promise<void> {
-    await this.settings()
-
-    const removeButtonLocator = this.page
-      .locator("div#tag-input")
-      .locator("span.ember-power-select-multiple-remove-btn")
-    const numTags = await removeButtonLocator.count()
-    for (let i = 0; i < numTags; i++) await removeButtonLocator.first().click()
-
-    const tagsInput = this.page.locator("input.ember-power-select-trigger-multiple-input").first()
-    for (const tag of newTags) {
-      await tagsInput.fill(tag)
-      await tagsInput.press("Enter")
-    }
-
-    await this.page.getByRole("button", { name: "Update" }).click()
-  }
-
   async delete(): Promise<void> {
     await this.settings()
 
@@ -114,6 +84,6 @@ export class EditPostPage {
     // Delete post confirmation
     await this.page.locator("button.gh-btn-red").click()
 
-    await this.page.waitForURL("**/posts")
+    await this.page.waitForURL("**/pages")
   }
 }

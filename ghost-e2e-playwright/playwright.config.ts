@@ -18,8 +18,6 @@ export default defineConfig({
   /* Retry on CI only */
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
-  // If tests are ran in parallel they fail, because of a race condition with the afterEach statement that deletes the state
-  // TODO: see how we can fix this race condition
   workers: 1, // process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',

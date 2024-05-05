@@ -3,5 +3,3 @@ export type Post = {
   content: string
   tags: string[]
 }
-
-export type PostAccess = "public" | "members" | "paid" | "tiers"
