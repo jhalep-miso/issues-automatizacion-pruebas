@@ -13,6 +13,13 @@ Given(
         assert.strictEqual(postFound, true);
     });
 
+Given("I create a new tag with label {kraken-string}",
+    async function (this: KrakenWorld, tag: string) {
+        await this.tagPage.navigateToCreateTag();
+        await this.tagPage.setTagName(tag);
+        await this.tagPage.clickSaveTag();
+    });
+
 When("I click on the \"4 posts\" link from the tag with name {kraken-string}",
     async function (this: KrakenWorld, tag: string) {
         await this.postPage.filterPostByTag(tag);

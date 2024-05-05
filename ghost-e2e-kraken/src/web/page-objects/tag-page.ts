@@ -4,10 +4,12 @@ import {BASE_URL} from "./constants";
 export class TagPage {
     driver: Browser<"async">;
     listTagUrl: string;
+    createTagUrl: string;
 
     constructor(driver: Browser<"async">) {
         this.driver = driver;
         this.listTagUrl = BASE_URL + "/ghost/#/tags";
+        this.createTagUrl = BASE_URL + "/ghost/#/tags/new";
     }
 
     async pause(milliseconds = 1000) {
@@ -75,4 +77,21 @@ export class TagPage {
 
     }
 
+    async navigateToCreateTag() {
+        await this.driver.url(this.createTagUrl);
+        await this.pause();
+    }
+
+    async setTagName(tag: string) {
+        const nameElement = await this.driver.$("[data-test-input='tag-name']");
+        await nameElement.waitForDisplayed({timeout: 5000});
+        await nameElement.setValue(tag);
+    }
+
+    async clickSaveTag() {
+        const saveButton = await this.driver.$("[data-test-button='save']");
+        await saveButton.waitForDisplayed({timeout: 5000});
+        await saveButton.click();
+        await this.pause();
+    }
 }
