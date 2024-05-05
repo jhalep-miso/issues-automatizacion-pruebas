@@ -65,12 +65,12 @@ git clone https://github.com/jhalep-miso/issues-automatizacion-pruebas.git
 cd issues-automatizacion-pruebas/ghost-e2e-playwright
 ```
 
-3. Instala las dependencias del proyecto. Estas pruebas utilizan `playwright` y `faker` únicamente
+3. Instala las dependencias del proyecto. Estas pruebas utilizan únicamente `playwright` y `faker` como dependencias
 ```bash
 npm install
 ```
 
-4. Ejecuta las pruebas utilizando alguno de los siguientes dos comandos. El segundo permite visualizar las pruebas con la UI de playwright:
+4. Ejecuta las pruebas utilizando alguno de los siguientes dos comandos. El segundo permite visualizar las pruebas de forma interactiva con la UI de playwright:
 ```bash
 npx playwright test
 ```
