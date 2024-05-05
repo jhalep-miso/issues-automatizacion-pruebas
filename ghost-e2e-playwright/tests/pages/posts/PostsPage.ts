@@ -1,6 +1,7 @@
-import { type Page } from "@playwright/test"
+import { Locator, type Page } from "@playwright/test"
 import { NewPostPage } from "./NewPostPage"
 import { Config } from "../../Config"
+import { EditPostPage } from "./EditPostPage"
 
 export class PostPage {
 
@@ -8,8 +9,14 @@ export class PostPage {
 
   constructor(private readonly page: Page) { }
 
-  getPostByTitle(title: string) {
+  getPostByTitle(title: string): Locator {
     return this.page.getByRole("heading", { name: title })
+  }
+
+  async editPost(title: string): Promise<EditPostPage> {
+    await this.getPostByTitle(title).click()
+
+    return new EditPostPage(this.page)
   }
 
   async newPost(): Promise<NewPostPage> {
