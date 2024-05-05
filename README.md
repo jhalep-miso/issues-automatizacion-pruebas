@@ -35,7 +35,7 @@ Una vez que hayas cumplido con los requisitos anteriores, sigue estos pasos para
 ```bash
 git clone https://github.com/jhalep-miso/issues-automatizacion-pruebas.git
 ```
-3. Navega hasta el directorio del repositorio:
+2. Navega hasta el directorio del repositorio:
 ```bash
 cd issues-automatizacion-pruebas
 ```
@@ -55,18 +55,29 @@ npm test
 
 Para instalar y ejecutar las pruebas con Playwright, sigue los siguientes pasos:
 
-1. **Instalación de Playwright:** Ejecuta el siguiente comando para instalar Playwright en tu proyecto:
+1. Clona este repositorio en tu máquina local:
 ```bash
-npm install playwright
+git clone https://github.com/jhalep-miso/issues-automatizacion-pruebas.git
 ```
 
-2. **Configuración de las Pruebas:** Crea tus scripts de prueba utilizando Playwright según la documentación proporcionada en [Playwright Documentation](https://playwright.dev/docs/intro).
+2. Navega al directorio `ghost-e2e-playwright`
+```bash
+cd issues-automatizacion-pruebas/ghost-e2e-playwright
+```
 
-3. **Ejecución de las Pruebas:** Una vez que hayas configurado tus pruebas, puedes ejecutarlas utilizando el siguiente comando:
+3. Instala las dependencias del proyecto. Estas pruebas utilizan `playwright` y `faker` únicamente
+```bash
+npm install
+```
+
+4. Ejecuta las pruebas utilizando alguno de los siguientes dos comandos. El segundo permite visualizar las pruebas con la UI de playwright:
 ```bash
 npx playwright test
 ```
-¡Listo! Ahora puedes ejecutar tus pruebas con Playwright y aprovechar sus poderosas capacidades de automatización de pruebas.
+```bash
+npx playwright test --ui
+```
+
 ## Contribución
 
 Si deseas contribuir a este repositorio, no dudes en hacerlo. Puedes abrir un issue para reportar problemas o enviar solicitudes de extracción con mejoras o correcciones.
