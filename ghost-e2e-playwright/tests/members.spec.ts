@@ -56,3 +56,28 @@ test("Edit a member from the Impersonate link", async ({ page, context }) => {
 
   await expect(page.getByText(newName)).toBeVisible()
 })
+
+test("Delete a member and verify that their access is restricted afterwards", async ({ page }) => {
+  const member = {
+    name: faker.word.words(2),
+    email: faker.internet.email(),
+    labels: new Array(4).fill(faker.word.words(1)),
+    note: faker.word.words(10)
+  }
+
+  const adminPage = new AdminPage(page)
+  const membersPage = await adminPage.members()
+  const newMemberPage = await membersPage.newMember()
+
+  await newMemberPage.create(member)
+
+  await membersPage.go()
+  const editMemberPage = await membersPage.editMember(member.email)
+  const impersonateUrl = await editMemberPage.getImpersonateUrl()
+
+  await editMemberPage.delete()
+
+  await page.goto(impersonateUrl)
+  const notificationFrame = page.frameLocator(".gh-portal-notification-iframe")
+  await expect(notificationFrame.getByText("Could not sign in. Login link expired.")).toBeVisible()
+})

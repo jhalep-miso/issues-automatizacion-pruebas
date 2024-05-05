@@ -1,5 +1,4 @@
 import { type Page } from "@playwright/test"
-import { Config } from "../../Config"
 
 export class ImpersonatePage {
 

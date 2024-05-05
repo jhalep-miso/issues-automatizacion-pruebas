@@ -9,7 +9,7 @@ export class EditMemberPage {
     return this.page.locator("button.gh-btn-icon.icon-only").click()
   }
 
-  async impersonate(): Promise<ImpersonatePage> {
+  async getImpersonateUrl(): Promise<string> {
     await this.settings()
 
     await this.page.getByRole("button", { name: "Impersonate" }).click()
@@ -17,6 +17,14 @@ export class EditMemberPage {
     await this.page.getByRole("button", { name: "Copy link" }).click()
 
     const impersonateUrl = await this.page.evaluate(() => navigator.clipboard.readText())
+
+    await this.page.getByTitle("Close").click()
+
+    return impersonateUrl
+  }
+
+  async impersonate(): Promise<ImpersonatePage> {
+    const impersonateUrl = await this.getImpersonateUrl()
 
     await this.page.goto(impersonateUrl)
 
