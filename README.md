@@ -4,10 +4,10 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
 
 ## Participantes
 
-- **Sebastián Lemus Cadena**: [correo@uniandes.edu.co](mailto:s.lemus@uniandes.edu.co)
-- **Sergio Augusto Celis Esteban**: [correo@uniandes.edu.co](mailto:s.celise@uniandes.edu.co)
-- **Alejandro Peña**: [correo@uniandes.edu.co](mailto:ja.penat1@uniandes.edu.co)
-- **Romel Palomino Jaramillo**: [correo@uniandes.edu.co](mailto:r.palominoj@uniandes.edu.co)
+- **Sebastián Lemus Cadena**: [s.lemus@uniandes.edu.co](mailto:s.lemus@uniandes.edu.co)
+- **Sergio Augusto Celis Esteban**: [s.celise@uniandes.edu.co](mailto:s.celise@uniandes.edu.co)
+- **Alejandro Peña**: [ja.penat1@uniandes.edu.co](mailto:ja.penat1@uniandes.edu.co)
+- **Romel Palomino Jaramillo**: [r.palominoj@uniandes.edu.co](mailto:r.palominoj@uniandes.edu.co)
 
 ## Instalación y Ejecución de las Pruebas en Kraken
 

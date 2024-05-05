@@ -1,5 +1,6 @@
 import {IWorldOptions, setDefaultTimeout, setWorldConstructor, World,} from "@cucumber/cucumber";
 import {LoginPage} from "../page-objects/login-page";
+import {MemberPage } from "../page-objects/member-page";
 import {PostPage} from "../page-objects/post-page";
 import {PageSection} from "../page-objects/page-section";
 import {ErrorPage} from "../page-objects/error-page";
@@ -12,7 +13,7 @@ export class KrakenWorld extends World {
     driver: any;
     deviceClient: any;
     loginPage!: LoginPage;
-    postPage!: PostPage;
+    memberPage!: MemberPage;postPage!: PostPage;
     pageSection!: PageSection;
     errorPage!: ErrorPage;
 
@@ -27,7 +28,7 @@ export class KrakenWorld extends World {
 
     async init() {
         this.loginPage = new LoginPage(this.driver);
-        this.postPage = new PostPage(this.driver);
+        this.memberPage = new MemberPage(this.driver);this.postPage = new PostPage(this.driver);
         this.pageSection = new PageSection(this.driver);
         this.errorPage = new ErrorPage(this.driver);
     }

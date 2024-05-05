@@ -61,6 +61,24 @@ When("I unpublish the created post", async function (this: KrakenWorld) {
   await this.postPage.clickUnpublishAndRevertToDraft();
 });
 
+When("I delete the created post", async function (this: KrakenWorld) {
+  await this.postPage.navigateToEditPost();
+  await this.postPage.clickSettingsButton();
+  await this.postPage.clickDeletePost();
+  await this.postPage.clickDeletePostConfirm();
+});
+
+When("I navigate to the list of posts", async function (this: KrakenWorld) {
+  await this.postPage.navigateToPostsList();
+});
+
+When(
+  "I navigate to the list of posts filtered by {string} {string}",
+  async function (this: KrakenWorld, filterType: string, filterValue: string) {
+    await this.postPage.navigateToPostsList({ [filterType]: filterValue });
+  }
+);
+
 Then(
   "I should see the post title {kraken-string} and content {kraken-string}",
   async function (this: KrakenWorld, title: string, content: string) {
@@ -100,5 +118,25 @@ Then(
 
     const elementText = await element.getText();
     assert.strictEqual(elementText, text);
+  }
+);
+
+Then(
+  "I {string} see the post with title {kraken-string} in the list of posts",
+  async function (
+    this: KrakenWorld,
+    condition: "should" | "should not",
+    title: string
+  ) {
+    if (!["should", "should not"].includes(condition)) {
+      throw new Error("Invalid condition");
+    }
+
+    const postTitles = await this.postPage.getPostTitles();
+    if (condition === "should") {
+      assert.ok(postTitles.includes(title));
+    } else {
+      assert.ok(!postTitles.includes(title));
+    }
   }
 );

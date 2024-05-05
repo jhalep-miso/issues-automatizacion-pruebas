@@ -1,18 +1,11 @@
 import { test, expect } from '@playwright/test'
 import { AdminLoginPage } from './pages/AdminLoginPage'
 import { Config } from './Config'
-import { SettingsPage } from './pages/settings/SettingsPage'
 import { AdminPage } from './pages/AdminPage'
 
 test.beforeEach(async ({ page }) => {
+  // Given: (This step is part of the "Given" section of every escenario below)
   await new AdminLoginPage(page, Config.user).signIn()
-})
-
-test.afterEach(async ({ page }) => {
-  const settingsPage = new SettingsPage(page)
-
-  await settingsPage.go()
-  await settingsPage.deleteAllContent()
 })
 
 test("Create a blog page", async ({ page }) => {
@@ -28,5 +21,5 @@ test("Create a blog page", async ({ page }) => {
   await newBlogPagePage.create(blogPage)
   await blogPagesPage.go()
 
-  expect(blogPagesPage.getBlogPageByTitle(blogPage.title)).toHaveText(blogPage.title)
+  await expect(blogPagesPage.getBlogPageByTitle(blogPage.title)).toHaveText(blogPage.title)
 })

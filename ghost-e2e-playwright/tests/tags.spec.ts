@@ -1,18 +1,10 @@
 import { test, expect } from '@playwright/test'
 import { AdminLoginPage } from './pages/AdminLoginPage'
 import { AdminPage } from './pages/AdminPage'
-import { SettingsPage } from './pages/settings/SettingsPage'
 import { Config } from './Config'
 
 test.beforeEach(async ({ page }) => {
   await new AdminLoginPage(page, Config.user).signIn()
-})
-
-test.afterEach(async ({ page }) => {
-  const settingsPage = new SettingsPage(page)
-
-  await settingsPage.go()
-  await settingsPage.deleteAllContent()
 })
 
 test("Create a tag", async ({ page }) => {
@@ -29,5 +21,5 @@ test("Create a tag", async ({ page }) => {
   await newTagPage.create(tag)
   await tagsPage.go()
 
-  expect(tagsPage.getTagByName(tag.name)).toHaveText(tag.name)
+  await expect(tagsPage.getTagByName(tag.name)).toHaveText(tag.name)
 })

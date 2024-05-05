@@ -34,14 +34,24 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
-    // {
-    //   name: 'chromium',
-    //   use: { ...devices['Desktop Chrome'] },
-    // },
+
+    {
+      name: 'ghost cleanup',
+      testMatch: /global\.teardown\.ts/
+    },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: {
+        ...devices['Desktop Firefox'],
+        launchOptions: {
+          firefoxUserPrefs: {
+            'dom.events.asyncClipboard.readText': true,
+            'dom.events.testing.asyncClipboard': true,
+          },
+        }
+      },
+      teardown: 'ghost cleanup'
     },
 
     // {
