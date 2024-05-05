@@ -1,6 +1,6 @@
 import {IWorldOptions, setDefaultTimeout, setWorldConstructor, World,} from "@cucumber/cucumber";
 import {LoginPage} from "../page-objects/login-page";
-import {MemberPage } from "../page-objects/member-page";
+import {MemberPage} from "../page-objects/member-page";
 import {PostPage} from "../page-objects/post-page";
 import {TagPage} from "../page-objects/tag-page";
 import {PageSection} from "../page-objects/page-section";
@@ -15,7 +15,8 @@ export class KrakenWorld extends World {
     deviceClient: any;
     loginPage!: LoginPage;
     memberPage!: MemberPage;
-    postPage!: PostPage;pageSection!: PageSection;
+    postPage!: PostPage;
+    pageSection!: PageSection;
     errorPage!: ErrorPage;
     tagPage!: TagPage;
 
