@@ -99,12 +99,52 @@ export class MemberPage {
     await this.pause();
   }
 
+  async clickDeleteMemberButton() {
+    const impersonateButton = await this.driver.$(
+      "button[data-test-button='delete-member']"
+    );
+    await impersonateButton.waitForDisplayed({ timeout: 5000 });
+    await impersonateButton.click();
+    await this.pause();
+  }
+
+  async clickConfirmDeleteMemberButton() {
+    const confirmDeleteButton = await this.driver.$(
+      "button[data-test-button='confirm']"
+    );
+    await confirmDeleteButton.waitForDisplayed({ timeout: 5000 });
+    await confirmDeleteButton.click();
+    await this.pause();
+  }
+
+  async getImpersonateErrorMessage() {
+    const notificationFrameElement = await this.driver.$(
+      ".gh-portal-notification-iframe"
+    );
+    await notificationFrameElement.waitForDisplayed({ timeout: 5000 });
+    await this.driver.switchToFrame(notificationFrameElement);
+    const errorMessage = await this.driver.$(
+      "div.gh-portal-notification.error > p"
+    );
+    await errorMessage.waitForDisplayed({ timeout: 5000 });
+    const errorMessageText = await errorMessage.getText();
+    await this.driver.switchToParentFrame();
+    return errorMessageText;
+  }
+
   async clickImpersonateButton() {
     const impersonateButton = await this.driver.$(
       "button[data-test-button='impersonate']"
     );
     await impersonateButton.waitForDisplayed({ timeout: 5000 });
     await impersonateButton.click();
+    await this.pause();
+  }
+
+  async clickCloseImpersonateDialogButton() {
+    const closeImpersonateDialogButton = await this.driver.$("a.close");
+    await closeImpersonateDialogButton.waitForDisplayed({ timeout: 5000 });
+    await closeImpersonateDialogButton.click();
     await this.pause();
   }
 
