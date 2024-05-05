@@ -1,23 +1,10 @@
 import { test, expect } from '@playwright/test'
 import { AdminLoginPage } from './pages/AdminLoginPage'
 import { Config } from './Config'
-import { SettingsPage } from './pages/settings/SettingsPage'
 import { AdminPage } from './pages/AdminPage'
 
 test.beforeEach(async ({ page }) => {
   await new AdminLoginPage(page, Config.user).signIn()
-})
-
-test.afterEach(async ({ page }) => {
-  const settingsPage = new SettingsPage(page)
-
-  await settingsPage.go()
-  await settingsPage.deleteAllContent()
-
-  const adminPage = new AdminPage(page)
-  await adminPage.go()
-  const membersPage = await adminPage.members()
-  await membersPage.deleteAllMembers()
 })
 
 test("Create a member", async ({ page }) => {

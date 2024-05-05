@@ -3,7 +3,7 @@ import { Config } from "../../Config"
 
 export class SettingsPage {
 
-  private static readonly path = "ghost/#/settings"
+  static readonly path = "ghost/#/settings"
 
   constructor(private readonly page: Page) { }
 
@@ -15,7 +15,6 @@ export class SettingsPage {
 
   async go(): Promise<SettingsPage> {
     await this.page.goto(`${Config.baseUri}/${SettingsPage.path}`)
-    await this.page.getByRole("button", { name: "Delete all content", exact: true }).isEnabled()
 
     return new SettingsPage(this.page)
   }

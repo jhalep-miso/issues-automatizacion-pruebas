@@ -24,7 +24,7 @@ export class NewMemberPage {
 
     await this.page.getByText("Created — ").waitFor({
       state: "visible",
-      timeout: 50000
+      timeout: 5000
     })
   }
 }
