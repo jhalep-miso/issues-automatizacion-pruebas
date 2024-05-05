@@ -61,6 +61,32 @@ test("Create a post and update the access to Paid-members Only and verify the ba
   await expect(expectedText).toBeVisible()
 })
 
+test("Create a post and change the url to then verify it is being changed and the old url is no longer valid", async ({ page }) => {
+  const post = {
+    title: faker.word.words(5),
+    content: faker.word.words(50)
+  }
+
+  const adminPage = new AdminPage(page)
+  const postsPage = await adminPage.posts()
+  const newPostPage = await postsPage.newPost()
+
+  await newPostPage.create(post)
+  await postsPage.go()
+  const editPostPage = await postsPage.editPost(post.title)
+
+  const oldUrl = await editPostPage.getPublishedUrl()
+
+  await editPostPage.changeUrlSlug("new-url-slug")
+  await editPostPage.viewPublished()
+
+  await expect(page.getByText(post.title, { exact: true })).toBeVisible()
+  await expect(page.getByText(post.content, { exact: true })).toBeVisible()
+
+  await page.goto(oldUrl)
+  await expect(page.getByRole("heading", { name: "404" })).toBeVisible()
+})
+
 test("Create a post", async ({ page }) => {
   const post = {
     title: faker.word.words(5),

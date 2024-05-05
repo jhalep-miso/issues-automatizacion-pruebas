@@ -9,11 +9,26 @@ export class EditPostPage {
     return this.page.getByTitle("Settings").click()
   }
 
-  async viewPublished(): Promise<void> {
+  async getPublishedUrl(): Promise<string> {
     // For some reason, clicking on the link directly does not work :c
     const url = await this.page.getByRole("link", { name: "Published" }).getAttribute("href")
 
+    return url || ""
+  }
+
+  async viewPublished(): Promise<void> {
+    const url = await this.getPublishedUrl()
+
     await this.page.goto(url || "")
+  }
+
+  async changeUrlSlug(slug: string): Promise<void> {
+    await this.settings()
+
+    await this.page.locator("input#url").fill(slug)
+
+    // Just to unfocus the Post URL field
+    await this.page.getByText("Post settings").click()
   }
 
   async changePostAccess(access: PostAccess): Promise<void> {
