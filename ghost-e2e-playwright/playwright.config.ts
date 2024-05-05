@@ -34,10 +34,14 @@ export default defineConfig({
   projects: [
 
     {
-      name: 'ghost cleanup',
+      name: 'initial ghost cleanup',
+      testMatch: /global\.setup\.ts/,
+      teardown: 'final ghost cleanup'
+    },
+    {
+      name: 'final ghost cleanup',
       testMatch: /global\.teardown\.ts/
     },
-
     {
       name: 'firefox',
       use: {
@@ -49,7 +53,7 @@ export default defineConfig({
           },
         }
       },
-      teardown: 'ghost cleanup'
+      dependencies: ['initial ghost cleanup']
     },
 
     // {
