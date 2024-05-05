@@ -1,5 +1,6 @@
 import {BASE_URL} from "./constants";
 import type {Browser} from "webdriverio";
+import {ListFilters} from "../utils/list-filters";
 
 export class PageSection {
     driver: Browser<"async">;
@@ -213,5 +214,38 @@ export class PageSection {
         const errorText = await this.driver.$(".error-code");
         await errorText.waitForDisplayed({timeout: 5000});
         return errorText.getText().then((text: string) => parseInt(text, 10));
+    }
+
+    async navigateToPagesList(filter?: ListFilters) {
+        const query = new URLSearchParams(filter).toString();
+        const url = query
+            ? `${BASE_URL}/ghost/#/pages?${query}`
+            : `${BASE_URL}/ghost/#/pages`;
+        await this.driver.url(url);
+        await this.pause();
+    }
+
+    async getPageTitles() {
+        const titleElements = await this.driver.$$("div.posts-list.gh-list > div > li > a > h3");
+        await titleElements[0].waitForDisplayed({timeout: 5000});
+        return Promise.all(titleElements.map((element) => element.getText()));
+    }
+
+    async clickDeletePage() {
+        const deletePageButton = await this.driver.$(
+            ".settings-menu-delete-button > button"
+        );
+        await deletePageButton.waitForDisplayed({timeout: 5000});
+        await deletePageButton.click();
+        await this.pause();
+    }
+
+    async clickDeletePageConfirm() {
+        const confirmButton = await this.driver.$(
+            "div.modal-footer >button.gh-btn-red"
+        );
+        await confirmButton.waitForDisplayed({timeout: 5000});
+        await confirmButton.click();
+        await this.pause();
     }
 }

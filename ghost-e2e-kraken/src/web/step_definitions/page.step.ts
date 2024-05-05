@@ -102,3 +102,37 @@ Then(
         assert.strictEqual(elementText, text);
     }
 );
+
+Then(
+    "I {string} see the page with title {kraken-string} in the list of pages",
+    async function (
+        this: KrakenWorld,
+        condition: "should" | "should not",
+        title: string
+    ) {
+        if (!["should", "should not"].includes(condition)) {
+            throw new Error("Invalid condition");
+        }
+
+        const pageTitles = await this.pageSection.getPageTitles();
+        if (condition === "should") {
+            assert.ok(pageTitles.includes(title));
+        } else {
+            assert.ok(!pageTitles.includes(title));
+        }
+    }
+);
+
+When(
+    "I navigate to the list of pages filtered by {string} {string}",
+    async function (this: KrakenWorld, filterType: string, filterValue: string) {
+        await this.pageSection.navigateToPagesList({ [filterType]: filterValue });
+    }
+);
+
+When("I delete the created page", async function (this: KrakenWorld) {
+    await this.pageSection.navigateToEditPage();
+    await this.pageSection.clickSettingsButton();
+    await this.pageSection.clickDeletePage();
+    await this.pageSection.clickDeletePageConfirm();
+});
