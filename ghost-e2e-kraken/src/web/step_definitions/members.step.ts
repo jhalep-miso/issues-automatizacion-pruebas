@@ -18,6 +18,38 @@ When(
   }
 );
 
+Given("I get the Impersonate link", async function (this: KrakenWorld) {
+  await this.memberPage.clickMemberSettingsButton();
+  await this.memberPage.clickImpersonateButton();
+});
+
+When("I copy link", async function (this: KrakenWorld) {
+  const impersonateLink = await this.memberPage.copyImpersonateLink();
+  this.memberPage.setImpersonateLink(impersonateLink);
+});
+
+When(
+  "I navigate to the Impersonate link in another tab",
+  async function (this: KrakenWorld) {
+    await this.memberPage.navigateToImpersonateLink();
+  }
+);
+
+When(
+  "I edit member with name {kraken-string} from Impersonate link",
+  async function (this: KrakenWorld, name: string) {
+    await this.memberPage.clickMemberAccountButton();
+    await this.memberPage.editMemberNameInFrame(name);
+  }
+);
+
+When(
+  "I return and refresh the members list in the administration panel",
+  async function (this: KrakenWorld) {
+    await this.memberPage.navigateToMembersList();
+  }
+);
+
 Then(
   "I should see the member with name {kraken-string} and email {kraken-string}",
   async function (this: KrakenWorld, name: string, email: string) {

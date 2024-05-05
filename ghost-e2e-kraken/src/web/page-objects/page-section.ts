@@ -2,13 +2,12 @@ import {BASE_URL} from "./constants";
 import type {Browser} from "webdriverio";
 import {ListFilters} from "../utils/list-filters";
 
-export class PostPage {
+export class PageSection {
     driver: Browser<"async">;
-    editPostUrl: string;
-    createPostUrl: string;
-    filterPostUrlByTag: string;
-    oldPostUrl: string;
-    publishedPostUrl: string;
+    editPageUrl: string;
+    createPageUrl: string;
+    oldPageUrl: string;
+    publishedPageUrl: string;
     private accessTypeMap = new Map([
         ["Public", "public"],
         ["Members only", "members"],
@@ -18,48 +17,40 @@ export class PostPage {
 
     constructor(driver: Browser<"async">) {
         this.driver = driver;
-        this.editPostUrl = "";
-        this.publishedPostUrl = "";
-        this.oldPostUrl = "";
-        this.createPostUrl = BASE_URL + "/ghost/#/editor/post";
-        this.filterPostUrlByTag = BASE_URL + "/ghost/#/posts?tag=";
+        this.editPageUrl = "";
+        this.publishedPageUrl = "";
+        this.oldPageUrl = "";
+        this.createPageUrl = BASE_URL + "/ghost/#/editor/page";
     }
 
     async pause(milliseconds = 1000) {
         await this.driver.pause(milliseconds);
     }
 
-    async navigateToCreatePost() {
-        await this.driver.url(this.createPostUrl);
+    async navigateToCreatePage() {
+        await this.driver.url(this.createPageUrl);
         await this.pause();
     }
 
-    async navigateToEditPost() {
-        await this.driver.url(this.editPostUrl);
+    async navigateToEditPage() {
+        await this.driver.url(this.editPageUrl);
         await this.pause(2000);
     }
 
-    async navigateToPostsList(filter?: ListFilters) {
-    const query = new URLSearchParams(filter).toString();
-    const url = query
-      ? `${BASE_URL}/ghost/#/posts?${query}`
-      : `${BASE_URL}/ghost/#/posts`;
-    await this.driver.url(url);
-    await this.pause();
-  }async setPostTitle(title: string) {
+    async setPageTitle(title: string) {
         const titleElement = await this.driver.$(".gh-editor-title");
         await titleElement.waitForDisplayed({timeout: 5000});
         await titleElement.setValue(title);
     }
 
-    async setPostContent(content: string) {
+    async setPageContent(content: string) {
         const contentElement = await this.driver.$(".kg-prose");
         await contentElement.waitForDisplayed({timeout: 5000});
         await contentElement.setValue(content);
         await this.pause(2000);
     }
 
-    async publishPost() {
+    async publishPage() {
         const publishButton = await this.driver.$(
             "[data-test-button='publish-flow']"
         );
@@ -78,23 +69,23 @@ export class PostPage {
         await this.pause();
     }
 
-    async setEditPostUrl() {
-        this.editPostUrl = await this.driver.getUrl();
+    async setEditPageUrl() {
+        this.editPageUrl = await this.driver.getUrl();
     }
 
-    async setPublishedPostUrl() {
-        const postCreated = await this.driver.$(".gh-post-bookmark-wrapper");
-        await postCreated.waitForDisplayed({timeout: 5000});
-        this.publishedPostUrl = await postCreated.getAttribute("href");
+    async setPublishedPageUrl() {
+        const pageCreated = await this.driver.$(".gh-post-bookmark-wrapper");
+        await pageCreated.waitForDisplayed({timeout: 5000});
+        this.publishedPageUrl = await pageCreated.getAttribute("href");
     }
 
-    async navigateToPublishedPost() {
-        await this.driver.url(this.publishedPostUrl);
+    async navigateToPublishedPage() {
+        await this.driver.url(this.publishedPageUrl);
         await this.pause();
     }
 
-    async navigateToOldPostUrl() {
-        await this.driver.url(this.oldPostUrl);
+    async navigateToOldPageUrl() {
+        await this.driver.url(this.oldPageUrl);
         await this.pause();
     }
 
@@ -111,24 +102,6 @@ export class PostPage {
         );
         await unpublishButton.waitForDisplayed({timeout: 5000});
         await unpublishButton.click();
-        await this.pause();
-    }
-
-    async clickDeletePost() {
-        const deletePostButton = await this.driver.$(
-            ".settings-menu-delete-button > button"
-        );
-        await deletePostButton.waitForDisplayed({timeout: 5000});
-        await deletePostButton.click();
-        await this.pause();
-    }
-
-    async clickDeletePostConfirm() {
-        const confirmButton = await this.driver.$(
-            "div.modal-footer >button.gh-btn-red"
-        );
-        await confirmButton.waitForDisplayed({timeout: 5000});
-        await confirmButton.click();
         await this.pause();
     }
 
@@ -169,31 +142,31 @@ export class PostPage {
         await this.pause();
     }
 
-    async selectPostVisibility(accessType: string) {
-        const postVisibilitySelect = await this.driver.$(
+    async selectPageVisibility(accessType: string) {
+        const pageVisibilitySelect = await this.driver.$(
             "[data-test-select='post-visibility']"
         );
-        await postVisibilitySelect.waitForDisplayed({timeout: 5000});
+        await pageVisibilitySelect.waitForDisplayed({timeout: 5000});
         const accessTypeValue = this.accessTypeMap.get(accessType);
         if (!accessTypeValue) throw new Error("Invalid access type");
-        await postVisibilitySelect.selectByAttribute("value", accessTypeValue);
+        await pageVisibilitySelect.selectByAttribute("value", accessTypeValue);
         await this.pause();
     }
 
-    async updatePostUrlSlug(newUrlText: string) {
+    async updatePageUrlSlug(newUrlText: string) {
         const urlElement = await this.driver.$(".post-setting-slug");
         await urlElement.waitForDisplayed({timeout: 5000});
         await urlElement.setValue(newUrlText);
         await this.pause();
     }
 
-    async setNewPostUrl() {
+    async setNewPageUrl() {
         const urlPreviewUrlElement = await this.driver.$(".ghost-url-preview");
         await urlPreviewUrlElement.waitForDisplayed({timeout: 5000});
         const urlPreviewUrl: string = await urlPreviewUrlElement.getText();
-        const newPostPath = urlPreviewUrl.split("/")[1];
-        this.oldPostUrl = this.publishedPostUrl;
-        this.publishedPostUrl = `${BASE_URL}/${newPostPath}`;
+        const newPagePath = urlPreviewUrl.split("/")[1];
+        this.oldPageUrl = this.publishedPageUrl;
+        this.publishedPageUrl = `${BASE_URL}/${newPagePath}`;
     }
 
     async clickPublishSaveButton() {
@@ -203,17 +176,13 @@ export class PostPage {
         await this.pause();
     }
 
-    async getPostTitle() {
+    async getPageTitle() {
         const titleElement = await this.driver.$("h1.gh-article-title");
         await titleElement.waitForDisplayed({timeout: 5000});
         return titleElement.getText();
     }
 
-    async getPostTitles() {
-    const titleElements = await this.driver.$$("div.posts-list.gh-list > div > li > a > h3");
-    await titleElements[0].waitForDisplayed({ timeout: 5000 });
-    return Promise.all(titleElements.map((element) => element.getText()));
-  }async getPostContent() {
+    async getPageContent() {
         const contentElement = await this.driver.$("section.gh-content > p");
         await contentElement.waitForDisplayed({timeout: 5000});
         return contentElement.getText();
@@ -247,8 +216,36 @@ export class PostPage {
         return errorText.getText().then((text: string) => parseInt(text, 10));
     }
 
-    async filterPostByTag(tag: string) {
-        await this.driver.url(this.filterPostUrlByTag + tag);
+    async navigateToPagesList(filter?: ListFilters) {
+        const query = new URLSearchParams(filter).toString();
+        const url = query
+            ? `${BASE_URL}/ghost/#/pages?${query}`
+            : `${BASE_URL}/ghost/#/pages`;
+        await this.driver.url(url);
+        await this.pause();
+    }
+
+    async getPageTitles() {
+        const titleElements = await this.driver.$$("div.posts-list.gh-list > div > li > a > h3");
+        await titleElements[0].waitForDisplayed({timeout: 5000});
+        return Promise.all(titleElements.map((element) => element.getText()));
+    }
+
+    async clickDeletePage() {
+        const deletePageButton = await this.driver.$(
+            ".settings-menu-delete-button > button"
+        );
+        await deletePageButton.waitForDisplayed({timeout: 5000});
+        await deletePageButton.click();
+        await this.pause();
+    }
+
+    async clickDeletePageConfirm() {
+        const confirmButton = await this.driver.$(
+            "div.modal-footer >button.gh-btn-red"
+        );
+        await confirmButton.waitForDisplayed({timeout: 5000});
+        await confirmButton.click();
         await this.pause();
     }
 }

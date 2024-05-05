@@ -121,21 +121,6 @@ Then("I navigate to the old post url", async function (this: KrakenWorld) {
 });
 
 Then(
-  "I should see a {string} error and an error code {int}",
-  async function (
-    this: KrakenWorld,
-    errorDescription: string,
-    errorCode: number
-  ) {
-    const errorText = await this.postPage.getErrorText();
-    assert.strictEqual(errorText, errorDescription);
-
-    const statusCode = await this.postPage.getErrorCode();
-    assert.strictEqual(statusCode, errorCode);
-  }
-);
-
-Then(
   "I should see the post with a {string} element with id {kraken-string} and text {kraken-string}",
   async function (
     this: KrakenWorld,

@@ -10,6 +10,14 @@ export class NewPostPage {
 
     await this.page.getByRole("textbox").nth(1).fill(post.content)
 
+    await this.page.getByTitle("Settings").click()
+
+    const tagsInput = this.page.locator("input.ember-power-select-trigger-multiple-input").first()
+    for (const tag of post.tags) {
+      await tagsInput.fill(tag)
+      await tagsInput.press("Enter")
+    }
+
     await this.page.getByRole("button", { name: "Publish" }).click()
 
     await this.page.getByRole("button", { name: "Continue, final review →" }).click()

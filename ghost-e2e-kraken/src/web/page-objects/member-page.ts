@@ -6,6 +6,7 @@ export class MemberPage {
   url = BASE_URL + "/ghost/#/members";
   createNewMemberUrl = BASE_URL + "/ghost/#/members/new";
   createdMemberUrl = "";
+  impersonateLink = "";
 
   constructor(driver: Browser<"async">) {
     this.driver = driver;
@@ -28,6 +29,11 @@ export class MemberPage {
   async navigateToCreatedMember() {
     await this.driver.url(this.createdMemberUrl);
     await this.pause();
+  }
+
+  async navigateToImpersonateLink() {
+    await this.driver.url(this.impersonateLink);
+    await this.pause(5000);
   }
 
   async setMemberName(name: string) {
@@ -62,6 +68,10 @@ export class MemberPage {
     this.createdMemberUrl = await this.driver.getUrl();
   }
 
+  async setImpersonateLink(link: string) {
+    this.impersonateLink = link;
+  }
+
   async getMembersListData() {
     const membersList = await this.driver.$$("h3.gh-members-list-name");
     const membersData = [];
@@ -78,6 +88,75 @@ export class MemberPage {
       membersData.push({ name: memberName, email: memberEmail });
     }
     return membersData;
+  }
+
+  async clickMemberSettingsButton() {
+    const memberSettingsButton = await this.driver.$(
+      "button[data-test-button='member-actions']"
+    );
+    await memberSettingsButton.waitForDisplayed({ timeout: 5000 });
+    await memberSettingsButton.click();
+    await this.pause();
+  }
+
+  async clickImpersonateButton() {
+    const impersonateButton = await this.driver.$(
+      "button[data-test-button='impersonate']"
+    );
+    await impersonateButton.waitForDisplayed({ timeout: 5000 });
+    await impersonateButton.click();
+    await this.pause();
+  }
+
+  async copyImpersonateLink() {
+    const impersonateCopyLinkElement = await this.driver.$(
+      "input[data-test-input='member-signin-url']"
+    );
+    await impersonateCopyLinkElement.waitForDisplayed({ timeout: 5000 });
+    const link = await impersonateCopyLinkElement.getValue();
+    return link;
+  }
+
+  async clickMemberAccountButton() {
+    const memberAccountButton = await this.driver.$("a[data-portal='account']");
+    await memberAccountButton.waitForDisplayed({ timeout: 15000 });
+    await memberAccountButton.click();
+    await this.pause();
+  }
+
+  async editMemberNameInFrame(name: string) {
+    const popupFrameElement = await this.driver.$(
+      "[data-testid='portal-popup-frame']"
+    );
+    await popupFrameElement.waitForDisplayed({ timeout: 5000 });
+    await this.driver.switchToFrame(popupFrameElement);
+    const editMemberButton = await this.driver.$(
+      "[data-test-button='edit-profile']"
+    );
+    await editMemberButton.waitForDisplayed({ timeout: 5000 });
+    await editMemberButton.click();
+    await this.setMemberEditNameInFrame(name);
+    await this.clickSaveAccountMemberButtonInFrame();
+    await this.driver.switchToParentFrame();
+    await this.pause();
+  }
+
+  private async setMemberEditNameInFrame(name: string) {
+    const memberEditNameElement = await this.driver.$(
+      "[data-test-input='input-name']"
+    );
+    await memberEditNameElement.waitForDisplayed({ timeout: 5000 });
+    await memberEditNameElement.setValue(name);
+    await this.pause();
+  }
+
+  private async clickSaveAccountMemberButtonInFrame() {
+    const saveMemberButton = await this.driver.$(
+      "button[data-test-button='save-button']"
+    );
+    await saveMemberButton.waitForDisplayed({ timeout: 5000 });
+    await saveMemberButton.click();
+    await this.pause();
   }
 
   async getMemberDetails() {

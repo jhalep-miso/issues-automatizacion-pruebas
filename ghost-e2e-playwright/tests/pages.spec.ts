@@ -4,7 +4,8 @@ import { Config } from './Config'
 import { AdminPage } from './pages/AdminPage'
 
 test.beforeEach(async ({ page }) => {
-  // Given: (This step is part of the "Given" section of every escenario below)
+ // Given: 
+  // I Login with "<EMAIL>" and "<PASSWORD>" (This step is part of the "Given" section of every escenario below)
   await new AdminLoginPage(page, Config.user).signIn()
 })
 
