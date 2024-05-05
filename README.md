@@ -70,13 +70,22 @@ cd issues-automatizacion-pruebas/ghost-e2e-playwright
 npm install
 ```
 
-4. Ejecuta las pruebas utilizando alguno de los siguientes dos comandos. El segundo permite visualizar las pruebas de forma interactiva con la UI de playwright:
+4. Asegurarse de que las líneas correspondientes a la configuración de la URL `https://ghost-ebcl.onrender.com` estén descomentadas en el archivo `ghost-e2e-playwright/tests/Config.ts` como se muestra a continuación:
+
+<img width="614" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/c10b9e0c-dd57-46fb-89e6-03e7b5f73d80">
+
+5. Ejecuta las pruebas utilizando alguno de los siguientes dos comandos. El segundo permite visualizar las pruebas de forma interactiva con la UI de playwright:
 ```bash
 npx playwright test
 ```
 ```bash
 npx playwright test --ui
 ```
+
+6. Si se está utilizando playwright en modo `--ui`, asegurarse de que en el panel de la parte superior izquierda, el campo de `Projects` esté configurado con el valor `all`, para que se muestren todos los tests, como se muestra en la siguiente imagen:
+
+<img width="360" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/7c77f001-3a59-4d77-86af-ca5b4a317bb9">
+
 
 ## Contribución
 
