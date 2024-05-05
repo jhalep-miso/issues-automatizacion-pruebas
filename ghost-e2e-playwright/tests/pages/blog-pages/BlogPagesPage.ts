@@ -27,8 +27,11 @@ export class BlogPagesPage {
 
   async go(): Promise<BlogPagesPage> {
     await this.page.goto(`${Config.baseUri}/${BlogPagesPage.path}`)
-    // Wait for any title to load from the list of blog pages
-    await this.page.waitForSelector("h3")
+    // Wait for the list of blog pages to load
+    await this.page.locator("div.posts-list").waitFor({
+      state: "visible",
+      timeout: 5000
+    })
 
     return this
   }

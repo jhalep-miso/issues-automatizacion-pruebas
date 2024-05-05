@@ -27,11 +27,10 @@ export class EditBlogPagePage {
 
     await this.page.locator("input#url").fill(slug)
 
+    const waitResponse = this.page.waitForResponse("**/ghost/api/admin/pages/**")
     // Just to unfocus the Post URL field
     await this.page.getByText("Page settings").click()
-
-    // Unfortunately I don't know how else to know from the UI when the url was changed
-    await this.page.waitForTimeout(2000)
+    await waitResponse
   }
 
   async changePageAccess(access: AccessType): Promise<void> {
@@ -56,24 +55,17 @@ export class EditBlogPagePage {
 
     await this.page.keyboard.type(code)
 
+    const waitResponse = this.page.waitForResponse("**/ghost/api/admin/pages/**")
     await this.settings()
-
-    // Unfortunately I don't know how else to know from the UI when the injection is saved
-    await this.page.waitForTimeout(2000)
+    await waitResponse
   }
 
   async unpublish(): Promise<void> {
     await this.page.getByRole("button", { name: "Unpublish" }).click()
 
+    const waitResponse = this.page.waitForResponse("**/ghost/api/admin/pages/**")
     await this.page.getByRole("button", { name: "Unpublish and revert to private draft" }).click()
-
-    await this.page.getByRole("button", { name: "Preview" }).waitFor({
-      state: "visible",
-      timeout: 5000
-    })
-
-    // Unfortunately I don't know how else to know from the UI when the post is unpublished
-    await this.page.waitForTimeout(2000)
+    await waitResponse
   }
 
   async delete(): Promise<void> {

@@ -1,4 +1,4 @@
-import { type Page } from "@playwright/test"
+import { Locator, type Page } from "@playwright/test"
 import { Config } from "../../Config"
 import { NewTagPage } from "./NewTagPage"
 import { PostPage } from "../posts/PostsPage"
@@ -10,7 +10,7 @@ export class TagsPage {
 
   constructor(private readonly page: Page) { }
 
-  getTagByName(name: string) {
+  getTagByName(name: string): Locator {
     return this.page.getByRole("heading", { name })
   }
 
@@ -32,15 +32,19 @@ export class TagsPage {
   }
 
   async editTag(tagName: string): Promise<EditTagPage> {
-    await this.page.getByTitle("Edit tag").filter({ hasText: tagName }).first().click()
+    // await this.page.getByTitle("Edit tag").filter({ hasText: tagName }).first().click()
+    await this.getTagByName(tagName).click()
 
     return new EditTagPage(this.page)
   }
 
   async go(): Promise<TagsPage> {
     await this.page.goto(`${Config.baseUri}/${TagsPage.path}`)
-    // Wait for any title to load from the list of tags
-    await this.page.waitForSelector("h3")
+    // Wait for the list of tags to load
+    await this.page.locator("ol.tags-list").waitFor({
+      state: "visible",
+      timeout: 5000
+    })
 
     return this
   }

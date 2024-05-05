@@ -33,8 +33,11 @@ export class PostPage {
 
   async go(): Promise<PostPage> {
     await this.page.goto(`${Config.baseUri}/${PostPage.path}`)
-    // Wait for any title to load from the list of posts
-    await this.page.waitForSelector("h3")
+    // Wait for the list of posts to load
+    await this.page.locator("div.posts-list").waitFor({
+      state: "visible",
+      timeout: 5000
+    })
 
     return this
   }
