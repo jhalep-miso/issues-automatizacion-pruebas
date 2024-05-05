@@ -22,7 +22,9 @@ export class NewPostPage {
 
     await this.page.getByRole("button", { name: "Continue, final review →" }).click()
 
+    const waitResponse = this.page.waitForResponse("**/ghost/api/admin/posts/**")
     await this.page.getByRole("button", { name: "Publish post, right now" }).click()
+    await waitResponse
 
     // Wait for final page that shows that the post was published successfully to avoid issues with navigation
     await this.page.waitForSelector("img")
