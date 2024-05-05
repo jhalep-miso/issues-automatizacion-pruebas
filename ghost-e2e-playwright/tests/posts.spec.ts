@@ -131,3 +131,24 @@ test("Create a post and unpublish it should not allow to see it", async ({ page 
   await page.goto(oldUrl)
   await expect(page.getByRole("heading", { name: "404" })).toBeVisible()
 })
+
+test("Create a post and delete it should not allow to see it", async ({ page }) => {
+  const post = {
+    title: faker.word.words(5),
+    content: faker.word.words(50)
+  }
+
+  const adminPage = new AdminPage(page)
+  const postsPage = await adminPage.posts()
+  const newPostPage = await postsPage.newPost()
+
+  await newPostPage.create(post)
+  await postsPage.go()
+  const editPostPage = await postsPage.editPost(post.title)
+
+  const oldUrl = await editPostPage.getPublishedUrl()
+  await editPostPage.delete()
+
+  await page.goto(oldUrl)
+  await expect(page.getByRole("heading", { name: "404" })).toBeVisible()
+})
