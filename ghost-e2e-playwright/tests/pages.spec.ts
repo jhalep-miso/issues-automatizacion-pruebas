@@ -4,6 +4,7 @@ import { Config } from './Config'
 import { AdminPage } from './pages/AdminPage'
 
 test.beforeEach(async ({ page }) => {
+  // Given: (This step is part of the "Given" section of every escenario below)
   await new AdminLoginPage(page, Config.user).signIn()
 })
 
@@ -20,5 +21,5 @@ test("Create a blog page", async ({ page }) => {
   await newBlogPagePage.create(blogPage)
   await blogPagesPage.go()
 
-  expect(blogPagesPage.getBlogPageByTitle(blogPage.title)).toHaveText(blogPage.title)
+  await expect(blogPagesPage.getBlogPageByTitle(blogPage.title)).toHaveText(blogPage.title)
 })

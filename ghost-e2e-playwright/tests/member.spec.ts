@@ -22,5 +22,5 @@ test("Create a member", async ({ page }) => {
   await newMemberPage.create(member)
   await adminPage.members()
 
-  expect(membersPage.getMemberByEmail(member.email)).toHaveText(member.email)
+  await expect(membersPage.getMemberByEmail(member.email)).toHaveText(member.email)
 })
