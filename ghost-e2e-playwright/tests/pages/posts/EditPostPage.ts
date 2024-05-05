@@ -79,12 +79,11 @@ export class EditPostPage {
   async getTags(): Promise<string[]> {
     await this.settings()
 
-    await this.page.locator("div#tag-input").waitFor({
-      state: "visible",
-      timeout: 5000
-    })
+    const inputLocator = this.page.locator("div#tag-input")
 
-    const tagLocators = await this.page.locator("div#tag-input").locator("li.tag-token").all()
+    await inputLocator.waitFor({ state: "visible", timeout: 5000 })
+
+    const tagLocators = await inputLocator.locator("li.tag-token").all()
 
     return Promise.all(tagLocators.map(locator => locator.innerText()))
   }
