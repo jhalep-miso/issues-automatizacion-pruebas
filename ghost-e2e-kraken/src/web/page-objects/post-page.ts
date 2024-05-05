@@ -6,6 +6,7 @@ export class PostPage {
     driver: Browser<"async">;
     editPostUrl: string;
     createPostUrl: string;
+    filterPostUrlByTag: string;
     oldPostUrl: string;
     publishedPostUrl: string;
     private accessTypeMap = new Map([
@@ -21,6 +22,7 @@ export class PostPage {
         this.publishedPostUrl = "";
         this.oldPostUrl = "";
         this.createPostUrl = BASE_URL + "/ghost/#/editor/post";
+        this.filterPostUrlByTag = BASE_URL + "/ghost/#/posts?tag=";
     }
 
     async pause(milliseconds = 1000) {
@@ -38,15 +40,13 @@ export class PostPage {
     }
 
     async navigateToPostsList(filter?: ListFilters) {
-        const query = new URLSearchParams(filter).toString();
-        const url = query
-            ? `${BASE_URL}/ghost/#/posts?${query}`
-            : `${BASE_URL}/ghost/#/posts`;
-        await this.driver.url(url);
-        await this.pause();
-    }
-
-    async setPostTitle(title: string) {
+    const query = new URLSearchParams(filter).toString();
+    const url = query
+      ? `${BASE_URL}/ghost/#/posts?${query}`
+      : `${BASE_URL}/ghost/#/posts`;
+    await this.driver.url(url);
+    await this.pause();
+  }async setPostTitle(title: string) {
         const titleElement = await this.driver.$(".gh-editor-title");
         await titleElement.waitForDisplayed({timeout: 5000});
         await titleElement.setValue(title);
@@ -210,12 +210,10 @@ export class PostPage {
     }
 
     async getPostTitles() {
-        const titleElements = await this.driver.$$("div.posts-list.gh-list > div > li > a > h3");
-        await titleElements[0].waitForDisplayed({timeout: 5000});
-        return Promise.all(titleElements.map((element) => element.getText()));
-    }
-
-    async getPostContent() {
+    const titleElements = await this.driver.$$("div.posts-list.gh-list > div > li > a > h3");
+    await titleElements[0].waitForDisplayed({ timeout: 5000 });
+    return Promise.all(titleElements.map((element) => element.getText()));
+  }async getPostContent() {
         const contentElement = await this.driver.$("section.gh-content > p");
         await contentElement.waitForDisplayed({timeout: 5000});
         return contentElement.getText();
@@ -247,5 +245,10 @@ export class PostPage {
         const errorText = await this.driver.$(".error-code");
         await errorText.waitForDisplayed({timeout: 5000});
         return errorText.getText().then((text: string) => parseInt(text, 10));
+    }
+
+    async filterPostByTag(tag: string) {
+        await this.driver.url(this.filterPostUrlByTag + tag);
+        await this.pause();
     }
 }

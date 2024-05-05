@@ -15,6 +15,21 @@ Given(
   }
 );
 
+Given(
+    "I create a new post with title {kraken-string}, content {kraken-string} and tag {kraken-string}",
+    async function (this: KrakenWorld, title: string, content: string, tag: string) {
+        await this.postPage.navigateToCreatePost();
+        await this.postPage.setPostTitle(title);
+        await this.postPage.setPostContent(content);
+        await this.postPage.clickSettingsButton();
+        await this.tagPage.addPostTag(tag);
+        await this.postPage.clickSettingsButton();
+        await this.postPage.publishPost();
+        await this.postPage.setEditPostUrl();
+        await this.postPage.setPublishedPostUrl();
+    }
+);
+
 Given("I navigate to the created post", async function (this: KrakenWorld) {
   await this.postPage.navigateToPublishedPost();
 });
