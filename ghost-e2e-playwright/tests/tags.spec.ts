@@ -98,3 +98,34 @@ test("If we replace the tag of an exisiting post by another one, the change shou
   const postTitles = await postsPage.getAllPostTitles()
   expect(postTitles).toStrictEqual([post.title])
 })
+
+test("If we create a post with a tag, and then edit the name said tag from the list of tags, we should see that the post information got updated, showing that the new tag name on its tag list", async ({ page }) => {
+  const oldTagName = faker.word.words(1)
+  const post = {
+    title: faker.word.words(5),
+    content: faker.word.words(50),
+    tags: [oldTagName]
+  }
+  const newTagName = faker.word.words(1)
+
+  const adminPage = new AdminPage(page)
+  const postsPage = await adminPage.posts()
+  const newPostPage = await postsPage.newPost()
+  await newPostPage.create(post)
+
+  await adminPage.go()
+  const tagsPage = await adminPage.tags()
+
+  // Check that the tag has 1 post associated to it
+  const tagNumberPosts = page.getByTitle(`List posts tagged with '${oldTagName}'`)
+  expect(tagNumberPosts).toHaveText("1 post")
+
+  const editTagPage = await tagsPage.editTag(oldTagName)
+  await editTagPage.editName(newTagName)
+
+  await postsPage.go()
+  const editPostPage = await postsPage.editPost(post.title)
+  const postTags = await editPostPage.getTags()
+
+  expect(postTags).toStrictEqual([newTagName])
+})

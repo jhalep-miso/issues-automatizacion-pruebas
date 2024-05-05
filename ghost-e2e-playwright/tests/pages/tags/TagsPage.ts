@@ -2,6 +2,7 @@ import { type Page } from "@playwright/test"
 import { Config } from "../../Config"
 import { NewTagPage } from "./NewTagPage"
 import { PostPage } from "../posts/PostsPage"
+import { EditTagPage } from "./EditTagPage"
 
 export class TagsPage {
 
@@ -28,6 +29,12 @@ export class TagsPage {
     await this.page.getByRole("link", { name: "New tag", exact: true }).click()
 
     return new NewTagPage(this.page)
+  }
+
+  async editTag(tagName: string): Promise<EditTagPage> {
+    await this.page.getByTitle("Edit tag").filter({ hasText: tagName }).first().click()
+
+    return new EditTagPage(this.page)
   }
 
   async go(): Promise<TagsPage> {
