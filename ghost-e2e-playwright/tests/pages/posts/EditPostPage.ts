@@ -44,6 +44,21 @@ export class EditPostPage {
     })
   }
 
+  async injectHeaderCode(code: string): Promise<void> {
+    await this.settings()
+
+    await this.page.getByRole("button", { name: " Code injection" }).click()
+
+    await this.page.locator("div.CodeMirror-code > div:nth-child(1) > pre").nth(0).click()
+
+    await this.page.keyboard.type(code)
+
+    await this.settings()
+
+    // Unfortunately I don't know how else to know from the UI when the injection is saved
+    await this.page.waitForTimeout(2000)
+  }
+
   async delete(): Promise<void> {
     await this.settings()
 

@@ -87,10 +87,14 @@ test("Create a post and change the url to then verify it is being changed and th
   await expect(page.getByRole("heading", { name: "404" })).toBeVisible()
 })
 
-test("Create a post", async ({ page }) => {
+test("Create a post and update it with code injection and verify the changes", async ({ page }) => {
   const post = {
     title: faker.word.words(5),
     content: faker.word.words(50)
+  }
+  const injection = {
+    id: faker.string.alpha(4),
+    content: faker.string.alphanumeric(10)
   }
 
   const adminPage = new AdminPage(page)
@@ -99,6 +103,10 @@ test("Create a post", async ({ page }) => {
 
   await newPostPage.create(post)
   await postsPage.go()
+  const editPostPage = await postsPage.editPost(post.title)
 
-  await expect(postsPage.getPostByTitle(post.title)).toHaveText(post.title)
+  await editPostPage.injectHeaderCode(`<h1 id="${injection.id}">${injection.content}</h1>`)
+  await editPostPage.viewPublished()
+
+  await expect(page.locator(`h1#${injection.id}`)).toHaveText(injection.content)
 })
