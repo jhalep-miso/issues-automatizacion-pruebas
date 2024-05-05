@@ -26,6 +26,7 @@ Given("I get the Impersonate link", async function (this: KrakenWorld) {
 When("I copy link", async function (this: KrakenWorld) {
   const impersonateLink = await this.memberPage.copyImpersonateLink();
   this.memberPage.setImpersonateLink(impersonateLink);
+  await this.memberPage.clickCloseImpersonateDialogButton();
 });
 
 When(
@@ -47,6 +48,23 @@ When(
   "I return and refresh the members list in the administration panel",
   async function (this: KrakenWorld) {
     await this.memberPage.navigateToMembersList();
+  }
+);
+
+When("I select delete member option", async function (this: KrakenWorld) {
+  await this.memberPage.clickMemberSettingsButton();
+  await this.memberPage.clickDeleteMemberButton();
+});
+
+When("I confirm delete member", async function (this: KrakenWorld) {
+  await this.memberPage.clickConfirmDeleteMemberButton();
+});
+
+Then(
+  "I should see a message error which say Could not sign in. Login link expired",
+  async function (this: KrakenWorld) {
+    const errorMessage = await this.memberPage.getImpersonateErrorMessage();
+    assert.match(errorMessage, /Could not sign in. Login link expired/);
   }
 );
 
