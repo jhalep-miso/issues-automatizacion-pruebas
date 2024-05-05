@@ -5,6 +5,7 @@ import {
   IWorldOptions,
 } from "@cucumber/cucumber";
 import { LoginPage } from "../page-objects/login-page";
+import { MemberPage } from "../page-objects/member-page";
 import { PostPage } from "../page-objects/post-page";
 
 export class KrakenWorld extends World {
@@ -15,6 +16,7 @@ export class KrakenWorld extends World {
   driver: any;
   deviceClient: any;
   loginPage!: LoginPage;
+  memberPage!: MemberPage;
   postPage!: PostPage;
   constructor(input: IWorldOptions) {
     super(input);
@@ -27,6 +29,7 @@ export class KrakenWorld extends World {
 
   async init() {
     this.loginPage = new LoginPage(this.driver);
+    this.memberPage = new MemberPage(this.driver);
     this.postPage = new PostPage(this.driver);
   }
 }
