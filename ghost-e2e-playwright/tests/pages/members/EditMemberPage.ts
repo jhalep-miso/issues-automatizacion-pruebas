@@ -1,11 +1,30 @@
-import { type Page } from "@playwright/test"
+import { expect, type Page } from "@playwright/test"
+import { ImpersonatePage } from "./ImpersonatePage"
 
 export class EditMemberPage {
 
   constructor(private readonly page: Page) { }
 
+  settings(): Promise<void> {
+    return this.page.locator("button.gh-btn-icon.icon-only").click()
+  }
+
+  async impersonate(): Promise<ImpersonatePage> {
+    await this.settings()
+
+    await this.page.getByRole("button", { name: "Impersonate" }).click()
+
+    await this.page.getByRole("button", { name: "Copy link" }).click()
+
+    const impersonateUrl = await this.page.evaluate(() => navigator.clipboard.readText())
+
+    await this.page.goto(impersonateUrl)
+
+    return new ImpersonatePage(this.page)
+  }
+
   async delete(): Promise<void> {
-    await this.page.locator("button.gh-btn-icon.icon-only").click()
+    await this.settings()
 
     await this.page.getByRole("button", { name: "Delete member" }).click()
 
