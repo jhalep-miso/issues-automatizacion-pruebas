@@ -1,6 +1,7 @@
 import { type Page } from "@playwright/test"
 import { Config } from "../../Config"
 import { NewTagPage } from "./NewTagPage"
+import { PostPage } from "../posts/PostsPage"
 
 export class TagsPage {
 
@@ -10,6 +11,17 @@ export class TagsPage {
 
   getTagByName(name: string) {
     return this.page.getByRole("heading", { name })
+  }
+
+  async goToPostsByTagName(name: string): Promise<PostPage> {
+    await this.page.getByTitle(`List posts tagged with '${name}'`).click()
+
+    await this.page.locator(".posts-list").waitFor({
+      state: "visible",
+      timeout: 5000
+    })
+
+    return new PostPage(this.page)
   }
 
   async newTag(): Promise<NewTagPage> {

@@ -13,6 +13,12 @@ export class PostPage {
     return this.page.getByRole("heading", { name: title })
   }
 
+  async getAllPostTitles(): Promise<string[]> {
+    const titleLocators = await this.page.locator("h3.gh-content-entry-title").all()
+
+    return Promise.all(titleLocators.map(locator => locator.innerText()))
+  }
+
   async editPost(title: string): Promise<EditPostPage> {
     await this.getPostByTitle(title).click()
 
