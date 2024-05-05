@@ -1,5 +1,6 @@
 import { expect, type Page } from "@playwright/test"
 import { ImpersonatePage } from "./ImpersonatePage"
+import { Config } from "../../Config"
 
 export class EditMemberPage {
 
@@ -27,6 +28,8 @@ export class EditMemberPage {
     const impersonateUrl = await this.getImpersonateUrl()
 
     await this.page.goto(impersonateUrl)
+
+    await this.page.waitForURL(Config.baseUri)
 
     return new ImpersonatePage(this.page)
   }
