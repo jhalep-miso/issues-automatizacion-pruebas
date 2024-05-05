@@ -66,3 +66,35 @@ test("Create a tag and associate it with multiple posts", async ({ page }) => {
 
   expect(postTitles.sort()).toStrictEqual(posts.map(p => p.title).sort())
 })
+
+test("If we replace the tag of an exisiting post by another one, the change should be reflected when listing the posts", async ({ page }) => {
+  const oldTagName = faker.word.words(1)
+  const post = {
+    title: faker.word.words(5),
+    content: faker.word.words(50),
+    tags: [oldTagName]
+  }
+  const newTagName = faker.word.words(1)
+
+  const adminPage = new AdminPage(page)
+  const postsPage = await adminPage.posts()
+  const newPostPage = await postsPage.newPost()
+  await newPostPage.create(post)
+
+  await adminPage.go()
+  const tagsPage = await adminPage.tags()
+  await tagsPage.goToPostsByTagName(oldTagName)
+  const editPostPage = await postsPage.editPost(post.title)
+  await editPostPage.replaceTags([newTagName])
+
+  await tagsPage.go()
+  // Check that the old tag has 0 posts associated to it
+  const oldTagNumberPosts = page.locator(`[href="#/tags/${oldTagName}/"]`).filter({
+    hasText: "0 posts"
+  })
+  await expect(oldTagNumberPosts).toBeVisible()
+
+  await tagsPage.goToPostsByTagName(newTagName)
+  const postTitles = await postsPage.getAllPostTitles()
+  expect(postTitles).toStrictEqual([post.title])
+})

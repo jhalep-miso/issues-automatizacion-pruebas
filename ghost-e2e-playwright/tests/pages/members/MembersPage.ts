@@ -30,7 +30,7 @@ export class MembersPage {
     const numMembers = await memberLocator.count()
 
     for (let i = 0; i < numMembers; i++) {
-      await memberLocator.nth(0).click()
+      await memberLocator.first().click()
       await new EditMemberPage(this.page).delete()
     }
   }
