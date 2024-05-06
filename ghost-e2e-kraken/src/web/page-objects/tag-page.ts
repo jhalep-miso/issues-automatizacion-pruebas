@@ -45,12 +45,13 @@ export class TagPage {
     }
 
     async validateQuantityPostDisplay(tag: string, quantityPostDisplay: string) {
+        const tagsList = await this.driver.$('.tags-list.gh-list');
+        await tagsList.waitForDisplayed({timeout: 5000});
         const tagListItems = await this.driver.$$('.gh-tags-list-item');
         let found = false;
         for (const listItem of tagListItems) {
             const tagNameElement = await listItem.$('.gh-tag-list-name');
             const tagName = await tagNameElement.getText();
-            console.log(tag)
             if (tagName.trim() === tag) {
                 const postCountElement = await listItem.$('.gh-tag-list-posts-count');
                 const postCountText = await postCountElement.getText();

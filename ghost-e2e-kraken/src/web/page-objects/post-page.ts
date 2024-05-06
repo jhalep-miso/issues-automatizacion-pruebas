@@ -265,7 +265,7 @@ export class PostPage {
     }
 
     async filterPostByTag(tag: string) {
-        await this.driver.url(this.filterPostUrlByTag + tag);
+        await this.driver.url(this.filterPostUrlByTag + tag.toLowerCase());
         await this.pause();
     }
 }
