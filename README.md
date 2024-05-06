@@ -24,7 +24,7 @@ npm install -g appium
 
 3. **Node.js versión 18:** Asegúrate de tener Node.js instalado en tu sistema, preferiblemente la versión 18.
 
-4. **URL de Ghost:** Ajusta la URL de la instancia de Ghost en el archivo de propiedades `properties.json`. Puedes encontrar el archivo en este repositorio en [properties.json](https://github.com/jhalep-miso/issues-automatizacion-pruebas/blob/main/properties.json).
+4. **URL de Ghost:** Ajusta la URL de la instancia de Ghost en el archivo de propiedades `properties.json`. Puedes encontrar el archivo en este repositorio en [properties.json](https://github.com/jhalep-miso/issues-automatizacion-pruebas/blob/main/ghost-e2e-kraken/properties.json).
 
 5. **Lista de steps predefinidos Kraken:** Puedes encontrar la lista de steps predefinidos para Kraken en el siguiente enlace: [Lista de steps predefinidos Kraken](https://github.com/TheSoftwareDesignLab/Kraken/blob/master/src/steps/web.ts).
 
@@ -35,9 +35,9 @@ Una vez que hayas cumplido con los requisitos anteriores, sigue estos pasos para
 ```bash
 git clone https://github.com/jhalep-miso/issues-automatizacion-pruebas.git
 ```
-2. Navega hasta el directorio del repositorio:
+2. Navega hasta el directorio del repositorio donde se encuentran los tests e2e de kraken:
 ```bash
-cd issues-automatizacion-pruebas
+cd issues-automatizacion-pruebas/ghost-e2e-kraken
 ```
 3. Instala las dependencias de Node.js utilizando npm:
 ```bash
