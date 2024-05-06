@@ -29,6 +29,18 @@ export class PostPage {
         await this.driver.pause(milliseconds);
     }
 
+    async open(url: string) {
+        await this.driver.url(url);
+        await this.driver.waitUntil(async () => {
+            const readyState = await this.driver.execute(() => document.readyState);
+            return readyState === 'complete';
+        }, {
+            timeout: 10000, 
+            timeoutMsg: 'expected page to be loaded after 10s'
+        });
+    }
+
+
     async navigateToCreatePost() {
         await this.driver.url(this.createPostUrl);
         await this.pause();
@@ -44,9 +56,11 @@ export class PostPage {
     const url = query
       ? `${BASE_URL}/ghost/#/posts?${query}`
       : `${BASE_URL}/ghost/#/posts`;
-    await this.driver.url(url);
-    await this.pause();
-  }async setPostTitle(title: string) {
+      await this.open(url);
+      await this.pause();
+    }
+
+    async setPostTitle(title: string) {
         const titleElement = await this.driver.$(".gh-editor-title");
         await titleElement.waitForDisplayed({timeout: 5000});
         await titleElement.setValue(title);
@@ -210,10 +224,13 @@ export class PostPage {
     }
 
     async getPostTitles() {
-    const titleElements = await this.driver.$$("div.posts-list.gh-list > div > li > a > h3");
-    await titleElements[0].waitForDisplayed({ timeout: 5000 });
-    return Promise.all(titleElements.map((element) => element.getText()));
-  }async getPostContent() {
+        const postListElement = await this.driver.$("div.posts-list.gh-list");
+        await postListElement.waitForDisplayed({timeout: 5000});
+        const titleElements = await this.driver.$$("div.posts-list.gh-list > div > li > a > h3");
+        return Promise.all(titleElements.map((element) => element.getText()));
+    }
+    
+    async getPostContent() {
         const contentElement = await this.driver.$("section.gh-content > p");
         await contentElement.waitForDisplayed({timeout: 5000});
         return contentElement.getText();
@@ -248,7 +265,7 @@ export class PostPage {
     }
 
     async filterPostByTag(tag: string) {
-        await this.driver.url(this.filterPostUrlByTag + tag);
+        await this.driver.url(this.filterPostUrlByTag + tag.toLowerCase());
         await this.pause();
     }
 }

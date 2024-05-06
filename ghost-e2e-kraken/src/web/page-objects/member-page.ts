@@ -73,9 +73,11 @@ export class MemberPage {
   }
 
   async getMembersListData() {
-    const membersList = await this.driver.$$("h3.gh-members-list-name");
+    const membersList = await this.driver.$("div[data-test-table='members']");
+    await membersList.waitForDisplayed({ timeout: 5000 });
+    const membersListItems = await this.driver.$$("h3.gh-members-list-name");
     const membersData = [];
-    for (const member of membersList) {
+    for (const member of membersListItems) {
       const memberName = await member.getText();
       const classes = await member.getAttribute("class");
       const hasNoNameClass = classes.includes("gh-members-name-noname");

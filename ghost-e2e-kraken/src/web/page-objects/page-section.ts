@@ -226,6 +226,8 @@ export class PageSection {
     }
 
     async getPageTitles() {
+        const pageList = await this.driver.$("div.posts-list.gh-list");
+        await pageList.waitForDisplayed({timeout: 5000});
         const titleElements = await this.driver.$$("div.posts-list.gh-list > div > li > a > h3");
         await titleElements[0].waitForDisplayed({timeout: 5000});
         return Promise.all(titleElements.map((element) => element.getText()));
