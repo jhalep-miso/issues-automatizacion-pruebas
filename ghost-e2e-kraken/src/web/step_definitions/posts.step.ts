@@ -30,6 +30,16 @@ Given(
     }
 );
 
+Given("I edit the previously created post, replacing the tag {kraken-string} by a new tag {kraken-string}",
+    async function (this: KrakenWorld, previousTag: string, newTag: string) {
+        await this.postPage.navigateToEditPost();
+        await this.postPage.clickSettingsButton();
+        await this.postPage.clickPublishSaveButton();
+        await this.tagPage.addPostTag(newTag);
+        await this.postPage.clickSettingsButton();
+        await this.postPage.clickPublishSaveButton();
+    });
+
 Given("I navigate to the created post", async function (this: KrakenWorld) {
   await this.postPage.navigateToPublishedPost();
 });

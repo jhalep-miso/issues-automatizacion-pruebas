@@ -4,11 +4,13 @@ import {BASE_URL} from "./constants";
 export class TagPage {
     driver: Browser<"async">;
     listTagUrl: string;
+    editTagUrl: string;
     createTagUrl: string;
 
     constructor(driver: Browser<"async">) {
         this.driver = driver;
-        this.listTagUrl = BASE_URL + "/ghost/#/tags";
+        this.listTagUrl = BASE_URL + "/ghost/#/tags/";
+        this.editTagUrl = BASE_URL + "/ghost/#/tags/";
         this.createTagUrl = BASE_URL + "/ghost/#/tags/new";
     }
 
@@ -24,6 +26,9 @@ export class TagPage {
     //ember-power-select-trigger-multiple-input-ember2261
     async addPostTag(tag: string) {
         const tagInputElement = await this.driver.$('.ember-power-select-trigger-multiple-input');
+        await tagInputElement.click();
+        await tagInputElement.keys(['Control', 'a']);
+        await tagInputElement.keys('Backspace');
         await tagInputElement.setValue(tag);
         await tagInputElement.execute(() => {
             const event = new Event('change', {bubbles: true});
@@ -65,20 +70,23 @@ export class TagPage {
         for (const listItem of tagListItems) {
             const tagNameElement = await listItem.$('.midgrey-l2');
             const tagName = await tagNameElement.getText();
-            console.log(tagName+"-"+tag)
+            console.log(tagName + "-" + tag)
             if (tagName.trim() === tag) {
                 count++;
-            } else {
-                return false;
             }
         }
-        console.log(count+"-"+quantityPost)
+        console.log(count + "-" + quantityPost)
         return count === quantityPost;
 
     }
 
     async navigateToCreateTag() {
         await this.driver.url(this.createTagUrl);
+        await this.pause();
+    }
+
+    async navigateToEditTag(tag: string) {
+        await this.driver.url(this.editTagUrl + tag.toLowerCase());
         await this.pause();
     }
 
@@ -93,5 +101,24 @@ export class TagPage {
         await saveButton.waitForDisplayed({timeout: 5000});
         await saveButton.click();
         await this.pause();
+    }
+
+    async clickDeleteTag() {
+        const saveButton = await this.driver.$("[data-test-button='delete-tag']");
+        await saveButton.waitForDisplayed({timeout: 5000});
+        await saveButton.click();
+        await this.pause();
+    }
+
+    async clickButtonConfirm() {
+        const confirmButton = await this.driver.$("[data-test-button='confirm']");
+        await confirmButton.waitForDisplayed({timeout: 5000});
+        await confirmButton.click();
+        await this.pause();
+    }
+
+    async hasTags() {
+        const tagListItems = await this.driver.$$('.gh-article-tag');
+        return tagListItems.length > 0
     }
 }
