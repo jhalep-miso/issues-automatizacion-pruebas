@@ -54,7 +54,6 @@ export class TagPage {
             if (tagName.trim() === tag) {
                 const postCountElement = await listItem.$('.gh-tag-list-posts-count');
                 const postCountText = await postCountElement.getText();
-                console.log(postCountText + "-" + quantityPostDisplay)
                 if (postCountText.trim() === quantityPostDisplay.trim()) {
                     found = true;
                     break;
@@ -70,12 +69,10 @@ export class TagPage {
         for (const listItem of tagListItems) {
             const tagNameElement = await listItem.$('.midgrey-l2');
             const tagName = await tagNameElement.getText();
-            console.log(tagName + "-" + tag)
             if (tagName.trim() === tag) {
                 count++;
             }
         }
-        console.log(count + "-" + quantityPost)
         return count === quantityPost;
 
     }
@@ -94,6 +91,7 @@ export class TagPage {
         const nameElement = await this.driver.$("[data-test-input='tag-name']");
         await nameElement.waitForDisplayed({timeout: 5000});
         await nameElement.setValue(tag);
+        await this.pause();
     }
 
     async clickSaveTag() {
@@ -120,5 +118,22 @@ export class TagPage {
     async hasTags() {
         const tagListItems = await this.driver.$$('.gh-article-tag');
         return tagListItems.length > 0
+    }
+
+    async hasTag(tag: string) {
+        console.log("Elemento inicio: " + tag);
+        const tagListItems = await this.driver.$$('.gh-article-tag');
+
+        if (tagListItems.length > 0) {
+            for (const element of tagListItems) {
+                const text = await element.getText();
+                console.log("Elemento: " + text);
+                if (text.toLowerCase() === tag.toLowerCase()) {
+                    return true; 
+                }
+            }
+        }
+
+        return false;
     }
 }

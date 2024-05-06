@@ -248,7 +248,6 @@ export class PostPage {
     }
 
     async filterPostByTag(tag: string) {
-        console.log("Filter by:"+tag)
         await this.driver.url(this.filterPostUrlByTag + tag);
         await this.pause();
     }
