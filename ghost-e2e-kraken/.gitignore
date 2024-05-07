@@ -3,4 +3,4 @@ reports/
 .kraken/
 features/web
 features/tsconfig.*
-steps/screenshots
+screenshots/

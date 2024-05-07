@@ -1,5 +1,5 @@
-import {KrakenWorld} from "web/support/support";
 
+import { KrakenWorld } from "../support/support";
 import {Given, Then, When} from "@cucumber/cucumber";
 import assert from "assert";
 

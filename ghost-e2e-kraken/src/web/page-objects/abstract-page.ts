@@ -1,7 +1,10 @@
 import { STEPS_SCREENSHOTS_PATH } from "../constants/files";
 import type { Browser } from "webdriverio";
 
-export type ExtendedBrowser = Browser<"async"> & { stepsCounter: number };
+export type ExtendedBrowser = Browser<"async"> & {
+  stepsCounter: number;
+  scenario: string;
+};
 
 export abstract class AbstractPage {
   driver: ExtendedBrowser;
@@ -16,7 +19,7 @@ export abstract class AbstractPage {
 
   async takeScreenshot(ssName = "screenshot") {
     await this.driver.saveScreenshot(
-      `./${STEPS_SCREENSHOTS_PATH}/step${++this.driver
+      `./${STEPS_SCREENSHOTS_PATH}/${this.driver.scenario}/step${++this.driver
         .stepsCounter}-${ssName}.png`
     );
   }

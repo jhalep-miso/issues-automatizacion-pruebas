@@ -19,10 +19,17 @@ export function getHtmlReportPath() {
   return htmlReport;
 }
 
+export function getScenarioName() {
+  const scenarioFile = getScenarioFileName();
+  return scenarioFile.split(".")[0] || "unknown-scenario";
+}
+
 export async function createScreenshotsFolder() {
+  const scenarioName = getScenarioName();
+  const fullPath = path.join(STEPS_SCREENSHOTS_PATH, scenarioName);
   try {
-    await fs.access(STEPS_SCREENSHOTS_PATH);
+    await fs.access(fullPath);
   } catch (error) {
-    await fs.mkdir(STEPS_SCREENSHOTS_PATH, { recursive: true });
+    await fs.mkdir(fullPath, { recursive: true });
   }
 }

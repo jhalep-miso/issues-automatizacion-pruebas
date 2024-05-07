@@ -5,13 +5,15 @@ import {PostPage} from "../page-objects/post-page";
 import {TagPage} from "../page-objects/tag-page";
 import {PageSection} from "../page-objects/page-section";
 import {ErrorPage} from "../page-objects/error-page";
+import { ExtendedBrowser } from "../page-objects/abstract-page";
+import { getScenarioName } from "../utils/files";
 
 export class KrakenWorld extends World {
     userId: any;
     device: any;
     testScenarioId: any;
     attach: any;
-    driver: any;
+    driver!: ExtendedBrowser;
     deviceClient: any;
     loginPage!: LoginPage;
     memberPage!: MemberPage;
@@ -31,6 +33,7 @@ export class KrakenWorld extends World {
 
     async init() {
         this.driver.stepsCounter = 0;
+        this.driver.scenario = getScenarioName()
         this.loginPage = new LoginPage(this.driver);
         this.memberPage = new MemberPage(this.driver);
         this.postPage = new PostPage(this.driver);
