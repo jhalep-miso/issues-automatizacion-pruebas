@@ -30,6 +30,7 @@ export class KrakenWorld extends World {
     }
 
     async init() {
+        this.driver.stepsCounter = 0;
         this.loginPage = new LoginPage(this.driver);
         this.memberPage = new MemberPage(this.driver);
         this.postPage = new PostPage(this.driver);

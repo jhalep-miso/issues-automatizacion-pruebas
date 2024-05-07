@@ -1,4 +1,4 @@
-import {BASE_URL} from "./constants";
+import { BASE_URL } from "../constants/url";
 import type {Browser} from "webdriverio";
 import {ListFilters} from "../utils/list-filters";
 

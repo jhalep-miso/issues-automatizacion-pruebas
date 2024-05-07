@@ -1,5 +1,5 @@
 import type {Browser} from "webdriverio";
-import {BASE_URL} from "./constants";
+import {BASE_URL} from "../constants/url";
 
 export class TagPage {
     driver: Browser<"async">;
