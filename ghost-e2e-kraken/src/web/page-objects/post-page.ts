@@ -1,6 +1,6 @@
 import { BASE_URL } from "../constants/url";
 import {ListFilters} from "../utils/list-filters";
-import { ScreenshotAfterEachStep } from "./decorator";
+import { ScreenshotAfterEachStep } from "./decorators";
 import { AbstractPage, ExtendedBrowser } from "./abstract-page";
 
 @ScreenshotAfterEachStep()

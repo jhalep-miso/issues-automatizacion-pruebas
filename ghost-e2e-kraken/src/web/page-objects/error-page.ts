@@ -1,5 +1,5 @@
 import { AbstractPage, ExtendedBrowser } from "./abstract-page";
-import { ScreenshotAfterEachStep } from "./decorator";
+import { ScreenshotAfterEachStep } from "./decorators";
 
 @ScreenshotAfterEachStep()
 export class ErrorPage extends AbstractPage {

@@ -1,5 +1,5 @@
 import { BASE_URL } from "../constants/url";
-import { ScreenshotAfterEachStep } from "./decorator";
+import { ScreenshotAfterEachStep, SkipScreenshot } from "./decorators";
 import { AbstractPage, ExtendedBrowser } from "./abstract-page";
 
 @ScreenshotAfterEachStep()

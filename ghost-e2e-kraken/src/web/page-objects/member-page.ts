@@ -1,6 +1,6 @@
 import { BASE_URL } from "../constants/url";
 import { AbstractPage, ExtendedBrowser } from "./abstract-page";
-import { ScreenshotAfterEachStep } from "./decorator";
+import { ScreenshotAfterEachStep } from "./decorators";
 
 @ScreenshotAfterEachStep()
 export class MemberPage extends AbstractPage {

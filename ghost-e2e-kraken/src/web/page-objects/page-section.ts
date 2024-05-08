@@ -2,7 +2,7 @@ import {BASE_URL} from "../constants/url";
 import type {Browser} from "webdriverio";
 import {ListFilters} from "../utils/list-filters";
 import { AbstractPage, ExtendedBrowser } from "./abstract-page";
-import { ScreenshotAfterEachStep } from "./decorator";
+import { ScreenshotAfterEachStep } from "./decorators";
 
 @ScreenshotAfterEachStep()
 export class PageSection extends AbstractPage {
