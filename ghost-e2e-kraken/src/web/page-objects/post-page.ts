@@ -1,9 +1,10 @@
-import {BASE_URL} from "./constants";
-import type {Browser} from "webdriverio";
+import { BASE_URL } from "../constants/url";
 import {ListFilters} from "../utils/list-filters";
+import { ScreenshotAfterEachStep } from "./decorators";
+import { AbstractPage, ExtendedBrowser } from "./abstract-page";
 
-export class PostPage {
-    driver: Browser<"async">;
+@ScreenshotAfterEachStep()
+export class PostPage extends AbstractPage {
     editPostUrl: string;
     createPostUrl: string;
     filterPostUrlByTag: string;
@@ -16,17 +17,13 @@ export class PostPage {
         ["Specific tier(s)", "tiers"],
     ]);
 
-    constructor(driver: Browser<"async">) {
-        this.driver = driver;
+    constructor(driver: ExtendedBrowser) {
+        super(driver);
         this.editPostUrl = "";
         this.publishedPostUrl = "";
         this.oldPostUrl = "";
         this.createPostUrl = BASE_URL + "/ghost/#/editor/post";
         this.filterPostUrlByTag = BASE_URL + "/ghost/#/posts?tag=";
-    }
-
-    async pause(milliseconds = 1000) {
-        await this.driver.pause(milliseconds);
     }
 
     async open(url: string) {

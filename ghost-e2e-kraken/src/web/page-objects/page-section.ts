@@ -1,9 +1,11 @@
-import {BASE_URL} from "./constants";
+import {BASE_URL} from "../constants/url";
 import type {Browser} from "webdriverio";
 import {ListFilters} from "../utils/list-filters";
+import { AbstractPage, ExtendedBrowser } from "./abstract-page";
+import { ScreenshotAfterEachStep } from "./decorators";
 
-export class PageSection {
-    driver: Browser<"async">;
+@ScreenshotAfterEachStep()
+export class PageSection extends AbstractPage {
     editPageUrl: string;
     createPageUrl: string;
     oldPageUrl: string;
@@ -15,16 +17,12 @@ export class PageSection {
         ["Specific tier(s)", "tiers"],
     ]);
 
-    constructor(driver: Browser<"async">) {
-        this.driver = driver;
+    constructor(driver: ExtendedBrowser) {
+        super(driver);
         this.editPageUrl = "";
         this.publishedPageUrl = "";
         this.oldPageUrl = "";
         this.createPageUrl = BASE_URL + "/ghost/#/editor/page";
-    }
-
-    async pause(milliseconds = 1000) {
-        await this.driver.pause(milliseconds);
     }
 
     async navigateToCreatePage() {

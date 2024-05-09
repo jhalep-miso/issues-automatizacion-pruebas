@@ -1,10 +1,10 @@
-import type {Browser} from "webdriverio";
+import { AbstractPage, ExtendedBrowser } from "./abstract-page";
+import { ScreenshotAfterEachStep } from "./decorators";
 
-export class ErrorPage {
-    driver: Browser<"async">;
-
-    constructor(driver: Browser<"async">) {
-        this.driver = driver;
+@ScreenshotAfterEachStep()
+export class ErrorPage extends AbstractPage {
+    constructor(driver: ExtendedBrowser) {
+        super(driver);
     }
 
     async getErrorText(): Promise<string> {

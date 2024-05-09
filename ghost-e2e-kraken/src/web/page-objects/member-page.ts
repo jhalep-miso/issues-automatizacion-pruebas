@@ -1,19 +1,16 @@
-import { BASE_URL } from "./constants";
-import type { Browser } from "webdriverio";
+import { BASE_URL } from "../constants/url";
+import { AbstractPage, ExtendedBrowser } from "./abstract-page";
+import { ScreenshotAfterEachStep } from "./decorators";
 
-export class MemberPage {
-  driver: Browser<"async">;
+@ScreenshotAfterEachStep()
+export class MemberPage extends AbstractPage {
   url = BASE_URL + "/ghost/#/members";
   createNewMemberUrl = BASE_URL + "/ghost/#/members/new";
   createdMemberUrl = "";
   impersonateLink = "";
 
-  constructor(driver: Browser<"async">) {
-    this.driver = driver;
-  }
-
-  async pause(milliseconds = 1000) {
-    await this.driver.pause(milliseconds);
+  constructor(driver: ExtendedBrowser) {
+    super(driver);
   }
 
   async navigateToMembersList() {

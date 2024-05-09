@@ -5,12 +5,13 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc --build",
-    "test": "npm run build && kraken-node run"
+    "test": "npm run build && cross-env EXECUTION_DATE=$(node setDate.js) kraken-node run"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cross-env": "^7.0.3",
     "kraken-node": "^1.0.24"
   },
   "devDependencies": {

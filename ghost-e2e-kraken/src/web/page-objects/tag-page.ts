@@ -1,21 +1,18 @@
-import type {Browser} from "webdriverio";
-import {BASE_URL} from "./constants";
+import {BASE_URL} from "../constants/url";
+import { ScreenshotAfterEachStep } from "./decorators";
+import { AbstractPage, ExtendedBrowser } from "./abstract-page";
 
-export class TagPage {
-    driver: Browser<"async">;
+@ScreenshotAfterEachStep()
+export class TagPage extends AbstractPage {
     listTagUrl: string;
     editTagUrl: string;
     createTagUrl: string;
 
-    constructor(driver: Browser<"async">) {
-        this.driver = driver;
+    constructor(driver: ExtendedBrowser) {
+        super(driver);
         this.listTagUrl = BASE_URL + "/ghost/#/tags/";
         this.editTagUrl = BASE_URL + "/ghost/#/tags/";
         this.createTagUrl = BASE_URL + "/ghost/#/tags/new";
-    }
-
-    async pause(milliseconds = 1000) {
-        await this.driver.pause(milliseconds);
     }
 
     async navigateToTagList() {

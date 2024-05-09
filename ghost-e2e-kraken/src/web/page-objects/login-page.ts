@@ -1,21 +1,17 @@
-import { BASE_URL } from "./constants";
-import type { Browser } from "webdriverio";
+import { BASE_URL } from "../constants/url";
+import { ScreenshotAfterEachStep, SkipScreenshot } from "./decorators";
+import { AbstractPage, ExtendedBrowser } from "./abstract-page";
 
-export class LoginPage {
-  driver: Browser<"async">;
+@ScreenshotAfterEachStep()
+export class LoginPage extends AbstractPage {
   url: string;
-  constructor(driver: Browser<"async">) {
-    this.driver = driver;
+  constructor(driver: ExtendedBrowser) {
+    super(driver);
     this.url = BASE_URL + "/ghost/#/signin";
-  }
-
-  async pause(milliseconds = 1000) {
-    await this.driver.pause(milliseconds);
   }
 
   async navigateToLogin() {
     await this.driver.url(this.url);
-    await this.pause();
   }
 
   async enterEmail(email: string) {
@@ -34,6 +30,5 @@ export class LoginPage {
     const signInButton = await this.driver.$("[data-test-button='sign-in']");
     await signInButton.waitForDisplayed({ timeout: 5000 });
     await signInButton.click();
-    await this.pause();
   }
 }

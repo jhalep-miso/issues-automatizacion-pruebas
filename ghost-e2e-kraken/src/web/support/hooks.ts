@@ -2,13 +2,15 @@ import { After, Before, BeforeAll, AfterAll } from "@cucumber/cucumber";
 import dns from "dns";
 import { KrakenWorld } from "./support";
 import { CustomWebClient } from "./custom-web-client";
-import path from "path";
-
-const REPORT_PATH_ARGS_INDEX = 5;
-const FEATURE_PATH_ARGS_INDEX = 6;
+import {
+  createScreenshotsFolder,
+  getHtmlReportPath,
+  getScenarioFileName,
+} from "../utils/files";
 
 BeforeAll(async function () {
   dns.setDefaultResultOrder("ipv4first");
+  await createScreenshotsFolder();
 });
 
 Before(async function (this: KrakenWorld) {
@@ -27,16 +29,3 @@ AfterAll(async function () {
   const reportHtml = getHtmlReportPath();
   console.log(`\x1b[36m Done! Report saved to: ${reportHtml} \x1b[0m`);
 });
-
-function getScenarioFileName() {
-  const scenarioPath = process.argv[FEATURE_PATH_ARGS_INDEX] || "";
-  const scenarioFile = path.basename(scenarioPath || "");
-  return scenarioFile;
-}
-
-function getHtmlReportPath() {
-  const reportPath = process.argv[REPORT_PATH_ARGS_INDEX] || "";
-  const dirName = path.dirname(reportPath.replace("json:", ""));
-  const htmlReport = path.join(dirName, "feature_report.html");
-  return htmlReport;
-}
