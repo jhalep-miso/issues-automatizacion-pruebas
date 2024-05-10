@@ -41,6 +41,7 @@ export class PostPage extends AbstractPage {
     async navigateToCreatePost() {
         await this.driver.url(this.createPostUrl);
         await this.pause();
+        await this.driver.refresh();
     }
 
     async navigateToEditPost() {
@@ -64,12 +65,14 @@ export class PostPage extends AbstractPage {
         await this.pause();
     }
 
+    // TODO: Fix this flaky fuck
     async setPostContent(content: string) {
         await this.pause()
         const contentElement = await this.driver.$(".koenig-editor__editor");
         await contentElement.waitForDisplayed({timeout: 5000});
+        await this.pause();
         await contentElement.setValue(content);
-        await this.pause(1000);
+        await this.pause();
     }
 
     async publishPost() {
@@ -96,6 +99,7 @@ export class PostPage extends AbstractPage {
         const postCreated = await this.driver.$(".post-view-link");
         await postCreated.waitForDisplayed({timeout: 5000});
         this.publishedPostUrl = await postCreated.getAttribute("href");
+        await this.pause();
     }
 
     async navigateToPublishedPost() {
@@ -134,7 +138,7 @@ export class PostPage extends AbstractPage {
 
     async clickDeletePost() {
         const deletePostButton = await this.driver.$(
-            ".settings-menu-delete-button > button"
+            "button.settings-menu-delete-button"
         );
         await deletePostButton.waitForDisplayed({timeout: 5000});
         await deletePostButton.click();
@@ -151,11 +155,6 @@ export class PostPage extends AbstractPage {
     }
 
     async clickUnpublishAndRevertToDraft() {
-        const revertToDraftButton = await this.driver.$(
-            "[data-test-button='revert-to-draft']"
-        );
-        await revertToDraftButton.waitForDisplayed({timeout: 5000});
-        await revertToDraftButton.click();
         await this.pause();
     }
 
@@ -166,10 +165,16 @@ export class PostPage extends AbstractPage {
     }
 
     async clickCodeInjectionButton() {
-        const codeInjectionButton = await this.driver.$(
-            "[data-test-button='codeinjection']"
+        const settingsPanel = await this.driver.$(
+          "#entry-controls > div.settings-menu-pane-in.settings-menu.settings-menu-pane"
         );
-        await codeInjectionButton.waitForDisplayed({timeout: 5000});
+        await settingsPanel.waitForDisplayed({ timeout: 5000 });
+        await settingsPanel.scrollIntoView();
+        const codeInjectionButton = await this.driver.$(
+          "//li[contains(., 'Code injection')]"
+        );
+
+        await codeInjectionButton.waitForDisplayed({ timeout: 5000 });
         await codeInjectionButton.click();
         await this.pause();
     }
@@ -228,9 +233,9 @@ export class PostPage extends AbstractPage {
     }
 
     async getPostTitles() {
-        const postListElement = await this.driver.$("div.posts-list.gh-list");
+        const postListElement = await this.driver.$("ol.posts-list.gh-list");
         await postListElement.waitForDisplayed({timeout: 5000});
-        const titleElements = await this.driver.$$("div.posts-list.gh-list > div > li > a > h3");
+        const titleElements = await this.driver.$$("ol.posts-list.gh-list > li > a > h3");
         return Promise.all(titleElements.map((element) => element.getText()));
     }
     
