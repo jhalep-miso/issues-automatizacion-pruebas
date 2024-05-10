@@ -68,8 +68,9 @@ export class PostPage extends AbstractPage {
         await this.pause()
         const contentElement = await this.driver.$(".koenig-editor__editor");
         await contentElement.waitForDisplayed({timeout: 5000});
+        await this.pause();
         await contentElement.setValue(content);
-        await this.pause(1000);
+        await this.pause();
     }
 
     async publishPost() {
@@ -151,11 +152,6 @@ export class PostPage extends AbstractPage {
     }
 
     async clickUnpublishAndRevertToDraft() {
-        const revertToDraftButton = await this.driver.$(
-            "[data-test-button='revert-to-draft']"
-        );
-        await revertToDraftButton.waitForDisplayed({timeout: 5000});
-        await revertToDraftButton.click();
         await this.pause();
     }
 
@@ -166,10 +162,16 @@ export class PostPage extends AbstractPage {
     }
 
     async clickCodeInjectionButton() {
-        const codeInjectionButton = await this.driver.$(
-            "[data-test-button='codeinjection']"
+        const settingsPanel = await this.driver.$(
+          "#entry-controls > div.settings-menu-pane-in.settings-menu.settings-menu-pane"
         );
-        await codeInjectionButton.waitForDisplayed({timeout: 5000});
+        await settingsPanel.waitForDisplayed({ timeout: 5000 });
+        await settingsPanel.scrollIntoView();
+        const codeInjectionButton = await this.driver.$(
+          "//li[contains(., 'Code injection')]"
+        );
+
+        await codeInjectionButton.waitForDisplayed({ timeout: 5000 });
         await codeInjectionButton.click();
         await this.pause();
     }
