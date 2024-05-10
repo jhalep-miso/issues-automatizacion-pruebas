@@ -41,6 +41,7 @@ export class PostPage extends AbstractPage {
     async navigateToCreatePost() {
         await this.driver.url(this.createPostUrl);
         await this.pause();
+        await this.driver.refresh();
     }
 
     async navigateToEditPost() {
@@ -97,6 +98,7 @@ export class PostPage extends AbstractPage {
         const postCreated = await this.driver.$(".post-view-link");
         await postCreated.waitForDisplayed({timeout: 5000});
         this.publishedPostUrl = await postCreated.getAttribute("href");
+        await this.pause();
     }
 
     async navigateToPublishedPost() {
@@ -135,7 +137,7 @@ export class PostPage extends AbstractPage {
 
     async clickDeletePost() {
         const deletePostButton = await this.driver.$(
-            ".settings-menu-delete-button > button"
+            "button.settings-menu-delete-button"
         );
         await deletePostButton.waitForDisplayed({timeout: 5000});
         await deletePostButton.click();
@@ -230,9 +232,9 @@ export class PostPage extends AbstractPage {
     }
 
     async getPostTitles() {
-        const postListElement = await this.driver.$("div.posts-list.gh-list");
+        const postListElement = await this.driver.$("ol.posts-list.gh-list");
         await postListElement.waitForDisplayed({timeout: 5000});
-        const titleElements = await this.driver.$$("div.posts-list.gh-list > div > li > a > h3");
+        const titleElements = await this.driver.$$("ol.posts-list.gh-list > li > a > h3");
         return Promise.all(titleElements.map((element) => element.getText()));
     }
     
