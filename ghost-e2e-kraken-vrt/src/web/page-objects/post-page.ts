@@ -61,31 +61,27 @@ export class PostPage extends AbstractPage {
         const titleElement = await this.driver.$(".gh-editor-title");
         await titleElement.waitForDisplayed({timeout: 5000});
         await titleElement.setValue(title);
+        await this.pause();
     }
 
     async setPostContent(content: string) {
-        const contentElement = await this.driver.$(".kg-prose");
+        await this.pause()
+        const contentElement = await this.driver.$(".koenig-editor__editor");
         await contentElement.waitForDisplayed({timeout: 5000});
         await contentElement.setValue(content);
-        await this.pause(2000);
+        await this.pause(1000);
     }
 
     async publishPost() {
         const publishButton = await this.driver.$(
-            "[data-test-button='publish-flow']"
+            ".gh-publishmenu-trigger"
         );
         await publishButton.waitForDisplayed({timeout: 5000});
         await publishButton.click();
         await this.pause();
-        const continueButton = await this.driver.$("[data-test-button='continue']");
+        const continueButton = await this.driver.$(".gh-publishmenu-button");
         await continueButton.waitForDisplayed({timeout: 5000});
         await continueButton.click();
-        await this.pause();
-        const confirmButton = await this.driver.$(
-            "[data-test-button='confirm-publish']"
-        );
-        await confirmButton.waitForDisplayed({timeout: 5000});
-        await confirmButton.click();
         await this.pause();
     }
 
@@ -94,7 +90,10 @@ export class PostPage extends AbstractPage {
     }
 
     async setPublishedPostUrl() {
-        const postCreated = await this.driver.$(".gh-post-bookmark-wrapper");
+        const settingsButton = await this.driver.$(".post-settings");
+        await settingsButton.waitForDisplayed({timeout: 5000});
+        await settingsButton.click();
+        const postCreated = await this.driver.$(".post-view-link");
         await postCreated.waitForDisplayed({timeout: 5000});
         this.publishedPostUrl = await postCreated.getAttribute("href");
     }
@@ -110,16 +109,24 @@ export class PostPage extends AbstractPage {
     }
 
     async clickSettingsButton() {
-        const settingsButton = await this.driver.$(".settings-menu-toggle");
+        const settingsButton = await this.driver.$(".post-settings");
         await settingsButton.waitForDisplayed({timeout: 5000});
         await settingsButton.click();
         await this.pause();
     }
 
     async clickUnpublishButton() {
-        const unpublishButton = await this.driver.$(
-            ".gh-unpublish-trigger[data-test-button='update-flow']"
+        const publishButton = await this.driver.$(
+            ".gh-publishmenu-trigger"
         );
+        await publishButton.waitForDisplayed({timeout: 5000});
+        await publishButton.click();
+        const unpublishRadio = await this.driver.$(
+            "//div[@class='gh-publishmenu-radio-label' and text()='Unpublished']"
+        );
+        await unpublishRadio.waitForDisplayed({timeout: 5000});
+        await unpublishRadio.click();
+        const unpublishButton = await this.driver.$(".gh-publishmenu-button");
         await unpublishButton.waitForDisplayed({timeout: 5000});
         await unpublishButton.click();
         await this.pause();
@@ -215,7 +222,7 @@ export class PostPage extends AbstractPage {
     }
 
     async getPostTitle() {
-        const titleElement = await this.driver.$("h1.gh-article-title");
+        const titleElement = await this.driver.$("h1.post-full-title");
         await titleElement.waitForDisplayed({timeout: 5000});
         return titleElement.getText();
     }
@@ -228,7 +235,7 @@ export class PostPage extends AbstractPage {
     }
     
     async getPostContent() {
-        const contentElement = await this.driver.$("section.gh-content > p");
+        const contentElement = await this.driver.$(".post-content > p");
         await contentElement.waitForDisplayed({timeout: 5000});
         return contentElement.getText();
     }
