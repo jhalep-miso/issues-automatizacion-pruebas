@@ -62,16 +62,28 @@ export class PostPage extends AbstractPage {
         const titleElement = await this.driver.$(".gh-editor-title");
         await titleElement.waitForDisplayed({timeout: 5000});
         await titleElement.setValue(title);
-        await this.pause();
     }
 
-    // TODO: Fix this flaky fuck
     async setPostContent(content: string) {
-        await this.pause()
         const contentElement = await this.driver.$(".koenig-editor__editor");
-        await contentElement.waitForDisplayed({timeout: 5000});
+        await contentElement.waitForDisplayed({ timeout: 5000 });
+        await contentElement.click();
         await this.pause();
         await contentElement.setValue(content);
+        // double check that the content is set sometimes the first letters are missing
+        // clearValue and setValue do not work properly
+        let text = await contentElement.getText();
+        while (text !== content) {
+            await contentElement.click();
+            await contentElement.keys(["End"]);
+            let i = 0;
+            while (text.length > i) {
+                await contentElement.keys("Backspace");
+                i++;
+            }
+            await contentElement.setValue(content);
+            text = await contentElement.getText();
+        }
         await this.pause();
     }
 
