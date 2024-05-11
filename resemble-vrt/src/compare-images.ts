@@ -11,7 +11,7 @@ const makeImagePairs = async (dir1: string, dir2: string): Promise<[string, stri
   const filesToCompare = images1.filter(path => existsSync(`${dir2}/${path.name}`))
   const images2paths = filesToCompare.map(path => `${dir2}/${path.name}`)
 
-  return images1.map((image1, idx) =>
+  return filesToCompare.map((image1, idx) =>
     [image1.name, image1.fullpath(), images2paths[idx]]
   )
 }
