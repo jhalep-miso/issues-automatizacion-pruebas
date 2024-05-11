@@ -1,3 +1,1 @@
-export const STEPS_SCREENSHOTS_PATH = process.env.EXECUTION_DATE
-  ? `./screenshots/${process.env.EXECUTION_DATE}`
-  : "./screenshots";
+export const STEPS_SCREENSHOTS_PATH = "ghost-3.42.0";
