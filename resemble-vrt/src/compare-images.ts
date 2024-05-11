@@ -1,5 +1,6 @@
 import { glob } from "glob"
 import resemble from "resemblejs/compareImages"
+import { options } from "./config"
 import * as fs from "fs/promises"
 import { existsSync } from "fs"
 
@@ -17,7 +18,7 @@ const makeImagePairs = async (dir1: string, dir2: string): Promise<[string, stri
 
 const compareImages = async ([resultImageName, image1, image2]: [string, string, string]): Promise<void> => {
   console.log(`Comparing ${image1} with ${image2}`)
-  const data = await resemble(image1, image2, {})
+  const data = await resemble(image1, image2, options)
 
   const resultPath = `${resultsDir}/${resultImageName}`
   console.log(`Writing results to ${resultPath}`)
