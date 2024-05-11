@@ -4,3 +4,4 @@ reports/
 features/web
 features/tsconfig.*
 screenshots/
+ghost-*/
