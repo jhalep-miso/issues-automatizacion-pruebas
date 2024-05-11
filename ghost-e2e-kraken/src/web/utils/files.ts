@@ -1,9 +1,6 @@
 import path from "path";
 import fs from "fs/promises";
-import {
-  FEATURE_PATH_ARGS_INDEX,
-  REPORT_PATH_ARGS_INDEX,
-} from "../constants/args";
+import { FEATURE_PATH_ARGS_INDEX } from "../constants/args";
 import { STEPS_SCREENSHOTS_PATH } from "../constants/files";
 
 export function getScenarioFileName() {
@@ -12,11 +9,9 @@ export function getScenarioFileName() {
   return scenarioFile;
 }
 
-export function getHtmlReportPath() {
-  const reportPath = process.argv[REPORT_PATH_ARGS_INDEX] || "";
-  const dirName = path.dirname(reportPath.replace("json:", ""));
-  const htmlReport = path.join(dirName, "feature_report.html");
-  return htmlReport;
+export function getScreenshotsPath() {
+  const scenarioName = getScenarioName();
+  return path.join(STEPS_SCREENSHOTS_PATH, scenarioName);
 }
 
 export function getScenarioName() {
@@ -25,8 +20,7 @@ export function getScenarioName() {
 }
 
 export async function createScreenshotsFolder() {
-  const scenarioName = getScenarioName();
-  const fullPath = path.join(STEPS_SCREENSHOTS_PATH, scenarioName);
+  const fullPath = getScreenshotsPath();
   try {
     await fs.access(fullPath);
   } catch (error) {

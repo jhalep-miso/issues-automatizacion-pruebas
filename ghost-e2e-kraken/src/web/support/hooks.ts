@@ -4,7 +4,7 @@ import { KrakenWorld } from "./support";
 import { CustomWebClient } from "./custom-web-client";
 import {
   createScreenshotsFolder,
-  getHtmlReportPath,
+  getScreenshotsPath,
   getScenarioFileName,
 } from "../utils/files";
 
@@ -26,6 +26,6 @@ After(async function (this: KrakenWorld) {
 });
 
 AfterAll(async function () {
-  const reportHtml = getHtmlReportPath();
-  console.log(`\x1b[36m Done! Report saved to: ${reportHtml} \x1b[0m`);
+  const screenshotsPath = getScreenshotsPath();
+  console.log(`\x1b[36m Done! Screenshots saved to: ${screenshotsPath} \x1b[0m`);
 });
