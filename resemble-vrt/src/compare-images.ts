@@ -1,28 +1,29 @@
-import { Path, glob } from "glob"
+import { glob } from "glob"
 import resemble from "resemblejs/compareImages"
 import * as fs from "fs/promises"
+import { existsSync } from "fs"
 
 // Helpers:
 
-const makeImagePairs = async (dir1: string, dir2: string): Promise<[Path, Path][]> => {
+const makeImagePairs = async (dir1: string, dir2: string): Promise<[string, string, string][]> => {
   const images1 = await glob(`${dir1}/**/*.{png, jpeg}`, { withFileTypes: true })
-  const filesToCompare = new Set(images1.map(path => path.name))
+  const filesToCompare = images1.filter(path => existsSync(`${dir2}/${path.name}`))
+  const images2paths = filesToCompare.map(path => `${dir2}/${path.name}`)
 
-  const allDir2Images = await glob(`${dir2}/**/*.{png, jpeg}`, { withFileTypes: true })
-  const images2 = allDir2Images.filter(path => filesToCompare.has(path.name))
-
-  const numFiles = Math.max(images1.length, images2.length)
-
-  return [...Array(numFiles).keys()].map(idx => [images1[idx], images2[idx]])
+  return images1.map((image1, idx) =>
+    [image1.name, image1.fullpath(), images2paths[idx]]
+  )
 }
 
-const compareImages = async ([image1, image2]: [Path, Path]): Promise<void> => {
-  console.log(`Comparing ${image1.fullpath()} with ${image2.fullpath()}`)
-  const data = await resemble(image1.fullpath(), image2.fullpath(), {})
+const compareImages = async ([resultImageName, image1, image2]: [string, string, string]): Promise<void> => {
+  console.log(`Comparing ${image1} with ${image2}`)
+  const data = await resemble(image1, image2, {})
 
-  const resultPath = `${resultsDir}/${image1.name}`
+  const resultPath = `${resultsDir}/${resultImageName}`
   console.log(`Writing results to ${resultPath}`)
-  return fs.writeFile(resultPath, data.getBuffer!(true))
+
+  if (data.getBuffer) return fs.writeFile(resultPath, data.getBuffer(false))
+  else console.log(`Was not able to extract image while comparing ${image1} with ${image2}`)
 }
 
 const executeComparison = async (dir1: string, dir2: string, resultsDir: string): Promise<void> => {
