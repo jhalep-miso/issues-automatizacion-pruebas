@@ -42,28 +42,38 @@ export class PageSection extends AbstractPage {
     }
 
     async setPageContent(content: string) {
-        const contentElement = await this.driver.$(".kg-prose");
-        await contentElement.waitForDisplayed({timeout: 5000});
+        const contentElement = await this.driver.$(".koenig-editor__editor");
+        await contentElement.waitForDisplayed({ timeout: 5000 });
+        await contentElement.click();
+        await this.pause();
         await contentElement.setValue(content);
-        await this.pause(2000);
+        // double check that the content is set sometimes the first letters are missing
+        // clearValue and setValue do not work properly
+        let text = await contentElement.getText();
+        while (text !== content) {
+            await contentElement.click();
+            await contentElement.keys(["End"]);
+            let i = 0;
+            while (text.length > i) {
+                await contentElement.keys("Backspace");
+                i++;
+            }
+            await contentElement.setValue(content);
+            text = await contentElement.getText();
+        }
+        await this.pause();
     }
 
     async publishPage() {
         const publishButton = await this.driver.$(
-            "[data-test-button='publish-flow']"
+            ".gh-publishmenu-trigger"
         );
         await publishButton.waitForDisplayed({timeout: 5000});
         await publishButton.click();
         await this.pause();
-        const continueButton = await this.driver.$("[data-test-button='continue']");
+        const continueButton = await this.driver.$(".gh-publishmenu-button");
         await continueButton.waitForDisplayed({timeout: 5000});
         await continueButton.click();
-        await this.pause();
-        const confirmButton = await this.driver.$(
-            "[data-test-button='confirm-publish']"
-        );
-        await confirmButton.waitForDisplayed({timeout: 5000});
-        await confirmButton.click();
         await this.pause();
     }
 
@@ -72,9 +82,13 @@ export class PageSection extends AbstractPage {
     }
 
     async setPublishedPageUrl() {
-        const pageCreated = await this.driver.$(".gh-post-bookmark-wrapper");
-        await pageCreated.waitForDisplayed({timeout: 5000});
-        this.publishedPageUrl = await pageCreated.getAttribute("href");
+        const settingsButton = await this.driver.$(".post-settings");
+        await settingsButton.waitForDisplayed({timeout: 5000});
+        await settingsButton.click();
+        const postCreated = await this.driver.$(".post-view-link");
+        await postCreated.waitForDisplayed({timeout: 5000});
+        this.publishedPageUrl = await postCreated.getAttribute("href");
+        await this.pause();
     }
 
     async navigateToPublishedPage() {
@@ -88,7 +102,7 @@ export class PageSection extends AbstractPage {
     }
 
     async clickSettingsButton() {
-        const settingsButton = await this.driver.$(".settings-menu-toggle");
+        const settingsButton = await this.driver.$(".post-settings");
         await settingsButton.waitForDisplayed({timeout: 5000});
         await settingsButton.click();
         await this.pause();
@@ -175,13 +189,13 @@ export class PageSection extends AbstractPage {
     }
 
     async getPageTitle() {
-        const titleElement = await this.driver.$("h1.gh-article-title");
+        const titleElement = await this.driver.$("h1.post-full-title");
         await titleElement.waitForDisplayed({timeout: 5000});
         return titleElement.getText();
     }
 
     async getPageContent() {
-        const contentElement = await this.driver.$("section.gh-content > p");
+        const contentElement = await this.driver.$(".post-content > p");
         await contentElement.waitForDisplayed({timeout: 5000});
         return contentElement.getText();
     }
