@@ -54,6 +54,27 @@ Se compararán las imágenes entre las carpetas (escenarios) `ghost-e2e-kraken/g
 * para cada escenario se repite el proceso anterior, por cada paso del escenario
 * Al terminar de realizar las comparaciones entre todos los escenarios, se guarda un reporte completo sobre todos los escenarios en `results/report.html`
 
+### Pasos para Generación del Reporte VRT
+
+1. Ejecutar las pruebas de Kraken el la carpeta `ghost-e2e-kraken-vrt` siguiendo los pasos de la sección [Instalación y Ejecución de las Pruebas en Kraken](instalación-y-ejecución-de-las-pruebas-en-kraken). Al finalizar, se debió crear una carpeta `ghost-e2e-kraken-vrt/ghost-3.42.0` que contiene los screenshots de las pruebas
+2. Ejecutar las pruebas de Kraken el la carpeta `ghost-e2e-kraken` siguiendo los pasos de la sección [Instalación y Ejecución de las Pruebas en Kraken](instalación-y-ejecución-de-las-pruebas-en-kraken). Al finalizar, se debió crear una carpeta `ghost-e2e-kraken/ghost-5.80.0` que contiene los screenshots de las pruebas
+3. Ir al directorio `cd resemble-vrt`
+4. Instalar las dependencias del proyecto. Asegurarse de que tiene instaladas las [dependencias requeridas para node-canvas](https://github.com/Automattic/node-canvas?tab=readme-ov-file#compiling) en su computador, ya que `resemblejs` depende de `node-canvas`. Ejecutar `npm install` para instalar las dependencias del projecto
+5. Ejecutar el script para realizar el VRT y generar el reporte (puede cambiar los argumentos dependiendo de dónde se tenga las carpetas con las imágenes):
+```bash
+npm run vrt ../ghost-e2e-kraken-vrt/ghost-3.42.0 ../ghost-e2e-kraken/ghost-5.80.0 ../vrt-comparison-results
+```
+
+6. Abrir el archivo `../vrt-comparison-results/report.html` en un navegador, preferiblemente Chrome; encontramos algunos problemas en firefox donde las imágenes no se cargan debido a falta de permisos. (Si se especificó otra carpeta de resultados diferente a `vrt-comparison-results`, buscar el `report.html` dentro de la carpeta especificada)
+7. Al abrir el reporte, debería ver algo similar a lo siguiente:
+
+<img width="1476" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/a07ae4c1-ad16-49da-bec9-578dba7af99a">
+
+8. Al hacer click en alguno de los escenarios, debería ver un reporte parecido a:
+
+<img width="1476" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/95c2ea98-99bd-4b81-8730-48cc0b66e572">
+
+
 ## Instalación y Ejecución de las Pruebas en Kraken
 
 Antes de comenzar, asegúrate de cumplir con los siguientes requisitos:
