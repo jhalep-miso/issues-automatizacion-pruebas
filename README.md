@@ -11,6 +11,8 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
 
 ## Visual Regression Testing: Comparación de Imágenes y Generación de Reportes
 
+(**Relacionado:** [Pros y Contras de Resemble.js](https://github.com/jhalep-miso/issues-automatizacion-pruebas/wiki/Pros-y-Contras-de-las-Herramientas-Utilizadas#resemblejs))
+
 Este proyecto tiene la capacidad de realizar VRT entre dos versiones de Ghost, a partir de los screenshots que se toman en cada paso de cada escenario de prueba en `Kraken`. Dentro de la carpeta `resemble-vrt` se encuentra un script que recibe como entrada dos paths hacia los directorios que contienen los screenshots tomados para cada versión de Ghost, y un tercer path hacia el directorio donde se quiere guardar los resultados del VRT. En este directorio de resultados, se guardarán las imagen calculadas por `ResembleJS` a partir de la comparación de cada paso entre versiones, así como el reporte final en un archivo HTML. En este script se asume lo siguiente sobre las carpetas a comparar:
 
 * Cada imágen corresponde a un step/paso de un escenario
