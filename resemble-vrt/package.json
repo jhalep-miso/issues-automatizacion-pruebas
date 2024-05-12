@@ -2,7 +2,7 @@
   "scripts": {
     "clean": "tsc --build --clean",
     "build": "tsc",
-    "vrt": "tsc && node build/compare-images.js"
+    "vrt": "tsc && node build/index.js"
   },
   "devDependencies": {
     "@types/node": "^20.12.11",
