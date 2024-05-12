@@ -1,7 +1,7 @@
-import { BASE_URL } from "../constants/url";
+import {BASE_URL} from "../constants/url";
 import {ListFilters} from "../utils/list-filters";
-import { ScreenshotAfterEachStep } from "./decorators";
-import { AbstractPage, ExtendedBrowser } from "./abstract-page";
+import {ScreenshotAfterEachStep} from "./decorators";
+import {AbstractPage, ExtendedBrowser} from "./abstract-page";
 
 @ScreenshotAfterEachStep()
 export class PostPage extends AbstractPage {
@@ -32,7 +32,7 @@ export class PostPage extends AbstractPage {
             const readyState = await this.driver.execute(() => document.readyState);
             return readyState === 'complete';
         }, {
-            timeout: 10000, 
+            timeout: 10000,
             timeoutMsg: 'expected page to be loaded after 10s'
         });
     }
@@ -50,12 +50,12 @@ export class PostPage extends AbstractPage {
     }
 
     async navigateToPostsList(filter?: ListFilters) {
-    const query = new URLSearchParams(filter).toString();
-    const url = query
-      ? `${BASE_URL}/ghost/#/posts?${query}`
-      : `${BASE_URL}/ghost/#/posts`;
-      await this.open(url);
-      await this.pause();
+        const query = new URLSearchParams(filter).toString();
+        const url = query
+            ? `${BASE_URL}/ghost/#/posts?${query}`
+            : `${BASE_URL}/ghost/#/posts`;
+        await this.open(url);
+        await this.pause();
     }
 
     async setPostTitle(title: string) {
@@ -66,7 +66,7 @@ export class PostPage extends AbstractPage {
 
     async setPostContent(content: string) {
         const contentElement = await this.driver.$(".koenig-editor__editor");
-        await contentElement.waitForDisplayed({ timeout: 5000 });
+        await contentElement.waitForDisplayed({timeout: 5000});
         await contentElement.click();
         await this.pause();
         await contentElement.setValue(content);
@@ -104,15 +104,6 @@ export class PostPage extends AbstractPage {
         this.editPostUrl = await this.driver.getUrl();
     }
 
-    async setPublishedPostUrl() {
-        const settingsButton = await this.driver.$(".post-settings");
-        await settingsButton.waitForDisplayed({timeout: 5000});
-        await settingsButton.click();
-        const postCreated = await this.driver.$(".post-view-link");
-        await postCreated.waitForDisplayed({timeout: 5000});
-        this.publishedPostUrl = await postCreated.getAttribute("href");
-        await this.pause();
-    }
 
     async navigateToPublishedPost() {
         await this.driver.url(this.publishedPostUrl);
@@ -128,6 +119,25 @@ export class PostPage extends AbstractPage {
         const settingsButton = await this.driver.$(".post-settings");
         await settingsButton.waitForDisplayed({timeout: 5000});
         await settingsButton.click();
+        await this.pause();
+        await this.clickOutsideComponent()
+    }
+
+    async clickOutsideComponent() {
+        const body = await this.driver.$('body');
+        await body.moveTo();
+        await this.driver.pause(500);
+        await body.click();
+        await this.driver.pause(500);
+    }
+
+    async setPublishedPostUrl() {
+        const settingsButton = await this.driver.$(".post-settings");
+        await settingsButton.waitForDisplayed({timeout: 5000});
+        await settingsButton.click();
+        const postCreated = await this.driver.$(".post-view-link");
+        await postCreated.waitForDisplayed({timeout: 5000});
+        this.publishedPostUrl = await postCreated.getAttribute("href");
         await this.pause();
     }
 
@@ -179,13 +189,13 @@ export class PostPage extends AbstractPage {
 
     async clickCodeInjectionButton() {
         const settingsPanel = await this.driver.$(
-          "#entry-controls > div.settings-menu-pane-in.settings-menu.settings-menu-pane"
+            "#entry-controls > div.settings-menu-pane-in.settings-menu.settings-menu-pane"
         );
-        await settingsPanel.waitForDisplayed({ timeout: 15000 });
+        await settingsPanel.waitForDisplayed({timeout: 15000});
         const codeInjectionButton = await this.driver.$(
-          "//li[contains(., 'Code injection')]"
+            "//li[contains(., 'Code injection')]"
         );
-        await codeInjectionButton.waitForDisplayed({ timeout: 15000 });
+        await codeInjectionButton.waitForDisplayed({timeout: 15000});
         await codeInjectionButton.scrollIntoView();
         await codeInjectionButton.click();
         await this.pause();
@@ -232,9 +242,14 @@ export class PostPage extends AbstractPage {
     }
 
     async clickPublishSaveButton() {
-        const saveButton = await this.driver.$("[data-test-button='publish-save']");
+        const saveButton = await this.driver.$("[data-test-button='publish-save'], .gh-publishmenu");
         await saveButton.waitForDisplayed({timeout: 5000});
         await saveButton.click();
+        await this.pause();
+
+        const continueButton = await this.driver.$(".gh-publishmenu-button");
+        await continueButton.waitForDisplayed({timeout: 15000});
+        await continueButton.click();
         await this.pause();
     }
 
@@ -250,7 +265,7 @@ export class PostPage extends AbstractPage {
         const titleElements = await this.driver.$$("ol.posts-list.gh-list > li > a > h3");
         return Promise.all(titleElements.map((element) => element.getText()));
     }
-    
+
     async getPostContent() {
         const contentElement = await this.driver.$(".post-content > p");
         await contentElement.waitForDisplayed({timeout: 5000});
