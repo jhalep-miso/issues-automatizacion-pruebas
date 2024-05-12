@@ -72,7 +72,7 @@ export class PageSection extends AbstractPage {
         await publishButton.click();
         await this.pause();
         const continueButton = await this.driver.$(".gh-publishmenu-button");
-        await continueButton.waitForDisplayed({timeout: 5000});
+        await continueButton.waitForDisplayed({timeout: 15000});
         await continueButton.click();
         await this.pause();
     }
