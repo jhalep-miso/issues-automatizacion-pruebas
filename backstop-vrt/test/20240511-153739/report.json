@@ -1,0 +1,22 @@
+{
+  "testSuite": "BackstopJS",
+  "tests": [
+    {
+      "pair": {
+        "reference": "..\\..\\reference\\0305290799_comparison_0_body_0_default.png",
+        "test": "..\\..\\test\\20240511-153739\\0305290799_comparison_0_body_0_default.png",
+        "selector": "body",
+        "fileName": "0305290799_comparison_0_body_0_default.png",
+        "label": "comparison",
+        "requireSameDimensions": true,
+        "misMatchThreshold": 0,
+        "url": "about:blank",
+        "referenceUrl": "file:///C:/Users/sergio.celis/step1-navigateToLogin.png",
+        "expect": 0,
+        "viewportLabel": "default",
+        "error": "Reference file not found C:\\Users\\sergio.celis\\OneDrive - ApplusGlobal\\Documentos\\Maestría\\issues-automatizacion-pruebas\\backstop-vrt\\reference\\0305290799_comparison_0_body_0_default.png"
+      },
+      "status": "fail"
+    }
+  ]
+}

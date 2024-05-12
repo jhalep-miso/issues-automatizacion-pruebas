@@ -1,0 +1,29 @@
+{
+  "id": "step1",
+  "viewports": [
+    {
+      "label": "navigateToLogin",
+      "width": 1200,
+      "height": 761
+    }
+  ],
+  "scenarios": [
+    {
+      "label": "navigateToLogin",
+      "url": "file://backstop-vrt/backstop_data/bitmaps_test/03-create-post-change-url/step1-navigateToLogin.png",
+      "delay": 0,
+      "misMatchThreshold": 5,
+      "selector": "body",
+      "selectors": ["body"]
+    }
+  ],
+  "paths": {
+    "bitmaps_reference": "backstop_data/bitmaps_reference/03-create-post-change-url",
+    "bitmaps_test": "backstop_data/bitmaps_test",
+    "casper_scripts": "backstop_data/casper_scripts",
+    "html_report": "backstop_data/html_report",
+    "ci_report": "backstop_data/ci_report"
+  },
+  "report": ["browser"],
+  "engine": "puppeteer"
+}
