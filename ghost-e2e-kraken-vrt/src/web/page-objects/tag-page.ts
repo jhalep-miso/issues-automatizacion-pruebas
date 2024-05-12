@@ -86,14 +86,14 @@ export class TagPage extends AbstractPage {
     }
 
     async setTagName(tag: string) {
-        const nameElement = await this.driver.$("[data-test-input='tag-name']");
+        const nameElement = await this.driver.$("#tag-name");
         await nameElement.waitForDisplayed({timeout: 5000});
         await nameElement.setValue(tag);
         await this.pause();
     }
 
     async clickSaveTag() {
-        const saveButton = await this.driver.$("[data-test-button='save']");
+        const saveButton = await this.driver.$('button[data-test-button="save"].gh-btn, .view-actions button.gh-btn-blue');
         await saveButton.waitForDisplayed({timeout: 5000});
         await saveButton.click();
         await this.pause();
