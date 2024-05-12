@@ -95,7 +95,7 @@ export class PostPage extends AbstractPage {
         await publishButton.click();
         await this.pause();
         const continueButton = await this.driver.$(".gh-publishmenu-button");
-        await continueButton.waitForDisplayed({timeout: 5000});
+        await continueButton.waitForDisplayed({timeout: 15000});
         await continueButton.click();
         await this.pause();
     }
@@ -152,7 +152,8 @@ export class PostPage extends AbstractPage {
         const deletePostButton = await this.driver.$(
             "button.settings-menu-delete-button"
         );
-        await deletePostButton.waitForDisplayed({timeout: 5000});
+        await deletePostButton.waitForDisplayed({timeout: 15000});
+        await deletePostButton.scrollIntoView();
         await deletePostButton.click();
         await this.pause();
     }
@@ -180,13 +181,12 @@ export class PostPage extends AbstractPage {
         const settingsPanel = await this.driver.$(
           "#entry-controls > div.settings-menu-pane-in.settings-menu.settings-menu-pane"
         );
-        await settingsPanel.waitForDisplayed({ timeout: 5000 });
-        await settingsPanel.scrollIntoView();
+        await settingsPanel.waitForDisplayed({ timeout: 15000 });
         const codeInjectionButton = await this.driver.$(
           "//li[contains(., 'Code injection')]"
         );
-
-        await codeInjectionButton.waitForDisplayed({ timeout: 5000 });
+        await codeInjectionButton.waitForDisplayed({ timeout: 15000 });
+        await codeInjectionButton.scrollIntoView();
         await codeInjectionButton.click();
         await this.pause();
     }
