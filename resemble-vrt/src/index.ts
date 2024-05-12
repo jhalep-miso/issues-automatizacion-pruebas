@@ -1,7 +1,7 @@
 import { options } from "./config"
 import { scenarioComparisonFiles } from "./files"
 import { executeScenarioComparison } from "./images"
-import { writeReport } from "./reporting"
+import { Reporter } from "./reporting"
 
 const main = async (dir1: string, dir2: string, resultsDir: string): Promise<void> => {
   const scenarios = await scenarioComparisonFiles(dir1, dir2)
@@ -10,7 +10,7 @@ const main = async (dir1: string, dir2: string, resultsDir: string): Promise<voi
     scenarios.map(scenario => executeScenarioComparison(resultsDir, options, scenario))
   )
 
-  await writeReport(dir1, dir2, resultsDir, results)
+  await new Reporter({ dir1, dir2, resultsDir }).writeReport(results)
 }
 
 const [_node, _script, dir1, dir2, resultsDir] = process.argv
