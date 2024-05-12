@@ -45,7 +45,7 @@ Por ejemplo, dada la siguiente estructura de archivos, asumamos que se quiere co
             ├── step11-navigateToPublishedPost.png
 ```
 
-Se compararán las imágenes entre las carpetas (escenarios) `ghost-e2e-kraken/ghost-5.80.0/03-create-post-change-url` y `ghost-e2e-kraken-vrt/ghost-3.42.0/03-create-post-change-url`, y se guardaran los resultados en `ghost-e2e-kraken/results/03-create-post-change-url` para este escenario particular. La comparación ocurre por cada paraja de imagen que tengan el mismo nombre de archivo. Para este ejemplo, se hace lo siguiente:
+Se compararán las imágenes entre las carpetas (escenarios) `ghost-e2e-kraken/ghost-5.80.0/03-create-post-change-url` y `ghost-e2e-kraken-vrt/ghost-3.42.0/03-create-post-change-url`, y se guardaran los resultados en `results/03-create-post-change-url` para este escenario particular. La comparación ocurre por cada paraja de imagen que tengan el mismo nombre de archivo. Para este ejemplo, se hace lo siguiente:
 
 * Se compara `ghost-3.42.0/03-create-post-change-url/step1-navigateToLogin.png` con `ghost-3.42.0/03-create-post-change-url/step1-navigateToLogin.png`, y se guarda el resultado en `results/03-create-post-change-url/step1-navigateToLogin.png`
 * Se compara `ghost-3.42.0/03-create-post-change-url/step10-setPublishedPostUrl.png` con `ghost-3.42.0/03-create-post-change-url/step10-setPublishedPostUrl.png`, y se guarda el resultado en `results/03-create-post-change-url/step10-setPublishedPostUrl.png`
