@@ -1,6 +1,6 @@
 import {BASE_URL} from "../constants/url";
-import { ScreenshotAfterEachStep } from "./decorators";
-import { AbstractPage, ExtendedBrowser } from "./abstract-page";
+import {ScreenshotAfterEachStep} from "./decorators";
+import {AbstractPage, ExtendedBrowser} from "./abstract-page";
 
 @ScreenshotAfterEachStep()
 export class TagPage extends AbstractPage {
@@ -49,12 +49,13 @@ export class TagPage extends AbstractPage {
         for (const listItem of tagListItems) {
             const tagNameElement = await listItem.$('.gh-tag-list-name');
             const tagName = await tagNameElement.getText();
+            console.log("TagName:" + tagName + "-" + tag)
             if (tagName.trim() === tag) {
                 const postCountElement = await listItem.$('.gh-tag-list-posts-count');
                 const postCountText = await postCountElement.getText();
+                console.log("postCountText:" + postCountText + "-" + quantityPostDisplay)
                 if (postCountText.trim() === quantityPostDisplay.trim()) {
                     found = true;
-                    break;
                 }
             }
         }
@@ -62,16 +63,12 @@ export class TagPage extends AbstractPage {
     }
 
     async validateTagCountAndName(tag: string, quantityPost: number) {
+        const selectedItemElement = await this.driver.$('.gh-contentfilter-tag .ember-power-select-selected-item');
         const tagListItems = await this.driver.$$('.gh-posts-list-item');
-        let count = 0;
-        for (const listItem of tagListItems) {
-            const tagNameElement = await listItem.$('.midgrey-l2');
-            const tagName = await tagNameElement.getText();
-            if (tagName.trim() === tag) {
-                count++;
-            }
-        }
-        return count === quantityPost;
+        await selectedItemElement.waitForDisplayed({timeout: 5000});
+        const selectedItemText = await selectedItemElement.getText();
+        console.log("Tag:" + tag + "TagValue:" + selectedItemText.trim() + "tagListItems: " + tagListItems.length)
+        return tag === selectedItemText.trim() && tagListItems.length == quantityPost
 
     }
 
@@ -100,14 +97,20 @@ export class TagPage extends AbstractPage {
     }
 
     async clickDeleteTag() {
-        const saveButton = await this.driver.$("[data-test-button='delete-tag']");
-        await saveButton.waitForDisplayed({timeout: 5000});
+        await this.scrollToEndOfPage();
+        const saveButton = await this.driver.$("[data-test-button='delete-tag'], .gh-btn.gh-btn-red.gh-btn-icon.mb15");
+        await saveButton.waitForDisplayed({timeout: 15000});
+        await saveButton.scrollIntoView();
         await saveButton.click();
         await this.pause();
     }
 
+    async scrollToEndOfPage() {
+        await this.driver.executeScript("document.documentElement.scrollIntoView({ behavior: 'smooth', block: 'end', inline: 'end' })",[]);
+    }
+
     async clickButtonConfirm() {
-        const confirmButton = await this.driver.$("[data-test-button='confirm']");
+        const confirmButton = await this.driver.$("[data-test-button='confirm'], .gh-btn.gh-btn-red.gh-btn-icon.ember-view");
         await confirmButton.waitForDisplayed({timeout: 5000});
         await confirmButton.click();
         await this.pause();
@@ -120,14 +123,14 @@ export class TagPage extends AbstractPage {
 
     async hasTag(tag: string) {
         console.log("Elemento inicio: " + tag);
-        const tagListItems = await this.driver.$$('.gh-article-tag');
+        const tagListItems = await this.driver.$$('.gh-article-tag, section.post-full-tags a');
 
         if (tagListItems.length > 0) {
             for (const element of tagListItems) {
                 const text = await element.getText();
                 console.log("Elemento: " + text);
                 if (text.toLowerCase() === tag.toLowerCase()) {
-                    return true; 
+                    return true;
                 }
             }
         }
