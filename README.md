@@ -9,6 +9,51 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
 - **Alejandro Peña**: [ja.penat1@uniandes.edu.co](mailto:ja.penat1@uniandes.edu.co)
 - **Romel Palomino Jaramillo**: [r.palominoj@uniandes.edu.co](mailto:r.palominoj@uniandes.edu.co)
 
+## Visual Regression Testing: Comparación de Imágenes y Generación de Reportes
+
+Este proyecto tiene la capacidad de realizar VRT entre dos versiones de Ghost, a partir de los screenshots que se toman en cada paso de cada escenario de prueba en `Kraken`. Dentro de la carpeta `resemble-vrt` se encuentra un script que recibe como entrada dos paths hacia los directorios que contienen los screenshots tomados para cada versión de Ghost, y un tercer path hacia el directorio donde se quiere guardar los resultados del VRT. En este directorio de resultados, se guardarán las imagen calculadas por `ResembleJS` a partir de la comparación de cada paso entre versiones, así como el reporte final en un archivo HTML. En este script se asume lo siguiente sobre las carpetas a comparar:
+
+* Cada imágen corresponde a un step/paso de un escenario
+* La carpeta padre de una imagen corresponde al nombre del escenario al que pertenece
+* Los escenarios y pasos que se van a comparar tienen el mismo path relativo con respecto a cada directorio base
+
+Por ejemplo, dada la siguiente estructura de archivos, asumamos que se quiere comparar las carpetas `ghost-8.50.0`y `ghost-3.42.0`, y que se generarán los resultados en la carpeta `results`
+
+```
+├── ghost-e2e-kraken
+│   └── ghost-5.80.0
+│       ├── 01-create-post-for-members-only
+│       │   ├── step1-navigateToLogin.png
+│       │   ├── step10-setPublishedPostUrl.png
+│       │   ├── step11-navigateToPublishedPost.png
+│       │   └── ...
+│       └── 02-create-post-for-paid-members
+│       │   ├── step1-navigateToLogin.png
+│       │   ├── step10-setPublishedPostUrl.png
+│       │   ├── step11-navigateToPublishedPost.png
+│       │   └── ...
+        └── 03-create-post-change-url
+│       │   ├── step1-navigateToLogin.png
+│       │   ├── step10-setPublishedPostUrl.png
+│       │   ├── step11-navigateToPublishedPost.png
+│       │   └── ...
+└── ghost-e2e-kraken-vrt
+    └── ghost-3.42.0
+        └── 03-create-post-change-url
+            ├── step1-navigateToLogin.png
+            ├── step10-setPublishedPostUrl.png
+            ├── step11-navigateToPublishedPost.png
+```
+
+Se compararán las imágenes entre las carpetas (escenarios) `ghost-e2e-kraken/ghost-5.80.0/03-create-post-change-url` y `ghost-e2e-kraken-vrt/ghost-3.42.0/03-create-post-change-url`, y se guardaran los resultados en `ghost-e2e-kraken/results/03-create-post-change-url` para este escenario particular. La comparación ocurre por cada paraja de imagen que tengan el mismo nombre de archivo. Para este ejemplo, se hace lo siguiente:
+
+* Se compara `ghost-3.42.0/03-create-post-change-url/step1-navigateToLogin.png` con `ghost-3.42.0/03-create-post-change-url/step1-navigateToLogin.png`, y se guarda el resultado en `results/03-create-post-change-url/step1-navigateToLogin.png`
+* Se compara `ghost-3.42.0/03-create-post-change-url/step10-setPublishedPostUrl.png` con `ghost-3.42.0/03-create-post-change-url/step10-setPublishedPostUrl.png`, y se guarda el resultado en `results/03-create-post-change-url/step10-setPublishedPostUrl.png`
+* Se compara `ghost-3.42.0/03-create-post-change-url/step10-setPublishedPostUrl.png` con `ghost-3.42.0/03-create-post-change-url/step10-setPublishedPostUrl.png`, y se guarda el resultado en `results/03-create-post-change-url/step10-setPublishedPostUrl.png`
+* Se guarda un reporte para el escenario `03-create-post-change-url` en `results/03-create-post-change-url/report.hmtl`
+* para cada escenario se repite el proceso anterior, por cada paso del escenario
+* Al terminar de realizar las comparaciones entre todos los escenarios, se guarda un reporte completo sobre todos los escenarios en `results/report.html`
+
 ## Instalación y Ejecución de las Pruebas en Kraken
 
 Antes de comenzar, asegúrate de cumplir con los siguientes requisitos:
