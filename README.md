@@ -11,6 +11,8 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
 
 ## Visual Regression Testing: Comparación de Imágenes y Generación de Reportes
 
+## 1. ResembleJS
+
 (**Relacionado:** [Pros y Contras de Resemble.js](https://github.com/jhalep-miso/issues-automatizacion-pruebas/wiki/Pros-y-Contras-de-las-Herramientas-Utilizadas#resemblejs))
 
 Este proyecto tiene la capacidad de realizar VRT entre dos versiones de Ghost, a partir de los screenshots que se toman en cada paso de cada escenario de prueba en `Kraken`. Dentro de la carpeta `resemble-vrt` se encuentra un script que recibe como entrada dos paths hacia los directorios que contienen los screenshots tomados para cada versión de Ghost, y un tercer path hacia el directorio donde se quiere guardar los resultados del VRT. En este directorio de resultados, se guardarán las imagen calculadas por `ResembleJS` a partir de la comparación de cada paso entre versiones, así como el reporte final en un archivo HTML. En este script se asume lo siguiente sobre las carpetas a comparar:
@@ -76,6 +78,40 @@ npm run vrt ../ghost-e2e-kraken-vrt/ghost-3.42.0 ../ghost-e2e-kraken/ghost-5.80.
 9. Al hacer click en alguno de los escenarios, debería ver un reporte parecido a:
 
 <img width="1476" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/95c2ea98-99bd-4b81-8730-48cc0b66e572">
+
+## 2. BackstopJS
+
+(**Relacionado:** [Pros y Contras de BackstopJS](https://github.com/jhalep-miso/issues-automatizacion-pruebas/wiki/Pros-y-Contras-de-las-Herramientas-Utilizadas#backstopjs))
+
+Este proyecto tiene la capacidad de realizar VRT entre dos versiones de Ghost, a partir de los screenshots que se toman en cada paso de cada escenario de prueba en Kraken. Dentro de la carpeta `backstop` se encuentra un script que se encarga de crear los archivos `backstop.json` para cada uno de los escenarios de pruebas, así como los reportes y los directorios con las imágenes de referencia y pruebas. Dentro del directorio `backstop_data` encontrará otro directorio llamado `html_report` que contendrá los reportes para cada uno de los escenarios de prueba. En este script se asume lo siguiente sobre las carpetas a comparar:
+
+* Cada imágen corresponde a un step/paso de un escenario
+* La carpeta padre de una imagen corresponde al nombre del escenario al que pertenece
+* Los escenarios y pasos que se van a comparar tienen el mismo path relativo con respecto a cada directorio base.
+
+### Pasos para generación de los reportes
+
+Cabe aclarar que aunque se podía construir un único reporte con las comparaciones de todos los escenarios, se decidió generar un reporte separado para cada escenario con la intención de tener un orden definido para cada caso.
+
+1. Asegúrese de tener Node.js instalado en su sistema, preferiblemente la versión 18.
+2. Ejecutar previamente las pruebas de Kraken en la carpeta `ghost-e2e-kraken-vrt` siguiendo los pasos de la sección [Instalación y Ejecución de las Pruebas en Kraken](#instalación-y-ejecución-de-las-pruebas-en-kraken). Al finalizar, se debió crear una carpeta `ghost-e2e-kraken-vrt/ghost-3.42.0` que contiene los screenshots de las pruebas.
+3. De igual manera, es necesario ejecutar previamente las pruebas de Kraken el la carpeta `ghost-e2e-kraken` siguiendo los pasos de la sección [Instalación y Ejecución de las Pruebas en Kraken](#instalación-y-ejecución-de-las-pruebas-en-kraken). Al finalizar, se debió crear una carpeta `ghost-e2e-kraken/ghost-5.80.0` que contiene los screenshots de las pruebas para esta versión de Ghost.
+4. Desde el directorio raíz, vaya al directorio de backstop.
+```bash
+cd backstop
+```
+5. Ejecutar el script para realizar el VRT y generar el reporte (Esto puede tardar un tiempo. Puede cambiar en el script.js las rutas de directorio1 y directorio2 dependiendo de dónde se tenga las carpetas con las imágenes):
+```bash
+node script.js
+```
+6. Se abrirá una pestaña en el navegador para visualizar el reporte de cada escenario. También puede abrir el reporte directamente desde el directorio ubicado en la ruta `backstop/backstop_data/hmtl_report` y allí buscará dentro de la carpeta del escenario que desee el archivo `index.html` el cuál podra abrir en un navegador (recomendamos usar Chrome).
+7. Al terminar la ejecución del script, en la consola posiblemente verá unos mensajes de error como los mostrados a continuación. Estos errores indican que los escenarios de los test fallaron debido al alto porcentaje de diferencias que se encuentra en la comparación de las imágenes, pero no tiene que ver con errores del script como tal.
+   
+![image](https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/158172093/e2d078d9-87f5-4f2f-9a74-2408addb685a)
+
+9. Al terminar la ejecución del script o al abrir el reporte, debería ver en su navegador algo similar a lo siguiente:
+    
+![image](https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/158172093/f16b7802-367e-4f33-ac47-cb1c855214c6)
 
 
 ## Instalación y Ejecución de las Pruebas en Kraken
