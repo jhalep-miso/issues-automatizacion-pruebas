@@ -1,17 +1,18 @@
-import { KrakenRandomGenerator } from "./KrakenRandomGenerator";
+import {KrakenRandomGenerator} from "./KrakenRandomGenerator";
+import {KrakenPseudoGenerator} from "./KrakenPseudoGenerator";
 
 export function getGenerator(
-  dictionary: Map<string, string>,
-  string: "a-priori" | "pseudo" | "random"
-) {
-  switch (string) {
-    case "a-priori":
-      throw new Error("A priori generator not implemented");
+    dictionary: Map<string, string>,
+    string: "a-priori" | "pseudo" | "random"
+): Promise<KrakenGenerator> {
+    switch (string) {
+        case "a-priori":
+            return KrakenPseudoGenerator.getInstance(dictionary);
 
-    case "pseudo":
-      throw new Error("Pseudo random generator not implemented");
+        case "pseudo":
+            return KrakenRandomGenerator.getInstance(dictionary);
 
-    case "random":
-      return KrakenRandomGenerator.getInstance(dictionary);
-  }
+        case "random":
+            return KrakenRandomGenerator.getInstance(dictionary);
+    }
 }

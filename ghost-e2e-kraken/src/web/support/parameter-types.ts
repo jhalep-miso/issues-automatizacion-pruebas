@@ -12,13 +12,17 @@ Before(function (scenario) {
 defineParameterType({
   regexp: /"([^"]*)"/,
   async transformer(this: KrakenWorld, string: string) {
+    let generator: KrakenGenerator;
+
     if (currentTags.includes("@a-priori")) {
-      return getGenerator(this.dictionary, "a-priori").generateValue(string);
+      generator = await getGenerator(this.dictionary, "a-priori");
     } else if (currentTags.includes("@pseudo")) {
-      return getGenerator(this.dictionary, "pseudo").generateValue(string);
+      generator = await getGenerator(this.dictionary, "pseudo");
     } else {
-      return getGenerator(this.dictionary, "random").generateValue(string);
+      generator = await getGenerator(this.dictionary, "random");
     }
+
+    return generator.generateValue(string);
   },
   name: "generated-string",
   useForSnippets: false,

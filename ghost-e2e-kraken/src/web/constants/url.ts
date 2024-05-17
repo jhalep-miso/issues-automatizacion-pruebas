@@ -1,1 +1,1 @@
-export const BASE_URL = "https://ghost-ebcl.onrender.com";
+export const BASE_URL = "https://ghost-wfml.onrender.com";

@@ -1,7 +1,7 @@
 import faker from "@faker-js/faker";
 
-export class KrakenRandomGenerator implements KrakenGenerator  {
-  private static singleton: KrakenRandomGenerator;
+export class KrakenAPrioriGenerator implements KrakenGenerator {
+  private static singleton: KrakenAPrioriGenerator;
   private dictionary: Map<string, string>;
 
   constructor(dictionary: Map<string, string>) {
@@ -9,28 +9,26 @@ export class KrakenRandomGenerator implements KrakenGenerator  {
   }
 
   public static getInstance(
-      dictionary: Map<string, string>
-  ): Promise<KrakenRandomGenerator> {
-    return new Promise((resolve, reject) => {
-      try {
-        if (!KrakenRandomGenerator.singleton) {
-          KrakenRandomGenerator.singleton = new KrakenRandomGenerator(dictionary);
-        }
-        resolve(KrakenRandomGenerator.singleton);
-      } catch (error) {
-        reject(error);
-      }
-    });
+    dictionary: Map<string, string>
+  ): KrakenAPrioriGenerator {
+    if (!KrakenAPrioriGenerator.singleton) {
+      KrakenAPrioriGenerator.singleton = new KrakenAPrioriGenerator(dictionary);
+    }
+    return KrakenAPrioriGenerator.singleton;
   }
 
-  public async generateValue(string: string) {
+  generateValue(string: string) {
     let finalString = string;
-    if (KrakenRandomGenerator.stringIsAFakerReuse(string)) {
-      finalString = this.reuseValueForKey(finalString);
-    } else if (KrakenRandomGenerator.stringIsAFaker(string)) {
-      finalString = this.generateValueForKey(finalString);
+    if (KrakenAPrioriGenerator.stringIsAFakerReuse(string)) {
+      finalString = KrakenAPrioriGenerator.getInstance(
+        this.dictionary
+      ).reuseValueForKey(finalString);
+    } else if (KrakenAPrioriGenerator.stringIsAFaker(string)) {
+      finalString = KrakenAPrioriGenerator.getInstance(
+        this.dictionary
+      ).generateValueForKey(finalString);
     }
-    return finalString;
+    return Promise.resolve(finalString);
   }
 
   generateValueForKey(key: string): string {
