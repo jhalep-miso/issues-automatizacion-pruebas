@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "cross-env": "^7.0.3",
+    "data-generators": "file:../data-generators",
     "kraken-node": "^1.0.24",
     "rimraf": "^5.0.6"
   },
