@@ -1,10 +1,11 @@
-import faker from "@faker-js/faker";
+import { RandomGenerator } from "data-generators";
 
-export class KrakenRandomGenerator {
+export class KrakenRandomGenerator extends RandomGenerator {
   private static singleton: KrakenRandomGenerator;
   private dictionary: Map<string, string>;
 
   constructor(dictionary: Map<string, string>) {
+    super();
     this.dictionary = dictionary;
   }
 
@@ -73,38 +74,6 @@ export class KrakenRandomGenerator {
   private saveKeyValueInDict(key: string, value: string) {
     let dictionary = this.getDictionary();
     dictionary.set(key, value);
-  }
-
-  private generateName(): string {
-    return faker.name.firstName();
-  }
-
-  private generateSentence(): string {
-    return faker.lorem.sentence();
-  }
-
-  private generateParagraph(): string {
-    return faker.lorem.paragraph();
-  }
-
-  private generateNumber(): string {
-    return `${faker.datatype.number()}`;
-  }
-
-  private generateEmail(): string {
-    return faker.internet.email();
-  }
-
-  private generateString(): string {
-    return faker.datatype.string();
-  }
-
-  private generateDate(): string {
-    return faker.datatype.datetime({}).toDateString();
-  }
-
-  private generateUrl(): string {
-    return faker.internet.url();
   }
 
   static stringIsAFaker(string: String): boolean {
