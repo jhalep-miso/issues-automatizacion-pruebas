@@ -4,7 +4,7 @@ import {Given, Then, When} from "@cucumber/cucumber";
 import assert from "assert";
 
 Given(
-    "I create a new page with title {kraken-string} and content {kraken-string}",
+    "I create a new page with title {generated-string} and content {generated-string}",
     async function (this: KrakenWorld, title: string, content: string) {
         await this.pageSection.navigateToCreatePage();
         await this.pageSection.setPageTitle(title);
@@ -30,7 +30,7 @@ When(
 );
 
 When(
-    "I update the page url to the slug of {kraken-string}",
+    "I update the page url to the slug of {generated-string}",
     async function (this: KrakenWorld, newUrlText: string) {
         await this.pageSection.navigateToEditPage();
         await this.pageSection.clickSettingsButton();
@@ -41,7 +41,7 @@ When(
 );
 
 When(
-    "I update the created page code injection with a {string} element with id {kraken-string} and text {kraken-string}",
+    "I update the created page code injection with a {string} element with id {generated-string} and text {generated-string}",
     async function (
         this: KrakenWorld,
         elementType: string,
@@ -62,7 +62,7 @@ When("I unpublish the created page", async function (this: KrakenWorld) {
 });
 
 Then(
-    "I should see the page title {kraken-string} and content {kraken-string}",
+    "I should see the page title {generated-string} and content {generated-string}",
     async function (this: KrakenWorld, title: string, content: string) {
         const titleText = await this.pageSection.getPageTitle();
         assert.strictEqual(titleText, title);
@@ -73,7 +73,7 @@ Then(
 );
 
 Then(
-    "I should see the page title {kraken-string} and a banner with text {string}",
+    "I should see the page title {generated-string} and a banner with text {string}",
     async function (this: KrakenWorld, title: string, text: string) {
         const titleText = await this.pageSection.getPageTitle();
         assert.strictEqual(titleText, title);
@@ -88,7 +88,7 @@ Then("I navigate to the old page url", async function (this: KrakenWorld) {
 });
 
 Then(
-    "I should see the page with a {string} element with id {kraken-string} and text {kraken-string}",
+    "I should see the page with a {string} element with id {generated-string} and text {generated-string}",
     async function (
         this: KrakenWorld,
         elementType: string,
@@ -104,7 +104,7 @@ Then(
 );
 
 Then(
-    "I {string} see the page with title {kraken-string} in the list of pages",
+    "I {string} see the page with title {generated-string} in the list of pages",
     async function (
         this: KrakenWorld,
         condition: "should" | "should not",

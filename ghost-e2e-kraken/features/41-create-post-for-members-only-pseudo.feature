@@ -1,15 +1,15 @@
 Feature: Create and update Posts
 
-  @user1 @web @random
-  Scenario: Create a post and unpublish it should not allow to see it
+  @user1 @web @pseudo
+  Scenario: Create a post and update the access to Members Only and verify the banner message
     Given I Login with "<EMAIL>" and "<PASSWORD>"
     And I wait for 2 seconds
     And I create a new post with title "$sentence_1" and content "$paragraph_1"
     And I wait for 2 seconds
     And I navigate to the created post
-    And I should see the post title "$$sentence_1" and content "$$paragraph_1"
-    When I unpublish the created post
-    And I wait for 2 seconds
+    When I wait for 2 seconds
+    And I update the created post access to "Members only"
     And I navigate to the created post
     And I wait for 2 seconds
-    Then I should see a "Page not found" error and an error code 404
+    Then I should see the post title "$$sentence_1" and a banner with text "This post is for subscribers only"
+
