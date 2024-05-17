@@ -1,6 +1,6 @@
 Feature: Edit and view members
 
-  @user1 @web
+  @user1 @web @random
   Scenario: Edit a member from the Impersonate link
     Given I Login with "<EMAIL>" and "<PASSWORD>"
     And I navigate to the members list

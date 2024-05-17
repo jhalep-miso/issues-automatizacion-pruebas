@@ -4,7 +4,7 @@ import { Given, When, Then } from "@cucumber/cucumber";
 import assert from "assert";
 
 Given(
-  "I create a new post with title {kraken-string} and content {kraken-string}",
+  "I create a new post with title {generated-string} and content {generated-string}",
   async function (this: KrakenWorld, title: string, content: string) {
     await this.postPage.navigateToCreatePost();
     await this.postPage.setPostTitle(title);
@@ -16,7 +16,7 @@ Given(
 );
 
 Given(
-    "I create a new post with title {kraken-string}, content {kraken-string} and tag {kraken-string}",
+    "I create a new post with title {generated-string}, content {generated-string} and tag {generated-string}",
     async function (this: KrakenWorld, title: string, content: string, tag: string) {
         await this.postPage.navigateToCreatePost();
         await this.postPage.setPostTitle(title);
@@ -30,7 +30,7 @@ Given(
     }
 );
 
-Given("I edit the previously created post, replacing the tag {kraken-string} by a new tag {kraken-string}",
+Given("I edit the previously created post, replacing the tag {generated-string} by a new tag {generated-string}",
     async function (this: KrakenWorld, previousTag: string, newTag: string) {
         await this.postPage.navigateToEditPost();
         await this.postPage.clickSettingsButton();
@@ -55,7 +55,7 @@ When(
 );
 
 When(
-  "I update the post url to the slug of {kraken-string}",
+  "I update the post url to the slug of {generated-string}",
   async function (this: KrakenWorld, newUrlText: string) {
     await this.postPage.navigateToEditPost();
     await this.postPage.clickSettingsButton();
@@ -66,7 +66,7 @@ When(
 );
 
 When(
-  "I update the created post code injection with a {string} element with id {kraken-string} and text {kraken-string}",
+  "I update the created post code injection with a {string} element with id {generated-string} and text {generated-string}",
   async function (
     this: KrakenWorld,
     elementType: string,
@@ -105,7 +105,7 @@ When(
 );
 
 Then(
-  "I should see the post title {kraken-string} and content {kraken-string}",
+  "I should see the post title {generated-string} and content {generated-string}",
   async function (this: KrakenWorld, title: string, content: string) {
     const titleText = await this.postPage.getPostTitle();
     assert.strictEqual(titleText, title);
@@ -116,7 +116,7 @@ Then(
 );
 
 Then(
-  "I should see the post title {kraken-string} and a banner with text {string}",
+  "I should see the post title {generated-string} and a banner with text {string}",
   async function (this: KrakenWorld, title: string, text: string) {
     const titleText = await this.postPage.getPostTitle();
     assert.strictEqual(titleText, title);
@@ -131,7 +131,7 @@ Then("I navigate to the old post url", async function (this: KrakenWorld) {
 });
 
 Then(
-  "I should see the post with a {string} element with id {kraken-string} and text {kraken-string}",
+  "I should see the post with a {string} element with id {generated-string} and text {generated-string}",
   async function (
     this: KrakenWorld,
     elementType: string,
@@ -147,7 +147,7 @@ Then(
 );
 
 Then(
-  "I {string} see the post with title {kraken-string} in the list of posts",
+  "I {string} see the post with title {generated-string} in the list of posts",
   async function (
     this: KrakenWorld,
     condition: "should" | "should not",

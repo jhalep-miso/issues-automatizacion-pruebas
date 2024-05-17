@@ -1,6 +1,6 @@
 Feature: Create and view members
 
-  @user1 @web
+  @user1 @web @random
   Scenario: Create a member and display it on the members list
     Given I Login with "<EMAIL>" and "<PASSWORD>"
     And I wait for 2 seconds

@@ -1,15 +1,15 @@
 Feature: Create and update Pages
 
-  @user1 @web
+  @user1 @web @random
   Scenario: Create a page and update the access to Paid-members Only and verify the banner message
     Given I Login with "<EMAIL>" and "<PASSWORD>"
     And I wait for 2 seconds
-    And I create a new page with title "$name_1" and content "$name_2"
+    And I create a new page with title "$sentence_1" and content "$paragraph_1"
     And I wait for 2 seconds
     And I navigate to the created page
     When I wait for 2 seconds
     And I update the created page access to "Paid-members only"
     And I navigate to the created page
     And I wait for 2 seconds
-    Then I should see the page title "$$name_1" and a banner with text "This page is for paying subscribers only"
+    Then I should see the page title "$$sentence_1" and a banner with text "This page is for paying subscribers only"
 

@@ -1,5 +1,5 @@
 Feature: Delete member
-  @user1 @web
+  @user1 @web @random
   Scenario: Delete a member and verify that their access is restricted afterwards
     Given I Login with "<EMAIL>" and "<PASSWORD>"
     And I navigate to the members list

@@ -7,7 +7,7 @@ Given("I navigate to the members list", async function (this: KrakenWorld) {
 });
 
 When(
-  "I create a new member with name {kraken-string} and email {kraken-string}",
+  "I create a new member with name {generated-string} and email {generated-string}",
   async function (this: KrakenWorld, name: string, email: string) {
     await this.memberPage.navigateToMembersList();
     await this.memberPage.navigateToCreateNewMember();
@@ -37,7 +37,7 @@ When(
 );
 
 When(
-  "I edit member with name {kraken-string} from Impersonate link",
+  "I edit member with name {generated-string} from Impersonate link",
   async function (this: KrakenWorld, name: string) {
     await this.memberPage.clickMemberAccountButton();
     await this.memberPage.editMemberNameInFrame(name);
@@ -69,7 +69,7 @@ Then(
 );
 
 Then(
-  "I should see the member with name {kraken-string} and email {kraken-string}",
+  "I should see the member with name {generated-string} and email {generated-string}",
   async function (this: KrakenWorld, name: string, email: string) {
     const membersList = await this.memberPage.getMembersListData();
     const member = membersList.find(
@@ -86,7 +86,7 @@ When("I navigate to the created member", async function (this: KrakenWorld) {
 });
 
 Then(
-  "I should see the {kraken-string} and {kraken-string} of the created member.",
+  "I should see the {generated-string} and {generated-string} of the created member.",
   async function (this: KrakenWorld, name: string, email: string) {
     const memberDetails = await this.memberPage.getMemberDetails();
     assert(memberDetails?.name === name);

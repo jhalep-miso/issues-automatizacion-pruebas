@@ -21,6 +21,7 @@ export class KrakenWorld extends World {
     pageSection!: PageSection;
     errorPage!: ErrorPage;
     tagPage!: TagPage;
+    dictionary: Map<string, string> = new Map();
 
     constructor(input: IWorldOptions) {
         super(input);
