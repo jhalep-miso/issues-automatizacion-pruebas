@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.6.8",
     "cross-env": "^7.0.3",
     "data-generators": "file:../data-generators",
     "kraken-node": "^1.0.24",
