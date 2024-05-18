@@ -1,4 +1,4 @@
-import {DataGenerator} from "./generator.interface";
+import { DataGenerator } from "./generator.interface";
 
 const fs = require("fs");
 const csv = require("csv-parser");
@@ -28,7 +28,7 @@ export class AprioriGenerator implements DataGenerator {
     }
 
     generateName(): string {
-        return this.response[this.getRandomPosition()].name;
+        return this.response[this.getRandomPosition()].firstName;
     }
 
     generateSentence(): string {

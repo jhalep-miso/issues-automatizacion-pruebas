@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 import { DataGenerator } from "./generator.interface";
 
 export class RandomGenerator implements DataGenerator {
-  constructor() {}
+  constructor() { }
 
   generateName(): string {
     return faker.person.firstName();

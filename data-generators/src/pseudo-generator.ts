@@ -1,16 +1,16 @@
-import {DataGenerator} from "./generator.interface";
+import { DataGenerator } from "./generator.interface";
 import axios from "axios";
 
 export class PseudoGenerator implements DataGenerator {
 
   private response: any[] = [];
 
-  constructor() {}
+  constructor() { }
 
   async initialize() {
     try {
       const response = await axios.get(
-          "https://my.api.mockaroo.com/mock.json?key=d8be7f40"
+        "https://my.api.mockaroo.com/mock.json?key=d8be7f40"
       );
       this.response = response.data;
     } catch (error) {
@@ -19,7 +19,7 @@ export class PseudoGenerator implements DataGenerator {
   }
 
   generateName(): string {
-    return this.response[this.getRandomPosition()].name;
+    return this.response[this.getRandomPosition()].firstName;
   }
 
   generateSentence(): string {
