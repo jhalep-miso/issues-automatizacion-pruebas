@@ -1,5 +1,5 @@
 const config = {
-  baseUri: "https://ghost-ebcl.onrender.com",
+  baseUri: "https://ghost-wfml.onrender.com",
   user: {
     email: "r.palominoj@uniandes.edu.co",
     password: "569RiutNDapHbzv"
@@ -14,4 +14,4 @@ const localConfig = {
   }
 }
 
-export const Config = localConfig
+export const Config = config
