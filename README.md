@@ -9,6 +9,10 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
 - **Alejandro Peña**: [ja.penat1@uniandes.edu.co](mailto:ja.penat1@uniandes.edu.co)
 - **Romel Palomino Jaramillo**: [r.palominoj@uniandes.edu.co](mailto:r.palominoj@uniandes.edu.co)
 
+## Generación de datos aleatorios
+En el siguiente documento se encuentra el detalle de las estrategias de generación de datos y cómo se integraron a los escenarios de Kraken y Playwright
+[Generación de datos aleatorios](https://github.com/jhalep-miso/issues-automatizacion-pruebas/wiki/Generaci%C3%B3n-de-datos-aleatorios)
+
 ## Visual Regression Testing: Comparación de Imágenes y Generación de Reportes
 
 ## 1. ResembleJS
