@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker"
 import { expect } from '@playwright/test'
 import { AdminLoginPage } from './pages/AdminLoginPage'
 import { Config } from './Config'
@@ -21,6 +20,14 @@ for (const mode of genModes) {
       title: gen.generateName(),
       content: gen.generateParagraph(),
       tags: []
+    }
+  }
+
+  const genInjection = (dataProvider: DataGenerationProvider) => {
+    const gen = dataProvider.select[mode]
+    return {
+      id: gen.generateName().toLocaleLowerCase(),
+      content: gen.generateSentence()
     }
   }
 
@@ -127,10 +134,7 @@ for (const mode of genModes) {
 
     test("Create a post and update it with code injection and verify the changes", async ({ page, dataProvider }) => {
       const post = genPost(dataProvider)
-      const injection = {
-        id: faker.string.alpha(4),
-        content: faker.string.alphanumeric(10)
-      }
+      const injection = genInjection(dataProvider)
 
       // Given:
       const adminPage = new AdminPage(page)
