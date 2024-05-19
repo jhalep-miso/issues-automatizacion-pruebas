@@ -19,6 +19,7 @@ Debido a que se reutilizan las estrategias en Kraken y Playwright a través del 
 2. Moverse al directorio `ghost-e2e-kraken` y ejecutar el comando `npm install`. Para ejecutar las pruebas, seguir las instrucciones de [Instalación y Ejecución de las Pruebas en Kraken](#instalación-y-ejecución-de-las-pruebas-en-kraken)
 2. Moverse al directorio `ghost-e2e-playwright` y ejecutar el comando `npm install`. Para ejecutar las pruebas, seguir las instrucciones de [Instalación y Ejecución de las Pruebas con Playwright](#instalación-y-ejecución-de-las-pruebas-con-playwright)
 
+**Reporte de Issues** Para esta iteración, las [incidencias reportadas](https://github.com/jhalep-miso/issues-automatizacion-pruebas/issues) son desde el `[ISSUE-024]` hasta el `[ISSUE-033]`. Estas incidencias se obtuvieron durante el proceso de pruebas, utilizando valores en la frontera para diferentes campos de la aplicación
 
 ## Visual Regression Testing: Comparación de Imágenes y Generación de Reportes
 
