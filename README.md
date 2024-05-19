@@ -16,8 +16,8 @@ En el siguiente documento se encuentra el detalle de las estrategias de generaci
 Debido a que se reutilizan las estrategias en Kraken y Playwright a través del uso de una librería local, es necesario seguir las siguientes instrucciones para garantizar la correcta ejecución:
 
 1. Dentro del directorio `data-generators` ejecutar los comandos `npm install` y `npm run build`
-2. Moverse al directorio `ghost-e2e-kraken` y ejecutar el comando `npm install`
-2. Moverse al directorio `ghost-e2e-playwright` y ejecutar el comando `npm install`
+2. Moverse al directorio `ghost-e2e-kraken` y ejecutar el comando `npm install`. Para ejecutar las pruebas, seguir las instrucciones de [Instalación y Ejecución de las Pruebas en Kraken](#instalación-y-ejecución-de-las-pruebas-en-kraken)
+2. Moverse al directorio `ghost-e2e-playwright` y ejecutar el comando `npm install`. Para ejecutar las pruebas, seguir las instrucciones de [Instalación y Ejecución de las Pruebas con Playwright](#instalación-y-ejecución-de-las-pruebas-con-playwright)
 
 
 ## Visual Regression Testing: Comparación de Imágenes y Generación de Reportes
