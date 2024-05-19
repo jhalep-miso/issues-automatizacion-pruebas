@@ -11,6 +11,11 @@ test.beforeEach(async ({ page }) => {
   await new AdminLoginPage(page, Config.user).signIn()
 })
 
+/**
+ * We create a group of tests per each available DataGenerationMode ("apriori" | "pseudo" | "random").
+ * Each test is defined using the extension `test` function from the `ghost-test.ts` module, so that each
+ * test has a DataGenerationProvider in scope
+ */
 for (const mode of genModes) {
   let triggerCleanup = false
 
@@ -33,6 +38,10 @@ for (const mode of genModes) {
 
   test.describe(`Ghost tests for Posts with ${mode} data generation`, () => {
 
+    /**
+     * We only cleanup state after all tests in the group get executed. This is to prevent some issues
+     * when we create too many posts, making some of them not visible in the list
+     */
     test.afterEach(async ({ page }) => {
       if (triggerCleanup) {
         const adminPage = new AdminPage(page)
