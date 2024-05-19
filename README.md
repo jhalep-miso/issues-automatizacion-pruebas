@@ -13,6 +13,13 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
 En el siguiente documento se encuentra el detalle de las estrategias de generación de datos y cómo se integraron a los escenarios de Kraken y Playwright
 [Generación de datos aleatorios](https://github.com/jhalep-miso/issues-automatizacion-pruebas/wiki/Generaci%C3%B3n-de-datos-aleatorios)
 
+Debido a que se reutilizan las estrategias en Kraken y Playwright a través del uso de una librería local, es necesario seguir las siguientes instrucciones para garantizar la correcta ejecución:
+
+1. Dentro del directorio `data-generators` ejecutar los comandos `npm install` y `npm run build`
+2. Moverse al directorio `ghost-e2e-kraken` y ejecutar el comando `npm install`
+2. Moverse al directorio `ghost-e2e-playwright` y ejecutar el comando `npm install`
+
+
 ## Visual Regression Testing: Comparación de Imágenes y Generación de Reportes
 
 ## 1. ResembleJS
