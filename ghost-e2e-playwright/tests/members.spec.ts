@@ -11,13 +11,8 @@ test.beforeEach(async ({ page }) => {
   await new AdminLoginPage(page, Config.user).signIn()
 })
 
-test.afterEach(async ({ page }) => {
-  const adminPage = new AdminPage(page)
-  await adminPage.go()
-  await cleanupGhost(adminPage)
-})
-
 for (const mode of genModes) {
+  let triggerCleanup = false
 
   const genMember = (dataProvider: DataGenerationProvider) => {
     const gen = dataProvider.select[mode]
@@ -30,6 +25,14 @@ for (const mode of genModes) {
   }
 
   test.describe(`Ghost tests for Members with ${mode} data generation`, () => {
+
+    test.afterEach(async ({ page }) => {
+      if (triggerCleanup) {
+        const adminPage = new AdminPage(page)
+        await adminPage.go()
+        await cleanupGhost(adminPage)
+      }
+    })
 
     test("Create a member and display it on the members list", async ({ page, dataProvider }) => {
       const member = genMember(dataProvider)
@@ -91,6 +94,7 @@ for (const mode of genModes) {
     })
 
     test("Delete a member and verify that their access is restricted afterwards", async ({ page, dataProvider }) => {
+      triggerCleanup = true
       const member = genMember(dataProvider)
 
       // Given:
