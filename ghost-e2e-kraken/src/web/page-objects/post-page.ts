@@ -126,6 +126,7 @@ export class PostPage extends AbstractPage {
     }
 
     async clickDeletePost() {
+        await this.clickUpdateButton()
         const deletePostButton = await this.driver.$(
             ".settings-menu-delete-button > button"
         );
@@ -152,10 +153,20 @@ export class PostPage extends AbstractPage {
         await this.pause();
     }
 
+    async clickUpdateButton() {
+        const updateButton = await this.driver.$(
+        "[data-test-button='publish-save']"
+        );
+        await updateButton.waitForDisplayed({ timeout: 5000 });
+        await updateButton.click();
+        await this.pause();
+    }
+
     // some changes to the settings are triggered by moving away from the modified element
     async saveSettingsChange() {
         await this.clickSettingsButton();
         await this.clickSettingsButton();
+        await this.clickUpdateButton();
     }
 
     async clickCodeInjectionButton() {
@@ -228,7 +239,7 @@ export class PostPage extends AbstractPage {
     }
     
     async getPostContent() {
-        const contentElement = await this.driver.$("section.gh-content > p");
+        const contentElement = await this.driver.$("section.gh-content");
         await contentElement.waitForDisplayed({timeout: 5000});
         return contentElement.getText();
     }
