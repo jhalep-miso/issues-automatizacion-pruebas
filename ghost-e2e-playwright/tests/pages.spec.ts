@@ -33,9 +33,11 @@ for (const mode of genModes) {
   test.describe(`Ghost tests for Pages with ${mode} data generation`, () => {
 
     test.afterEach(async ({ page }) => {
-      const adminPage = new AdminPage(page)
-      await adminPage.go()
-      await cleanupGhost(adminPage)
+      if (triggerCleanup) {
+        const adminPage = new AdminPage(page)
+        await adminPage.go()
+        await cleanupGhost(adminPage)
+      }
     })
 
     test("Create a page and update the access to Members Only and verify the banner message", async ({ page, dataProvider }) => {
