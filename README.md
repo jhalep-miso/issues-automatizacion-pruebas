@@ -11,14 +11,96 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
 
 ## Tabla de contenidos
 
-- Pruebas manuales exploratorias
-- Pruebas con APIs de automatización
-  - Kraken
-  - Playwright
+- [Pruebas manuales exploratorias](#pruebas-manuales-exploratorias)
+- [Pruebas con APIs de automatización](#pruebas-con-apis-de-automatización)
+  - [Kraken](#instalación-y-ejecución-de-las-pruebas-en-kraken)
+  - [Playwright](#instalación-y-ejecución-de-las-pruebas-con-playwright)
 - Pruebas VRT
   - ResembleJS
   - BackstopJS
 - Estrategias de Generación de Datos
+
+## Pruebas manuales exploratorias
+
+## Pruebas con APIs de automatización
+
+### Instalación y Ejecución de las Pruebas en Kraken
+
+Antes de comenzar, asegúrate de cumplir con los siguientes requisitos:
+
+1. **ADB instalado:** Asegúrate de tener Android Debug Bridge (ADB) instalado en tu sistema. Puedes obtenerlo como parte del kit de desarrollo de Android (SDK).
+
+2. **Appium instalado:** Instala Appium globalmente usando npm con el siguiente comando:
+
+```bash
+npm install -g appium
+```
+
+
+3. **Node.js versión 18:** Asegúrate de tener Node.js instalado en tu sistema, preferiblemente la versión 18.
+
+4. **URL de Ghost:** Ajusta la URL de la instancia de Ghost en el archivo de propiedades `properties.json`. Puedes encontrar el archivo en este repositorio en [properties.json](https://github.com/jhalep-miso/issues-automatizacion-pruebas/blob/main/ghost-e2e-kraken/properties.json).
+
+5. **Lista de steps predefinidos Kraken:** Puedes encontrar la lista de steps predefinidos para Kraken en el siguiente enlace: [Lista de steps predefinidos Kraken](https://github.com/TheSoftwareDesignLab/Kraken/blob/master/src/steps/web.ts).
+
+Una vez que hayas cumplido con los requisitos anteriores, sigue estos pasos para ejecutar las pruebas:
+
+1. Clona este repositorio en tu máquina local:
+
+```bash
+git clone https://github.com/jhalep-miso/issues-automatizacion-pruebas.git
+```
+2. Navega hasta el directorio del repositorio donde se encuentran los tests e2e de kraken:
+```bash
+cd issues-automatizacion-pruebas/ghost-e2e-kraken
+```
+3. Instala las dependencias de Node.js utilizando npm:
+```bash
+npm install
+```
+
+4. Ejecuta los tests de Kraken con el siguiente comando:
+```bash
+npm test
+```
+
+¡Eso es todo! Los tests de Kraken se ejecutarán automáticamente, y podrás ver los resultados en la consola.
+
+### Instalación y Ejecución de las Pruebas con Playwright
+
+Para instalar y ejecutar las pruebas con Playwright, sigue los siguientes pasos:
+
+1. Clona este repositorio en tu máquina local:
+```bash
+git clone https://github.com/jhalep-miso/issues-automatizacion-pruebas.git
+```
+
+2. Navega al directorio `ghost-e2e-playwright`
+```bash
+cd issues-automatizacion-pruebas/ghost-e2e-playwright
+```
+
+3. Instala las dependencias del proyecto. Estas pruebas utilizan únicamente `playwright` y `faker` como dependencias
+```bash
+npm install
+```
+
+4. Asegurarse de que las líneas correspondientes a la configuración de la URL `https://ghost-ebcl.onrender.com` estén descomentadas en el archivo `ghost-e2e-playwright/tests/Config.ts` como se muestra a continuación:
+
+<img width="614" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/c10b9e0c-dd57-46fb-89e6-03e7b5f73d80">
+
+5. Ejecuta las pruebas utilizando alguno de los siguientes dos comandos. El segundo permite visualizar las pruebas de forma interactiva con la UI de playwright:
+```bash
+npx playwright test
+```
+```bash
+npx playwright test --ui
+```
+
+6. Si se está utilizando playwright en modo `--ui`, asegurarse de que en el panel de la parte superior izquierda, el campo de `Projects` esté configurado con el valor `all`, para que se muestren todos los tests, como se muestra en la siguiente imagen:
+
+<img width="360" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/7c77f001-3a59-4d77-86af-ca5b4a317bb9">
+
 
 ## Generación de datos aleatorios
 En el siguiente documento se encuentra el detalle de las estrategias de generación de datos y cómo se integraron a los escenarios de Kraken y Playwright
@@ -135,84 +217,6 @@ node script.js
 9. Al terminar la ejecución del script o al abrir el reporte, debería ver en su navegador algo similar a lo siguiente:
     
 ![image](https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/158172093/f16b7802-367e-4f33-ac47-cb1c855214c6)
-
-
-## Instalación y Ejecución de las Pruebas en Kraken
-
-Antes de comenzar, asegúrate de cumplir con los siguientes requisitos:
-
-1. **ADB instalado:** Asegúrate de tener Android Debug Bridge (ADB) instalado en tu sistema. Puedes obtenerlo como parte del kit de desarrollo de Android (SDK).
-
-2. **Appium instalado:** Instala Appium globalmente usando npm con el siguiente comando:
-
-```bash
-npm install -g appium
-```
-
-
-3. **Node.js versión 18:** Asegúrate de tener Node.js instalado en tu sistema, preferiblemente la versión 18.
-
-4. **URL de Ghost:** Ajusta la URL de la instancia de Ghost en el archivo de propiedades `properties.json`. Puedes encontrar el archivo en este repositorio en [properties.json](https://github.com/jhalep-miso/issues-automatizacion-pruebas/blob/main/ghost-e2e-kraken/properties.json).
-
-5. **Lista de steps predefinidos Kraken:** Puedes encontrar la lista de steps predefinidos para Kraken en el siguiente enlace: [Lista de steps predefinidos Kraken](https://github.com/TheSoftwareDesignLab/Kraken/blob/master/src/steps/web.ts).
-
-Una vez que hayas cumplido con los requisitos anteriores, sigue estos pasos para ejecutar las pruebas:
-
-1. Clona este repositorio en tu máquina local:
-
-```bash
-git clone https://github.com/jhalep-miso/issues-automatizacion-pruebas.git
-```
-2. Navega hasta el directorio del repositorio donde se encuentran los tests e2e de kraken:
-```bash
-cd issues-automatizacion-pruebas/ghost-e2e-kraken
-```
-3. Instala las dependencias de Node.js utilizando npm:
-```bash
-npm install
-```
-
-4. Ejecuta los tests de Kraken con el siguiente comando:
-```bash
-npm test
-```
-
-¡Eso es todo! Los tests de Kraken se ejecutarán automáticamente, y podrás ver los resultados en la consola.
-
-## Instalación y Ejecución de las Pruebas con Playwright
-
-Para instalar y ejecutar las pruebas con Playwright, sigue los siguientes pasos:
-
-1. Clona este repositorio en tu máquina local:
-```bash
-git clone https://github.com/jhalep-miso/issues-automatizacion-pruebas.git
-```
-
-2. Navega al directorio `ghost-e2e-playwright`
-```bash
-cd issues-automatizacion-pruebas/ghost-e2e-playwright
-```
-
-3. Instala las dependencias del proyecto. Estas pruebas utilizan únicamente `playwright` y `faker` como dependencias
-```bash
-npm install
-```
-
-4. Asegurarse de que las líneas correspondientes a la configuración de la URL `https://ghost-ebcl.onrender.com` estén descomentadas en el archivo `ghost-e2e-playwright/tests/Config.ts` como se muestra a continuación:
-
-<img width="614" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/c10b9e0c-dd57-46fb-89e6-03e7b5f73d80">
-
-5. Ejecuta las pruebas utilizando alguno de los siguientes dos comandos. El segundo permite visualizar las pruebas de forma interactiva con la UI de playwright:
-```bash
-npx playwright test
-```
-```bash
-npx playwright test --ui
-```
-
-6. Si se está utilizando playwright en modo `--ui`, asegurarse de que en el panel de la parte superior izquierda, el campo de `Projects` esté configurado con el valor `all`, para que se muestren todos los tests, como se muestra en la siguiente imagen:
-
-<img width="360" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/7c77f001-3a59-4d77-86af-ca5b4a317bb9">
 
 
 ## Contribución
