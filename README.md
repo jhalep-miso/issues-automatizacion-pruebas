@@ -17,7 +17,9 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
   - [Instalación y Ejecución de las Pruebas con Playwright](#instalación-y-ejecución-de-las-pruebas-con-playwright)
 - [Visual Regression Testing: Comparación de Imágenes y Generación de Reportes](#visual-regression-testing-comparación-de-imágenes-y-generación-de-reportes)
   - [ResembleJS](#resemblejs)
+    - [Pasos para Generación del Reporte VRT](#pasos-para-generación-del-reporte-vrt)
   - [BackstopJS](#backstopjs)
+    - [Pasos para Generación del Reporte VRT](#pasos-para-generación-del-reporte-vrt)
 - [Estrategias de Generación de Datos](#estrategias-de-generación-de-datos)
 - [Contribución](#contribución)
 - [Licencia](#licencia)
@@ -155,7 +157,7 @@ Se compararán las imágenes entre las carpetas (escenarios) `ghost-e2e-kraken/g
 * para cada escenario se repite el proceso anterior, por cada paso del escenario
 * Al terminar de realizar las comparaciones entre todos los escenarios, se guarda un reporte completo sobre todos los escenarios en `results/report.html`
 
-### Pasos para Generación del Reporte VRT
+#### Pasos para Generación del Reporte VRT
 
 1. Asegúrate de tener Node.js instalado en tu sistema, preferiblemente la versión 18.
 2. Ejecutar las pruebas de Kraken el la carpeta `ghost-e2e-kraken-vrt` siguiendo los pasos de la sección [Instalación y Ejecución de las Pruebas en Kraken](#instalación-y-ejecución-de-las-pruebas-en-kraken). Al finalizar, se debió crear una carpeta `ghost-e2e-kraken-vrt/ghost-3.42.0` que contiene los screenshots de las pruebas
@@ -186,7 +188,7 @@ Este proyecto tiene la capacidad de realizar VRT entre dos versiones de Ghost, a
 * La carpeta padre de una imagen corresponde al nombre del escenario al que pertenece
 * Los escenarios y pasos que se van a comparar tienen el mismo path relativo con respecto a cada directorio base.
 
-### Pasos para generación de los reportes
+#### Pasos para Generación del Reporte VRT
 
 Cabe aclarar que aunque se podía construir un único reporte con las comparaciones de todos los escenarios, se decidió generar un reporte separado para cada escenario con la intención de tener un orden definido para cada caso.
 
