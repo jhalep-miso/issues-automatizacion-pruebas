@@ -19,7 +19,7 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
   - [ResembleJS](#resemblejs)
     - [Pasos para Generación del Reporte VRT](#pasos-para-generación-del-reporte-vrt)
   - [BackstopJS](#backstopjs)
-    - [Pasos para Generación del Reporte VRT](#pasos-para-generación-del-reporte-vrt)
+    - [Pasos para Generación del Reporte VRT](#pasos-para-generación-del-reporte-vrt-1)
 - [Estrategias de Generación de Datos](#estrategias-de-generación-de-datos)
 - [Contribución](#contribución)
 - [Licencia](#licencia)
