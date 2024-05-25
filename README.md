@@ -2,6 +2,17 @@
 
 Este repositorio contiene los scripts necesarios para automatizar pruebas utilizando Kraken y Playwright en una aplicación web, específicamente el [CMS Ghost V5.80.0](https://ghost-ebcl.onrender.com/ghost) y [CMS Ghost V3.42.0](https://ghost-fakk.onrender.com/ghost). Las instrucciones a continuación te guiarán a través del proceso de configuración y ejecución de las pruebas.
 
+## Tabla de contenidos
+
+- Pruebas manuales exploratorias
+- Pruebas con APIs de automatización
+  - Kraken
+  - Playwright
+- Pruebas VRT
+  - ResembleJS
+  - BackstopJS
+- Estrategias de Generación de Datos
+
 ## Participantes
 
 - **Sebastián Lemus Cadena**: [s.lemus@uniandes.edu.co](mailto:s.lemus@uniandes.edu.co)
