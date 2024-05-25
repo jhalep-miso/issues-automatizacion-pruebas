@@ -15,10 +15,12 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
 - [Pruebas con APIs de automatización](#pruebas-con-apis-de-automatización)
   - [Instalación y Ejecución de las Pruebas en Kraken](#instalación-y-ejecución-de-las-pruebas-en-kraken)
   - [Instalación y Ejecución de las Pruebas con Playwright](#instalación-y-ejecución-de-las-pruebas-con-playwright)
-- Pruebas VRT
-  - ResembleJS
-  - BackstopJS
-- Estrategias de Generación de Datos
+- [Visual Regression Testing: Comparación de Imágenes y Generación de Reportes](#visual-regression-testing-comparación-de-imágenes-y-generación-de-reportes)
+  - [ResembleJS](#resemblejs)
+  - [BackstopJS](#backstopjs)
+- [Estrategias de Generación de Datos](#estrategias-de-generación-de-datos)
+- [Contribución](#contribución)
+- [Licencia](#licencia)
 
 ## Pruebas manuales exploratorias
 
@@ -39,7 +41,6 @@ Antes de comenzar, asegúrate de cumplir con los siguientes requisitos:
 ```bash
 npm install -g appium
 ```
-
 
 3. **Node.js versión 18:** Asegúrate de tener Node.js instalado en tu sistema, preferiblemente la versión 18.
 
@@ -105,22 +106,9 @@ npx playwright test --ui
 
 <img width="360" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/7c77f001-3a59-4d77-86af-ca5b4a317bb9">
 
-
-## Generación de datos aleatorios
-En el siguiente documento se encuentra el detalle de las estrategias de generación de datos y cómo se integraron a los escenarios de Kraken y Playwright
-[Generación de datos aleatorios](https://github.com/jhalep-miso/issues-automatizacion-pruebas/wiki/Generaci%C3%B3n-de-datos-aleatorios)
-
-Debido a que se reutilizan las estrategias en Kraken y Playwright a través del uso de una librería local, es necesario seguir las siguientes instrucciones para garantizar la correcta ejecución:
-
-1. Dentro del directorio `data-generators` ejecutar los comandos `npm install` y `npm run build`
-2. Moverse al directorio `ghost-e2e-kraken` y ejecutar el comando `npm install`. Para ejecutar las pruebas, seguir las instrucciones de [Instalación y Ejecución de las Pruebas en Kraken](#instalación-y-ejecución-de-las-pruebas-en-kraken)
-2. Moverse al directorio `ghost-e2e-playwright` y ejecutar el comando `npm install`. Para ejecutar las pruebas, seguir las instrucciones de [Instalación y Ejecución de las Pruebas con Playwright](#instalación-y-ejecución-de-las-pruebas-con-playwright)
-
-**Reporte de Issues** Para esta iteración, las [incidencias reportadas](https://github.com/jhalep-miso/issues-automatizacion-pruebas/issues) son desde el `[ISSUE-024]` hasta el `[ISSUE-033]`. Estas incidencias se obtuvieron durante el proceso de pruebas, utilizando valores en la frontera para diferentes campos de la aplicación
-
 ## Visual Regression Testing: Comparación de Imágenes y Generación de Reportes
 
-## 1. ResembleJS
+### ResembleJS
 
 (**Relacionado:** [Pros y Contras de Resemble.js](https://github.com/jhalep-miso/issues-automatizacion-pruebas/wiki/Pros-y-Contras-de-las-Herramientas-Utilizadas#resemblejs))
 
@@ -188,7 +176,7 @@ npm run vrt ../ghost-e2e-kraken-vrt/ghost-3.42.0 ../ghost-e2e-kraken/ghost-5.80.
 
 <img width="1476" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/95c2ea98-99bd-4b81-8730-48cc0b66e572">
 
-## 2. BackstopJS
+### BackstopJS
 
 (**Relacionado:** [Pros y Contras de BackstopJS](https://github.com/jhalep-miso/issues-automatizacion-pruebas/wiki/Pros-y-Contras-de-las-Herramientas-Utilizadas#backstopjs))
 
@@ -221,6 +209,19 @@ node script.js
 9. Al terminar la ejecución del script o al abrir el reporte, debería ver en su navegador algo similar a lo siguiente:
     
 ![image](https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/158172093/f16b7802-367e-4f33-ac47-cb1c855214c6)
+
+
+## Estrategias de Generación de Datos
+En el siguiente documento se encuentra el detalle de las estrategias de generación de datos y cómo se integraron a los escenarios de Kraken y Playwright
+[Generación de datos aleatorios](https://github.com/jhalep-miso/issues-automatizacion-pruebas/wiki/Generaci%C3%B3n-de-datos-aleatorios)
+
+Debido a que se reutilizan las estrategias en Kraken y Playwright a través del uso de una librería local, es necesario seguir las siguientes instrucciones para garantizar la correcta ejecución:
+
+1. Dentro del directorio `data-generators` ejecutar los comandos `npm install` y `npm run build`
+2. Moverse al directorio `ghost-e2e-kraken` y ejecutar el comando `npm install`. Para ejecutar las pruebas, seguir las instrucciones de [Instalación y Ejecución de las Pruebas en Kraken](#instalación-y-ejecución-de-las-pruebas-en-kraken)
+2. Moverse al directorio `ghost-e2e-playwright` y ejecutar el comando `npm install`. Para ejecutar las pruebas, seguir las instrucciones de [Instalación y Ejecución de las Pruebas con Playwright](#instalación-y-ejecución-de-las-pruebas-con-playwright)
+
+**Reporte de Issues** Para esta iteración, las [incidencias reportadas](https://github.com/jhalep-miso/issues-automatizacion-pruebas/issues) son desde el `[ISSUE-024]` hasta el `[ISSUE-033]`. Estas incidencias se obtuvieron durante el proceso de pruebas, utilizando valores en la frontera para diferentes campos de la aplicación
 
 
 ## Contribución
