@@ -2,6 +2,13 @@
 
 Este repositorio contiene los scripts necesarios para automatizar pruebas utilizando Kraken y Playwright en una aplicación web, específicamente el [CMS Ghost V5.80.0](https://ghost-ebcl.onrender.com/ghost) y [CMS Ghost V3.42.0](https://ghost-fakk.onrender.com/ghost). Las instrucciones a continuación te guiarán a través del proceso de configuración y ejecución de las pruebas que se realizaron en este proyecto; en particular, pruebas con APIs de automatización (Kraken y Playwright), pruebas VRT y pruebas adaptadas con diferentes estrategias de generación de datos
 
+## Participantes
+
+- **Sebastián Lemus Cadena**: [s.lemus@uniandes.edu.co](mailto:s.lemus@uniandes.edu.co)
+- **Sergio Augusto Celis Esteban**: [s.celise@uniandes.edu.co](mailto:s.celise@uniandes.edu.co)
+- **Alejandro Peña**: [ja.penat1@uniandes.edu.co](mailto:ja.penat1@uniandes.edu.co)
+- **Romel Palomino Jaramillo**: [r.palominoj@uniandes.edu.co](mailto:r.palominoj@uniandes.edu.co)
+
 ## Tabla de contenidos
 
 - Pruebas manuales exploratorias
@@ -12,13 +19,6 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
   - ResembleJS
   - BackstopJS
 - Estrategias de Generación de Datos
-
-## Participantes
-
-- **Sebastián Lemus Cadena**: [s.lemus@uniandes.edu.co](mailto:s.lemus@uniandes.edu.co)
-- **Sergio Augusto Celis Esteban**: [s.celise@uniandes.edu.co](mailto:s.celise@uniandes.edu.co)
-- **Alejandro Peña**: [ja.penat1@uniandes.edu.co](mailto:ja.penat1@uniandes.edu.co)
-- **Romel Palomino Jaramillo**: [r.palominoj@uniandes.edu.co](mailto:r.palominoj@uniandes.edu.co)
 
 ## Generación de datos aleatorios
 En el siguiente documento se encuentra el detalle de las estrategias de generación de datos y cómo se integraron a los escenarios de Kraken y Playwright
