@@ -9,6 +9,10 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
 - **Alejandro Peña**: [ja.penat1@uniandes.edu.co](mailto:ja.penat1@uniandes.edu.co)
 - **Romel Palomino Jaramillo**: [r.palominoj@uniandes.edu.co](mailto:r.palominoj@uniandes.edu.co)
 
+## Wiki
+
+En [la Wiki del Repositorio](https://github.com/jhalep-miso/issues-automatizacion-pruebas/wiki) se encuentra información adicional sobre las funcionalidades bajo pruebas de Ghost y los detalles de implementación sobre las pruebas de extremo a extremo, VRT y la integración de diferentes Estrategias de Generación de Datos. También se incluye información sobre los Pros y Contras de las diferentes herramientas utilizadas en este proyecto
+
 ## Tabla de contenidos
 
 - [Pruebas manuales exploratorias](#pruebas-manuales-exploratorias)
