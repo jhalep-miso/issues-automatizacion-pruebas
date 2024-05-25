@@ -13,8 +13,8 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
 
 - [Pruebas manuales exploratorias](#pruebas-manuales-exploratorias)
 - [Pruebas con APIs de automatización](#pruebas-con-apis-de-automatización)
-  - [Kraken](#instalación-y-ejecución-de-las-pruebas-en-kraken)
-  - [Playwright](#instalación-y-ejecución-de-las-pruebas-con-playwright)
+  - [Instalación y Ejecución de las Pruebas en Kraken](#instalación-y-ejecución-de-las-pruebas-en-kraken)
+  - [Instalación y Ejecución de las Pruebas con Playwright](#instalación-y-ejecución-de-las-pruebas-con-playwright)
 - Pruebas VRT
   - ResembleJS
   - BackstopJS
@@ -22,7 +22,11 @@ Este repositorio contiene los scripts necesarios para automatizar pruebas utiliz
 
 ## Pruebas manuales exploratorias
 
+Para la entrega de la semana 8 del curso, se realizaron Pruebas Manuales Exploratorias como parte de la semana 1 correspondiente a la estrategia de pruebas final. Durante este ejercicio ser registraron 20 incidencias nuevas en [el Inventario de Pruebas](https://docs.google.com/spreadsheets/d/1HwMR1rplEF15GkA96m9bVNkIb6jD0AP0z8fek8IK8-A/edit#gid=108691601)
+
 ## Pruebas con APIs de automatización
+
+Se realizaron pruebas de extremo a extremo utilizando Kraken y Playwright. A continuación se presentan los pasos necesarios para ejecutar las pruebas en cada herramienta
 
 ### Instalación y Ejecución de las Pruebas en Kraken
 
@@ -85,9 +89,9 @@ cd issues-automatizacion-pruebas/ghost-e2e-playwright
 npm install
 ```
 
-4. Asegurarse de que las líneas correspondientes a la configuración de la URL `https://ghost-ebcl.onrender.com` estén descomentadas en el archivo `ghost-e2e-playwright/tests/Config.ts` como se muestra a continuación:
+4. Asegurarse que la configuración de las pruebas que se esté utilizando sea la correspondiente a la URL [https://ghost-ebcl.onrender.com](https://ghost-wfml.onrender.com) dentro del archivo `ghost-e2e-playwright/tests/Config.ts`. Existen dos configuraciones, una local y otra para la instancia real de Ghost, asegurarse de que se esté exportando el valor correcto (`export const Config = config`):
 
-<img width="614" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/c10b9e0c-dd57-46fb-89e6-03e7b5f73d80">
+<img width="481" alt="image" src="https://github.com/jhalep-miso/issues-automatizacion-pruebas/assets/42351248/51074a50-ac01-429a-9baa-4d37b6bb22d9">
 
 5. Ejecuta las pruebas utilizando alguno de los siguientes dos comandos. El segundo permite visualizar las pruebas de forma interactiva con la UI de playwright:
 ```bash
